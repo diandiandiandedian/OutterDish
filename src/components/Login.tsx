@@ -119,8 +119,10 @@ export const Login: React.FC = () => {
             const result = await response.json()
             if (result['result']) {
                 // 验证通过
+                console.log('result[\'user\']',result['user'])
                 if (result['user'].id !== undefined) {
                     localStorage.setItem('token', result['user'].token);
+                    localStorage.setItem('tgUserId', result['user'].tgUserId);
                     // 注册过了,跳转主页
                     router.push('/game');
                 }
