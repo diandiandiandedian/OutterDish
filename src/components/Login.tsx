@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {BASE_URL} from '../config/constant';
 import {useNotification} from "../context/NotificationContext";
+import CryptoJS from "crypto-js";
 
 export const Login: React.FC = () => {
     const [step, setStep] = useState(1);
@@ -22,8 +23,46 @@ export const Login: React.FC = () => {
         setStep(step + 1);
     };
 
+
+    async function login(tgUserId: Object) {
+        setLoginLoading(true)
+        try {
+            const secretKey = 'mySecretKey12345';
+            const encryptedData = encryptData(tgUserId, secretKey);
+            console.log('加密数据', encryptedData)
+
+            const response = await fetch(BASE_URL + "/tg/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // action: 'saveTgUser',
+                    requestData: encryptedData
+                })
+            });
+            const resResult = await response.json()
+            if (resResult.success && resResult.data["id"] !== undefined && resResult.data["id"] !== '') {
+                localStorage.setItem('tgUserId', resResult.data["id"]);
+                localStorage.setItem('token', resResult.data.token);
+                router.push('/game');
+            }
+            setLoginLoading(false)
+        } catch (e) {
+            showError('network error')
+            setLoginLoading(false)
+        }
+    }
+
+    const encryptData = (data: object, secretKey: string): string => {
+        return CryptoJS.AES.encrypt(JSON.stringify(data), CryptoJS.enc.Utf8.parse(secretKey), {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7
+        }).toString();
+    };
+
+
     useEffect(() => {
-        console.log('aaa')
         // console.log('(window as any).Telegram.WebApp.initDataUnsafe',(window as any).Telegram.WebApp.initDataUnsafe.user)
         // console.log('(window as any).Telegram.WebApp',(window as any).Telegram.WebApp)
         if (!loadFlag) {
@@ -35,6 +74,13 @@ export const Login: React.FC = () => {
                     setName(user.username)
                     setTgUserId(user.id)
                     setLoadFlag(true)
+                    const {inviter} = router.query;
+                    console.log('inviter', inviter)
+                    if (undefined !== inviter && '' !== inviter && null !== inviter) {
+                        // 有邀请人,记录邀请人
+                        recordInviter(inviter, user.id)
+                    }
+                    login(user.id)
                 }
             }
             const img = new Image();
@@ -47,6 +93,24 @@ export const Login: React.FC = () => {
     const handleLogin = async () => {
         await saveTgUser(name);
     };
+
+    async function recordInviter(inviter: string, tgUserId: string) {
+        try {
+            const response = await fetch(BASE_URL + "/invite/save", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // action: 'saveTgUser',
+                    inviter: inviter,
+                    invited: tgUserId
+                })
+            });
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     async function saveTgUser(name: string) {
         setLoginLoading(true)

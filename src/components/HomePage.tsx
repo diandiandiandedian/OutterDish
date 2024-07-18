@@ -91,6 +91,13 @@ const HomePage: React.FC = () => {
                     points={xScoreGift}
                     id="x"
                 />
+                <QuestItem
+                    imgSrc="/twitter.svg"
+                    title="Invite Your Friend"
+                    description="Invite Your Friend"
+                    points={xScoreGift}
+                    id="invite"
+                />
                 <div className='h-[100px]'></div>
             </div>
         </div>
