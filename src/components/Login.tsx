@@ -9,7 +9,7 @@ export const Login: React.FC = () => {
     const [tgUserId, setTgUserId] = useState('');
     const [loginLoading, setLoginLoading] = useState(false);
     const router = useRouter();
-    const [tgUser, setTgUser] = useState({id: ''});
+    const [tgUser, setTgUser] = useState({id: '',username:''});
     const {showSuccess, showError} = useNotification();
 
 
@@ -48,7 +48,7 @@ export const Login: React.FC = () => {
                     // action: 'saveTgUser',
                     address: "",
                     tgUserId: tgUser["id"],
-                    userInfo: tgUser['username'],
+                    userInfo: tgUser["username"],
                     userName: name
                 })
             });
