@@ -66,17 +66,18 @@ export const Login: React.FC = () => {
         // console.log('(window as any).Telegram.WebApp.initDataUnsafe',(window as any).Telegram.WebApp.initDataUnsafe.user)
         // console.log('(window as any).Telegram.WebApp',(window as any).Telegram.WebApp)
         if (!loadFlag) {
-            console.log('请求地址',window.location.href)
-            const {tgWebAppStartParam} = router.query;
-            console.log('inviter', tgWebAppStartParam,(window as any).Telegram)
+            // console.log('请求地址',window.location.href)
+            // const {tgWebAppStartParam} = router.query;
+
 
 
             if ((window as any).Telegram !== undefined) {
                 if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
 
+                    console.log((window as any).Telegram.WebApp)
                     // 获取 tgWebAppStartParam
-                    const startParam = (window as any).Telegram.WebApp.initDataUnsafe.tgWebAppStartParam;
-                    console.log("tgWebAppStartParam:", startParam);
+                    const inviter = (window as any).Telegram.WebApp.initDataUnsafe.start_param
+                    console.log('inviter', inviter)
 
                     const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
                     console.log('user', user)
@@ -86,9 +87,9 @@ export const Login: React.FC = () => {
                     setLoadFlag(true)
                     // const {startapp} = router.query;
                     // console.log('inviter', startapp)
-                    if (undefined !== tgWebAppStartParam && '' !== tgWebAppStartParam && null !== tgWebAppStartParam) {
+                    if (undefined !== inviter && '' !== inviter && null !== inviter) {
                         // 有邀请人,记录邀请人
-                        recordInviter(tgWebAppStartParam+"", user.id)
+                        recordInviter(inviter.substring(1, inviter.length - 1), user.id)
                     }
                     login(user.id)
                 }
