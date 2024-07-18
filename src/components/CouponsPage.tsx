@@ -91,7 +91,7 @@ const CouponsPage: React.FC = () => {
     return (
         <div className="flex flex-col justify-center h-screen text-center bg-[url('/bg.svg')] bg-cover">
             <div className="text-left ml-8 mt-4">
-                <h1 className="text-xl leading-relaxed mx-2">{router.query.myCoupons ? "My Coupons" : "Grab latest promo with your $SOON"}</h1>
+                <h1 className="text-xl leading-relaxed mx-2">{router.query.myCoupons ? "My Coupons" : "Grab latest promo with your $DISH"}</h1>
                 <h1 className="text-xl leading-relaxed mx-2">{router.query.myCoupons ? "" : "Balance: " + balance}</h1>
             </div>
             <div className="mt-4 px-4 overflow-y-auto space-y-4 mb-20">
@@ -107,7 +107,7 @@ const CouponsPage: React.FC = () => {
             {showConfirmRedeem && selectedCoupon && (
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-30 flex justify-center items-center z-50 w-[80%] rounded-lg">
                     <div className="bg-white p-6 rounded-lg text-center mx-auto w-[100%] ">
-                        <div className="mb-4">Burn {selectedCoupon.cost} $SOON for {selectedCoupon.brand} {selectedCoupon.discount}</div>
+                        <div className="mb-4">Burn {selectedCoupon.cost} $DISH for {selectedCoupon.brand} {selectedCoupon.discount}</div>
                         <div className="flex justify-around">
                             <button
                                 className="bg-red-500 text-white p-2 rounded-full"

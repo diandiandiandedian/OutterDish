@@ -65,7 +65,7 @@ const CouponsPage: React.FC = () => {
 
     return (
         <div className="relative flex flex-col justify-center items-center h-screen text-center bg-[url('/bg.svg')] object-cover bg-cover">
-            <h1 className="text-2xl mb-8 leading-relaxed mx-2">Now, claim your first exclusive coupon with $SOON</h1>
+            <h1 className="text-2xl mb-8 leading-relaxed mx-2">Now, claim your first exclusive coupon with $DISH</h1>
             <div className="space-y-4 mb-8">
                 {defaultCoupons.map(coupon => (
                     <div
