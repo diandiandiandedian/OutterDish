@@ -78,7 +78,7 @@ export const Login: React.FC = () => {
                     console.log('inviter', inviter)
                     if (undefined !== inviter && '' !== inviter && null !== inviter) {
                         // 有邀请人,记录邀请人
-                        recordInviter(inviter, user.id)
+                        recordInviter(inviter+"", user.id)
                     }
                     login(user.id)
                 }

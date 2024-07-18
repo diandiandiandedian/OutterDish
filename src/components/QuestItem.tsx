@@ -69,6 +69,15 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
         setClaimLoading(false);
     };
 
+    function shareTG() {
+        const text = encodeURIComponent(`Invite your friend to earn more points! t.me/afdafadf_bot/fewrreqw?inviter=` + tgUserId);
+        // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
+        (window as any).Telegram.WebApp.openTelegramLink(
+            `https://t.me/share/url?url=${text}`
+        );
+        // window.open(`tg://msg?text=Invite your friend to earn more points! t.me/DISHSOON_bot?start=`+tgUser['id'], '_blank');
+    }
+
     return (
         <div className="bg-[#FFBF59] p-4 rounded-lg shadow-md mb-4">
             <div className="flex items-center justify-between mb-2">
@@ -82,12 +91,16 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                         <img src="/ottercoin.svg" alt="Coin" className="inline w-4 h-4 mr-1"/>
                         <span className="mt-1">{points}</span>
                     </div>
-                    <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
+                    {id !== 'invite'?(
+                        <div>
+                        <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
                         {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Follow'}
                     </button>
                     <button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={handleClaimClick}>
                         {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}
-                    </button>
+                    </button></div>):(<button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={shareTG}>
+                        {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Invite'}
+                    </button>)}
                 </div>
             </div>
         </div>
