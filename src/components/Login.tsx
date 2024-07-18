@@ -42,8 +42,8 @@ export const Login: React.FC = () => {
                 })
             });
             const resResult = await response.json()
-            if (resResult.success && resResult.data["id"] !== undefined && resResult.data["id"] !== '') {
-                localStorage.setItem('tgUserId', resResult.data["id"]);
+            if (resResult.success && resResult.data["tgUserId"] !== undefined && resResult.data["tgUserId"] !== '') {
+                localStorage.setItem('tgUserId', resResult.data["tgUserId"]);
                 localStorage.setItem('token', resResult.data.token);
                 router.push('/game');
             }

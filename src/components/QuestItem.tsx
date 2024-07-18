@@ -92,7 +92,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                         <span className="mt-1">{points}</span>
                     </div>
                     {id !== 'invite'?(
-                        <div>
+                        <div className="flex flex-col">
                         <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
                         {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Follow'}
                     </button>
