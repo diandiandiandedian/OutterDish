@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
                 <QuestItem
                     imgSrc="/twitter.svg"
                     title="Follow OutterDish on X"
-                    description="Join the OutterDish Twitter channel"
+                    description="Follow OutterDish‘s X"
                     points={xScoreGift}
                     id="x"
                 />
