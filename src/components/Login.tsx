@@ -30,6 +30,10 @@ export const Login: React.FC = () => {
             }
         }
 
+        const img = new Image();
+        img.src = '/SquirrelChef.png';
+        img.onload = () => {};
+
     });
 
     const handleLogin = async () => {
