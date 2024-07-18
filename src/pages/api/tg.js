@@ -1,6 +1,6 @@
 import pool from '../../db/db';
 import Cors from 'cors';
-import CryptoJS from 'crypto-js';
+import crypto from 'crypto';
 
 
 function initMiddleware(middleware) {
@@ -30,21 +30,22 @@ export default async function handler(req, res) {
         case 'GET':
             return queryScoreAndRank(req, res);
         case 'POST':
-            const {action} = req.body;
-            switch (action) {
-                case 'updateScore':
-                    await updateScore(req, res);
-                    break;
-                case 'saveTgUser':
-                    await saveTgUser(req, res);
-                    break;
-                case 'action3':
-                    // await handleAction3(req, res);
-                    break;
-                // 添加其它方法的处理逻辑（PUT、DELETE）
-                default:
-                    return res.status(405).end(`Method ${req.method} Not Allowed`);
-            }
+            return tgVerfiy(req, res);
+        // const {action} = req.body;
+        // switch (action) {
+        //     case 'updateScore':
+        //         await updateScore(req, res);
+        //         break;
+        //     case 'saveTgUser':
+        //         await saveTgUser(req, res);
+        //         break;
+        //     case 'action3':
+        //         // await handleAction3(req, res);
+        //         break;
+        //     // 添加其它方法的处理逻辑（PUT、DELETE）
+        //     default:
+        //         return res.status(405).end(`Method ${req.method} Not Allowed`);
+        // }
     }
 }
 
@@ -85,7 +86,7 @@ const queryScoreAndRank = async (req, res) => {
     }
     const rows2 = await pool.query('SELECT count(1) as rankScore FROM tg_wallet where game_score>?', [rows[0][0].game_score]);
     const row3 = await pool.query('SELECT count(1) as couponCount FROM soon_coupon where tg_user_id=?', [rows[0][0].tg_user_id]);
-    console.log('row3',row3)
+    console.log('row3', row3)
     res.status(200).json({"user": rows[0][0], "rank": rows2[0][0].rankScore, 'couponCount': row3[0][0].couponCount});
 };
 
@@ -99,8 +100,8 @@ const updateScore = async (req, res) => {
     const bytes = CryptoJS.AES.decrypt(data, secretKey);
     const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-    const { token, username, score } = decryptedData;
-    console.log('score',score)
+    const {token, username, score} = decryptedData;
+    console.log('score', score)
     if (score !== 10 && score !== 20 && score !== 30 && score !== -10) {
         res.status(200).json({"data": "param error"});
         return
@@ -136,6 +137,46 @@ const updateUserGetCoupon = async (req, res) => {
     // res.status(200).json("aaaaa");
 
 }
+
+
+const tgVerfiy = async (req, res) => {
+    const {telegramInitData, user} = req.body;
+    // console.log('apiToken, telegramInitData', apiToken, telegramInitData)
+    const initData = new URLSearchParams(telegramInitData);
+    // console.log('initData==',JSON.stringify(initData.get('user')),user,JSON.stringify(user))
+    initData.set("user", JSON.stringify(user))
+    // console.log('initData==', initData)
+    initData.sort();
+
+    // // console.log('initData',initData)
+    const hash = initData.get("hash");
+    initData.delete("hash");
+    const dataToCheck = [...initData.entries()].map(([key, value]) => key + "=" + value).join("\n");
+    // console.log('dataToCheck', dataToCheck)
+
+    // 可以用的
+    // const apitoken="5768337691:AAGDAe6rjxu1cUgxK4BizYi--Utc3J9v5AU"
+    // const hash="371697738012ebd26a111ace4aff23ee265596cd64026c8c3677956a85ca1827"
+    // const joined_pairs = "auth_date=1709144340\nchat_instance=-3788475317572404878\nchat_type=private\nuser={\"id\":279058397,\"first_name\":\"Vladislav\",\"last_name\":\"Kibenko\",\"username\":\"vdkfrost\",\"language_code\":\"en\",\"is_premium\":true,\"allows_write_to_pm\":true}"
+
+    const apitoken = "7411782210:AAHe89edD-6bxxzEilQhQwzv-2SJqi20nNM"
+    // const hash="371697738012ebd26a111ace4aff23ee265596cd64026c8c3677956a85ca1827"
+    // const joined_pairs = "auth_date=1709144340\nchat_instance=-3788475317572404878\nchat_type=private\nuser={\"id\":279058397,\"first_name\":\"Vladislav\",\"last_name\":\"Kibenko\",\"username\":\"vdkfrost\",\"language_code\":\"en\",\"is_premium\":true,\"allows_write_to_pm\":true}"
+
+    // 可以用的
+    const secretKey = crypto.createHmac("sha256", "WebAppData").update(apitoken).digest();
+    const _hash = crypto.createHmac("sha256", secretKey).update(dataToCheck).digest("hex");
+    console.log(hash, _hash)
+    // res.status(200).json(hash === _hash);
+    if (hash === _hash) {
+        const rows = await pool.query('SELECT * FROM tg_user where tg_user_id = ?', [user.id]);
+        // console.log('rows[0][0]', rows[0][0])
+        res.status(200).json({"result": true, "user": rows[0][0]});
+    } else {
+        res.status(200).json({"result": false});
+    }
+};
+
 
 // console.log('aaaaaa')
 // const token = '7411782210:AAHe89edD-6bxxzEilQhQwzv-2SJqi20nNM'; // Replace with your own bot token

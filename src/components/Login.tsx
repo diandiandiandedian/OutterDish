@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 import {BASE_URL} from '../config/constant';
 import {useNotification} from "../context/NotificationContext";
 import CryptoJS from "crypto-js";
+import {validate} from '@telegram-apps/init-data-node';
 
 export const Login: React.FC = () => {
     const [step, setStep] = useState(1);
@@ -24,42 +25,42 @@ export const Login: React.FC = () => {
     };
 
 
-    async function login(tgUserId: Object) {
-        setLoginLoading(true)
-        try {
-            const secretKey = 'mySecretKey12345';
-            const encryptedData = encryptData(tgUserId, secretKey);
-            console.log('加密数据', encryptedData)
+    // async function login(tgUserId: Object) {
+    //     setLoginLoading(true)
+    //     try {
+    //         const secretKey = 'mySecretKey12345';
+    //         const encryptedData = encryptData(tgUserId, secretKey);
+    //         console.log('加密数据', encryptedData)
+    //
+    //         const response = await fetch(BASE_URL + "/tg/login", {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 // action: 'saveTgUser',
+    //                 requestData: encryptedData
+    //             })
+    //         });
+    //         const resResult = await response.json()
+    //         if (resResult.success && resResult.data["tgUserId"] !== undefined && resResult.data["tgUserId"] !== '') {
+    //             localStorage.setItem('tgUserId', resResult.data["tgUserId"]);
+    //             localStorage.setItem('token', resResult.data.token);
+    //             router.push('/game');
+    //         }
+    //         setLoginLoading(false)
+    //     } catch (e) {
+    //         showError('network error')
+    //         setLoginLoading(false)
+    //     }
+    // }
 
-            const response = await fetch(BASE_URL + "/tg/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    // action: 'saveTgUser',
-                    requestData: encryptedData
-                })
-            });
-            const resResult = await response.json()
-            if (resResult.success && resResult.data["tgUserId"] !== undefined && resResult.data["tgUserId"] !== '') {
-                localStorage.setItem('tgUserId', resResult.data["tgUserId"]);
-                localStorage.setItem('token', resResult.data.token);
-                router.push('/game');
-            }
-            setLoginLoading(false)
-        } catch (e) {
-            showError('network error')
-            setLoginLoading(false)
-        }
-    }
-
-    const encryptData = (data: object, secretKey: string): string => {
-        return CryptoJS.AES.encrypt(JSON.stringify(data), CryptoJS.enc.Utf8.parse(secretKey), {
-            mode: CryptoJS.mode.ECB,
-            padding: CryptoJS.pad.Pkcs7
-        }).toString();
-    };
+    // const encryptData = (data: object, secretKey: string): string => {
+    //     return CryptoJS.AES.encrypt(JSON.stringify(data), CryptoJS.enc.Utf8.parse(secretKey), {
+    //         mode: CryptoJS.mode.ECB,
+    //         padding: CryptoJS.pad.Pkcs7
+    //     }).toString();
+    // };
 
 
     useEffect(() => {
@@ -70,17 +71,16 @@ export const Login: React.FC = () => {
             // const {tgWebAppStartParam} = router.query;
 
 
-
             if ((window as any).Telegram !== undefined) {
                 if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
 
                     console.log((window as any).Telegram.WebApp)
                     // 获取 tgWebAppStartParam
                     const inviter = (window as any).Telegram.WebApp.initDataUnsafe.start_param
-                    console.log('inviter', inviter)
+                    // console.log('inviter', inviter)
 
                     const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
-                    console.log('user', user)
+                    // console.log('user', user)
                     setTgUser(user)
                     setName(user.username)
                     setTgUserId(user.id)
@@ -89,9 +89,18 @@ export const Login: React.FC = () => {
                     // console.log('inviter', startapp)
                     if (undefined !== inviter && '' !== inviter && null !== inviter) {
                         // 有邀请人,记录邀请人
-                        recordInviter(inviter.substring(1, inviter.length - 1), user.id)
+                        recordInviter(inviter, user.id)
                     }
-                    login(user.id)
+                    // login(user.id)
+                    const result = tgVerfiy((window as any).Telegram.WebApp.initDataUnsafe)
+                    if (result['result']) {
+                        // 验证通过
+                        if (result['user'].id !== undefined) {
+                            localStorage.setItem('token', result['user'].token);
+                            // 注册过了,跳转主页
+                            router.push('/game');
+                        }
+                    }
                 }
             }
             const img = new Image();
@@ -100,6 +109,30 @@ export const Login: React.FC = () => {
             };
         }
     });
+
+    async function tgVerfiy(telegramInitData: any) {
+
+        try {
+            const response = await fetch("/api/tg", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // action: 'saveTgUser',
+                    telegramInitData: telegramInitData,
+                    user: telegramInitData.user
+                })
+            });
+            return await response.json()
+
+        } catch (e) {
+            console.log(e)
+        }
+
+
+    }
+
 
     const handleLogin = async () => {
         await saveTgUser(name);
