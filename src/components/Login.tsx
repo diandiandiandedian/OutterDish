@@ -122,7 +122,7 @@ export const Login: React.FC = () => {
                 console.log('result[\'user\']',result['user'])
                 if (result['user'].id !== undefined) {
                     localStorage.setItem('token', result['user'].token);
-                    localStorage.setItem('tgUserId', result['user'].tgUserId);
+                    localStorage.setItem('tgUserId', result['user']['tg_user_id']);
                     // 注册过了,跳转主页
                     router.push('/game');
                 }
