@@ -74,11 +74,11 @@ export const Login: React.FC = () => {
                     setName(user.username)
                     setTgUserId(user.id)
                     setLoadFlag(true)
-                    const {inviter} = router.query;
-                    console.log('inviter', inviter)
-                    if (undefined !== inviter && '' !== inviter && null !== inviter) {
+                    const {startapp} = router.query;
+                    console.log('inviter', startapp)
+                    if (undefined !== startapp && '' !== startapp && null !== startapp) {
                         // 有邀请人,记录邀请人
-                        recordInviter(inviter+"", user.id)
+                        recordInviter(startapp+"", user.id)
                     }
                     login(user.id)
                 }

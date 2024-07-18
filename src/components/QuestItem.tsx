@@ -70,7 +70,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
     };
 
     function shareTG() {
-        const text = encodeURIComponent(`Invite your friend to earn more points! t.me/afdafadf_bot/fewrreqw?inviter=` + tgUserId);
+        const text = encodeURIComponent(`Invite your friend to earn more points! t.me/afdafadf_bot/fewrreqw?startapp=u` + tgUserId);
         // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
         (window as any).Telegram.WebApp.openTelegramLink(
             `https://t.me/share/url?url=${text}`
