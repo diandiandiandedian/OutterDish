@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overscroll-behavior: none;
+  touch-action: none;
+  font-family: 'KGTenThousandReasons', sans-serif;
+}
+
+@font-face {
+  font-family: "KGTenThousandReasons";
+  src: url("/KGTenThousandReasons.ttf");
+}
+
+.font-kg {
+  font-family: 'KGTenThousandReasons', sans-serif;
+}
+
+.egg-large {
+  background-image: url('/bighamburger.png');
+  background-size: cover;
+  width: 96px;
+  height: 96px;
+}
+
+.egg-medium {
+  background-image: url('/middlesoup.png');
+  background-size: cover;
+  width: 64px;
+  height: 64px;
+}
+
+.egg-small {
+  background-image: url('/smalltea.png');
+  background-size: cover;
+  width: 32px;
+  height: 32px;
+}
+
+.bomb {
+  background-image: url('/bomb.svg');
+  background-size: cover;
+  width: 32px;
+  height: 32px;
+}
+
+@keyframes fall {
+  0% {
+    top: -96px;
+  }
+  100% {
+    top: 100vh;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.animate-fall {
+  animation: fall 4.3s linear;
+}
+
+.animate-fade-out {
+  animation: fadeOut 1s ease-in-out;
+}
