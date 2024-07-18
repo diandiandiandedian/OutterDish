@@ -28,7 +28,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
 
     const handleJoinClick = async () => {
         if (id === 'tg') {
-            window.location.href = 'https://x.com/outterdish?s=21&t=Ci4cl542w-9W6fnarwq5nA';
+            window.location.href = 'https://t.me/OutterDishGang';
         } else if (id === 'x') {
             window.location.href = 'https://x.com/outterdish?s=21&t=Ci4cl542w-9W6fnarwq5nA';
             localStorage.setItem('xFollowed', 'true');
