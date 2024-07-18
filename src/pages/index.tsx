@@ -4,7 +4,6 @@ import {useRouter} from "next/router";
 import Game from "./game";
 import HomePage from "../components/HomePage";
 import Home from "./home";
-import {validate} from "@telegram-apps/init-data-node";
 
 export default function Index() {
     const [activeTab, setActiveTab] = useState<'home' | 'game' | 'order' | 'coupon' | 'quests'>('game');

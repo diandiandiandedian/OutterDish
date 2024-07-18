@@ -3,7 +3,6 @@ import {useRouter} from 'next/router';
 import {BASE_URL} from '../config/constant';
 import {useNotification} from "../context/NotificationContext";
 import CryptoJS from "crypto-js";
-import {validate} from '@telegram-apps/init-data-node';
 
 export const Login: React.FC = () => {
     const [step, setStep] = useState(1);
@@ -92,15 +91,8 @@ export const Login: React.FC = () => {
                         recordInviter(inviter, user.id)
                     }
                     // login(user.id)
-                    const result = tgVerfiy((window as any).Telegram.WebApp.initDataUnsafe)
-                    if (result['result']) {
-                        // 验证通过
-                        if (result['user'].id !== undefined) {
-                            localStorage.setItem('token', result['user'].token);
-                            // 注册过了,跳转主页
-                            router.push('/game');
-                        }
-                    }
+                    tgVerfiy((window as any).Telegram.WebApp.initDataUnsafe)
+
                 }
             }
             const img = new Image();
@@ -124,7 +116,15 @@ export const Login: React.FC = () => {
                     user: telegramInitData.user
                 })
             });
-            return await response.json()
+            const result = await response.json()
+            if (result['result']) {
+                // 验证通过
+                if (result['user'].id !== undefined) {
+                    localStorage.setItem('token', result['user'].token);
+                    // 注册过了,跳转主页
+                    router.push('/game');
+                }
+            }
 
         } catch (e) {
             console.log(e)
