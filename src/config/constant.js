@@ -13,7 +13,7 @@ export const BASE_URL = {
 export const defaultCoupons = [
     {id: 1, brand: 'Temu', discount: '30% OFF', cost: 1000, image: '/temu.svg', code: "fav19288"},
     {id: 2, brand: 'Shein', discount: '15% OFF', cost: 1000, image: '/couponimage1.svg', code: "Cozy03A41"},
-    {id: 3, brand: 'Cider', discount: '15% OFF', cost: 1000, image: '/couponimage1.svg', code: "CIDERWEB15CAP"},
+    {id: 3, brand: 'Cider', discount: '15% OFF', cost: 1000, image: '/cider.png', code: "CIDERWEB15CAP"},
 ];
 
 export const tgScoreGift = 1000
