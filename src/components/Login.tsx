@@ -23,6 +23,7 @@ export const Login: React.FC = () => {
         if ((window as any).Telegram !== undefined) {
             if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
                 const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
+                console.log('user',user)
                 setTgUser(user)
                 setName(user.username)
                 setTgUserId(user.id)
@@ -47,7 +48,7 @@ export const Login: React.FC = () => {
                     // action: 'saveTgUser',
                     address: "",
                     tgUserId: tgUser["id"],
-                    // userInfo22: tgUser,
+                    userInfo: tgUser['username'],
                     userName: name
                 })
             });
