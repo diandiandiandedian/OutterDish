@@ -68,9 +68,16 @@ export const Login: React.FC = () => {
         if (!loadFlag) {
             console.log('请求地址',window.location.href)
             const {tgWebAppStartParam} = router.query;
-            console.log('inviter', tgWebAppStartParam)
+            console.log('inviter', tgWebAppStartParam,(window as any).Telegram)
+
+
             if ((window as any).Telegram !== undefined) {
                 if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
+
+                    // 获取 tgWebAppStartParam
+                    const startParam = (window as any).Telegram.WebApp.initDataUnsafe.tgWebAppStartParam;
+                    console.log("tgWebAppStartParam:", startParam);
+
                     const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
                     console.log('user', user)
                     setTgUser(user)
