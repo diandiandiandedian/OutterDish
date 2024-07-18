@@ -8,32 +8,40 @@ export const Login: React.FC = () => {
     const [name, setName] = useState('');
     const [tgUserId, setTgUserId] = useState('');
     const [loginLoading, setLoginLoading] = useState(false);
+    const [loadFlag, setLoadFlag] = useState(false);
     const router = useRouter();
-    const [tgUser, setTgUser] = useState({id: '',username:''});
+    const [tgUser, setTgUser] = useState({id: '', username: ''});
     const {showSuccess, showError} = useNotification();
 
 
     const handleNextStep = () => {
+        if (step === 2 && name === '') {
+            showError("Please set name")
+            return
+        }
         setStep(step + 1);
     };
 
     useEffect(() => {
+        console.log('aaa')
         // console.log('(window as any).Telegram.WebApp.initDataUnsafe',(window as any).Telegram.WebApp.initDataUnsafe.user)
         // console.log('(window as any).Telegram.WebApp',(window as any).Telegram.WebApp)
-        if ((window as any).Telegram !== undefined) {
-            if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
-                const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
-                console.log('user',user)
-                setTgUser(user)
-                setName(user.username)
-                setTgUserId(user.id)
+        if (!loadFlag) {
+            if ((window as any).Telegram !== undefined) {
+                if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
+                    const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
+                    console.log('user', user)
+                    setTgUser(user)
+                    setName(user.username)
+                    setTgUserId(user.id)
+                    setLoadFlag(true)
+                }
             }
+            const img = new Image();
+            img.src = '/SquirrelChef.png';
+            img.onload = () => {
+            };
         }
-
-        const img = new Image();
-        img.src = '/SquirrelChef.png';
-        img.onload = () => {};
-
     });
 
     const handleLogin = async () => {
