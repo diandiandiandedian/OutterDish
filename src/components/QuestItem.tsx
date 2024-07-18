@@ -53,7 +53,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                 },
                 body: JSON.stringify({tgUserId, token, tgOrX}),
             });
-            // aaafdaffdafadsf
+            //
             const resResult = await response.json();
             if (!resResult.success) {
                 showError(resResult.msg);
