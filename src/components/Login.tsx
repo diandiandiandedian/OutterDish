@@ -66,6 +66,9 @@ export const Login: React.FC = () => {
         // console.log('(window as any).Telegram.WebApp.initDataUnsafe',(window as any).Telegram.WebApp.initDataUnsafe.user)
         // console.log('(window as any).Telegram.WebApp',(window as any).Telegram.WebApp)
         if (!loadFlag) {
+            console.log('请求地址',window.location.href)
+            const {startapp} = router.query;
+            console.log('inviter', startapp)
             if ((window as any).Telegram !== undefined) {
                 if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
                     const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
@@ -74,8 +77,8 @@ export const Login: React.FC = () => {
                     setName(user.username)
                     setTgUserId(user.id)
                     setLoadFlag(true)
-                    const {startapp} = router.query;
-                    console.log('inviter', startapp)
+                    // const {startapp} = router.query;
+                    // console.log('inviter', startapp)
                     if (undefined !== startapp && '' !== startapp && null !== startapp) {
                         // 有邀请人,记录邀请人
                         recordInviter(startapp+"", user.id)
