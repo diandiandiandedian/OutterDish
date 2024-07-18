@@ -38,7 +38,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
     const handleClaimClick = async () => {
         const xFollowed = localStorage.getItem('xFollowed');
         if (id === 'x' && !xFollowed) {
-            showError('You must follow on X before claiming points.');
+            showError('You must follow on X before claim');
             return;
         }
 
@@ -58,13 +58,13 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             if (!resResult.success) {
                 showError(resResult.msg);
             } else {
-                showSuccess('Points claimed successfully!');
+                showSuccess('Claim Success');
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
             }
         } else {
-            showError('User not logged in');
+            showError('Network Error');
         }
         setClaimLoading(false);
     };
