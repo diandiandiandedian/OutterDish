@@ -33,7 +33,8 @@ const HomePage: React.FC = () => {
                 const data = await response.json();
 
                 setBalance(data.data.user['gameScore']);
-                setRankings(data.data.user['gameScore'] < 2000 ? '--' : data.data['rank']);
+                // setRankings(data.data.user['gameScore'] < 2000 ? '--' : data.data['rank']);
+                setRankings(data.data['rank']);
                 setCoupons(data.data['coupon'].length);
 
             } catch (error) {
@@ -57,8 +58,8 @@ const HomePage: React.FC = () => {
                         <h1 className="text-2xl">OutterDish</h1>
                     </div>
                     <div className="flex space-x-4">
-                        <img src="/chat.svg" alt="Chat" className="w-8 h-8" />
-                        <img src="/tg.svg" alt="Telegram" className="w-8 h-8" />
+                        {/*<img src="/chat.svg" alt="Chat" className="w-8 h-8" />*/}
+                        {/*<img src="/tg.svg" alt="Telegram" className="w-8 h-8" />*/}
                     </div>
                 </div>
                 <div className="bg-[#FF8641] p-4 rounded-lg shadow-md mb-4">

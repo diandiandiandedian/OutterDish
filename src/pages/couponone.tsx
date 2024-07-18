@@ -89,10 +89,7 @@ const CouponsPage: React.FC = () => {
                         <CouponList coupons={myCoupons}/>
                         <div className="text-lg mb-4 text-black">has been saved to your wallet</div>
                         <div className="text-sm mb-8 text-black">You can check it anytime in 'Main' - 'Coupon'</div>
-                        <button
-                            className="bg-[#D9D9D9] text-black p-4 rounded-full text-xl w-full"
-                            onClick={handleExploreClick}
-                        >
+                        <button className="bg-[#FFE541AD] text-black p-4 rounded-full text-xl w-full" onClick={handleExploreClick}>
                             Explore OutterDish
                         </button>
                     </div>
