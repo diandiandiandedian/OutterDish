@@ -52,6 +52,7 @@ export const Login: React.FC = () => {
     });
 
     async function tgVerfiy(telegramInitData: any) {
+        setLoginLoading(true)
         try {
             const response = await fetch("/api/tg", {
                 method: 'POST',
@@ -65,6 +66,7 @@ export const Login: React.FC = () => {
                 })
             });
             const result = await response.json()
+            setLoginLoading(false)
             if (result['result']) {
                 // 验证通过
                 // console.log('result[\'user\']',result['user'])
