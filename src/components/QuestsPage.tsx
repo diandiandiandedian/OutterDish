@@ -1,6 +1,6 @@
 import React from 'react';
 import QuestItem from '../components/QuestItem';
-import { BASE_URL, tgScoreGift, xScoreGift } from "../config/constant";
+import {BASE_URL, inviteScoreLevel1, inviteScoreLevel2, inviteScoreLevel3, tgScoreGift, xScoreGift} from "../config/constant";
 import { useNotification } from "../context/NotificationContext";
 
 const QuestsPage: React.FC = () => {
@@ -24,11 +24,25 @@ const QuestsPage: React.FC = () => {
                     id="x"
                 />
                 <QuestItem
-                    imgSrc="/twitter.svg"
-                    title="Invite Your Friend"
-                    description="Invite Your Friend"
-                    points={xScoreGift}
-                    id="invite"
+                    imgSrc="/invite.svg"
+                    title="Invite 1 fren"
+                    description="Invite 1 fren to play OutterDish"
+                    points={inviteScoreLevel1}
+                    id="invite1"
+                />
+                <QuestItem
+                    imgSrc="/invite.svg"
+                    title="Invite 3 frens"
+                    description="Invite 3 frens to play OutterDish"
+                    points={inviteScoreLevel2}
+                    id="invite2"
+                />
+                <QuestItem
+                    imgSrc="/invite.svg"
+                    title="Invite 10 frens"
+                    description="Invite 10 frens to play OutterDish"
+                    points={inviteScoreLevel3}
+                    id="invite3"
                 />
                 <div className='h-[100px]'></div>
             </div>

@@ -32,6 +32,12 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
         } else if (id === 'x') {
             window.location.href = 'https://x.com/outterdish?s=21&t=Ci4cl542w-9W6fnarwq5nA';
             localStorage.setItem('xFollowed', 'true');
+        } else if (id.indexOf('invite') !== -1) {
+            const text = encodeURIComponent(`Invite your friend to earn more $DISH! t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+            // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
+            (window as any).Telegram.WebApp.openTelegramLink(
+                `https://t.me/share/url?url=${text}`
+            );
         }
     };
 
@@ -43,7 +49,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
         }
 
         setClaimLoading(true);
-        const tgOrX = id === 'tg' ? 2 : 3;
+        const tgOrX = id === 'tg' ? 2 : id === 'x' ? 3 : id === 'invite1' ? 5 : id === 'invite2' ? 6 : 7;
 
         if (tgUserId && token) {
             const response = await fetch(BASE_URL + '/tg/addGavePoint', {
@@ -69,14 +75,14 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
         setClaimLoading(false);
     };
 
-    function shareTG() {
-        const text = encodeURIComponent(`Invite your friend to earn more points! t.me/OutterDish_bot/Main?startapp=` + tgUserId);
-        // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
-        (window as any).Telegram.WebApp.openTelegramLink(
-            `https://t.me/share/url?url=${text}`
-        );
-        // window.open(`tg://msg?text=Invite your friend to earn more points! t.me/DISHSOON_bot?start=`+tgUser['id'], '_blank');
-    }
+    // function shareTG() {
+    //     const text = encodeURIComponent(`Invite your friend to earn more $DISH! t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+    //     // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
+    //     (window as any).Telegram.WebApp.openTelegramLink(
+    //         `https://t.me/share/url?url=${text}`
+    //     );
+    //     // window.open(`tg://msg?text=Invite your friend to earn more points! t.me/DISHSOON_bot?start=`+tgUser['id'], '_blank');
+    // }
 
     return (
         <div className="bg-[#FFBF59] p-4 rounded-lg shadow-md mb-4">
@@ -91,16 +97,14 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                         <img src="/ottercoin.svg" alt="Coin" className="inline w-4 h-4 mr-1"/>
                         <span className="mt-1">{points}</span>
                     </div>
-                    {id !== 'invite'?(
-                        <div className="flex flex-col">
+                    <div className="flex flex-col">
                         <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
-                        {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Follow'}
-                    </button>
-                    <button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={handleClaimClick}>
-                        {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}
-                    </button></div>):(<button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={shareTG}>
-                        {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Invite'}
-                    </button>)}
+                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite')!==-1 ? 'Share' : 'Follow'}
+                        </button>
+                        <button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={handleClaimClick}>
+                            {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

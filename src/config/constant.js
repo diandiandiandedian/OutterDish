@@ -4,7 +4,7 @@ import nextConfig from "../../next.config.mjs";
 // 172.20.10.3
 // https://testapi.ezswap.io/
 export const BASE_URL = {
-    dev: "https://api.ezswap.io/",
+    dev: "http://192.168.2.2:8085/",
     test: "https://testapi.ezswap.io/",
     pro: "https://api.ezswap.io/",
 }[nextConfig.publicRuntimeConfig.env.API];
@@ -18,6 +18,9 @@ export const defaultCoupons = [
 
 export const tgScoreGift = 1000
 export const xScoreGift = 1000
+export const inviteScoreLevel1 = 500
+export const inviteScoreLevel2 = 5000
+export const inviteScoreLevel3 = 20000
 
 export const restaurants = [
     {
