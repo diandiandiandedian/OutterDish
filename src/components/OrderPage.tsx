@@ -81,9 +81,9 @@ const OrderPage: React.FC = () => {
                 )}
                 <div className='h-[100px]'>
 
-                    <button className="" onClick={() => loginOut()}>
-                        login out
-                    </button>
+                    {/*<button className="" onClick={() => loginOut()}>*/}
+                    {/*    login out*/}
+                    {/*</button>*/}
 
                 </div>
             </div>
