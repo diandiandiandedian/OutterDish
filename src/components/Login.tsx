@@ -148,7 +148,7 @@ export const Login: React.FC = () => {
                     <h1 className="text-6xl mb-6">OutterDish</h1>
                     <p className="text-2xl mb-4">Order, play & earn</p>
                     <button className="p-4 rounded-full" onClick={handleNextStep}>
-                        <img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>
+                        {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}
                     </button>
                 </div>
             )}
