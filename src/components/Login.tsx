@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {BASE_URL} from '../config/constant';
 import {useNotification} from "../context/NotificationContext";
-import CryptoJS from "crypto-js";
 
 export const Login: React.FC = () => {
     const [step, setStep] = useState(1);
@@ -23,87 +22,36 @@ export const Login: React.FC = () => {
         setStep(step + 1);
     };
 
-
-    // async function login(tgUserId: Object) {
-    //     setLoginLoading(true)
-    //     try {
-    //         const secretKey = 'mySecretKey12345';
-    //         const encryptedData = encryptData(tgUserId, secretKey);
-    //         console.log('加密数据', encryptedData)
-    //
-    //         const response = await fetch(BASE_URL + "/tg/login", {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({
-    //                 // action: 'saveTgUser',
-    //                 requestData: encryptedData
-    //             })
-    //         });
-    //         const resResult = await response.json()
-    //         if (resResult.success && resResult.data["tgUserId"] !== undefined && resResult.data["tgUserId"] !== '') {
-    //             localStorage.setItem('tgUserId', resResult.data["tgUserId"]);
-    //             localStorage.setItem('token', resResult.data.token);
-    //             router.push('/game');
-    //         }
-    //         setLoginLoading(false)
-    //     } catch (e) {
-    //         showError('network error')
-    //         setLoginLoading(false)
-    //     }
-    // }
-
-    // const encryptData = (data: object, secretKey: string): string => {
-    //     return CryptoJS.AES.encrypt(JSON.stringify(data), CryptoJS.enc.Utf8.parse(secretKey), {
-    //         mode: CryptoJS.mode.ECB,
-    //         padding: CryptoJS.pad.Pkcs7
-    //     }).toString();
-    // };
-
-
     useEffect(() => {
-        // console.log('(window as any).Telegram.WebApp.initDataUnsafe',(window as any).Telegram.WebApp.initDataUnsafe.user)
-        // console.log('(window as any).Telegram.WebApp',(window as any).Telegram.WebApp)
-        if (!loadFlag) {
-            // console.log('请求地址',window.location.href)
-            // const {tgWebAppStartParam} = router.query;
-
-
-            if ((window as any).Telegram !== undefined) {
-                if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
-
-                    console.log((window as any).Telegram.WebApp)
-                    // 获取 tgWebAppStartParam
-                    const inviter = (window as any).Telegram.WebApp.initDataUnsafe.start_param
-                    // console.log('inviter', inviter)
-
-                    const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
-                    // console.log('user', user)
-                    setTgUser(user)
-                    setName(user.username)
-                    setTgUserId(user.id)
-                    setLoadFlag(true)
-                    // const {startapp} = router.query;
-                    // console.log('inviter', startapp)
-                    if (undefined !== inviter && '' !== inviter && null !== inviter) {
-                        // 有邀请人,记录邀请人
-                        recordInviter(inviter, user.id)
+        const timer = setTimeout(() => {
+            if (!loadFlag) {
+                if ((window as any).Telegram !== undefined) {
+                    if ((window as any).Telegram.WebApp.initDataUnsafe.user !== undefined) {
+                        console.log((window as any).Telegram.WebApp)
+                        // 获取 tgWebAppStartParam
+                        const inviter = (window as any).Telegram.WebApp.initDataUnsafe.start_param
+                        const user = (window as any).Telegram.WebApp.initDataUnsafe?.user;
+                        setTgUser(user)
+                        setName(user.username)
+                        setTgUserId(user.id)
+                        setLoadFlag(true)
+                        if (undefined !== inviter && '' !== inviter && null !== inviter) {
+                            // 有邀请人,记录邀请人
+                            recordInviter(inviter, user.id)
+                        }
+                        tgVerfiy((window as any).Telegram.WebApp.initDataUnsafe)
                     }
-                    // login(user.id)
-                    tgVerfiy((window as any).Telegram.WebApp.initDataUnsafe)
-
                 }
+                const img = new Image();
+                img.src = '/SquirrelChef.png';
+                img.onload = () => {
+                };
             }
-            const img = new Image();
-            img.src = '/SquirrelChef.png';
-            img.onload = () => {
-            };
-        }
+        }, 500); // 延迟1秒
+        return () => clearTimeout(timer); // 清除定时器
     });
 
     async function tgVerfiy(telegramInitData: any) {
-
         try {
             const response = await fetch("/api/tg", {
                 method: 'POST',
@@ -119,7 +67,7 @@ export const Login: React.FC = () => {
             const result = await response.json()
             if (result['result']) {
                 // 验证通过
-                console.log('result[\'user\']',result['user'])
+                // console.log('result[\'user\']',result['user'])
                 if (result['user'].id !== undefined) {
                     localStorage.setItem('token', result['user'].token);
                     localStorage.setItem('tgUserId', result['user']['tg_user_id']);
@@ -127,12 +75,9 @@ export const Login: React.FC = () => {
                     router.push('/game');
                 }
             }
-
         } catch (e) {
             console.log(e)
         }
-
-
     }
 
 
