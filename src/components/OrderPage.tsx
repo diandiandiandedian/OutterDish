@@ -9,6 +9,10 @@ const OrderPage: React.FC = () => {
         //     modalRef.current.showModal();
         // }
     };
+    const loginOut = () => {
+        localStorage.removeItem("tgUserId")
+        localStorage.removeItem("token")
+    };
 
     const [showConfirmRedeem, setShowConfirmRedeem] = useState<boolean>(false);
     const modalRef = useRef<HTMLDialogElement>(null);
@@ -51,7 +55,7 @@ const OrderPage: React.FC = () => {
                     ))}
                 </div>
 
-                <dialog id="my_modal_2" className="modal"  ref={modalRef}>
+                <dialog id="my_modal_2" className="modal" ref={modalRef}>
                     <div className="modal-box z-50">
                         <div className="mb-4">This store is currently closed</div>
                     </div>
@@ -75,7 +79,13 @@ const OrderPage: React.FC = () => {
                         </div>
                     </div>
                 )}
-                <div className='h-[100px]'></div>
+                <div className='h-[100px]'>
+
+                    <button className="" onClick={() => loginOut()}>
+                        login out
+                    </button>
+
+                </div>
             </div>
         </div>
     );
