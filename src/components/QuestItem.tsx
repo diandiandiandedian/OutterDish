@@ -33,7 +33,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             window.location.href = 'https://x.com/outterdish?s=21&t=Ci4cl542w-9W6fnarwq5nA';
             localStorage.setItem('xFollowed', 'true');
         } else if (id.indexOf('invite') !== -1) {
-            const text = encodeURIComponent(`Invite your friend to earn more $DISH! t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+            const text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
             // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
             (window as any).Telegram.WebApp.openTelegramLink(
                 `https://t.me/share/url?url=${text}`
