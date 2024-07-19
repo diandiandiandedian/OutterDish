@@ -159,7 +159,7 @@ const tgVerfiy = async (req, res) => {
     // const hash="371697738012ebd26a111ace4aff23ee265596cd64026c8c3677956a85ca1827"
     // const joined_pairs = "auth_date=1709144340\nchat_instance=-3788475317572404878\nchat_type=private\nuser={\"id\":279058397,\"first_name\":\"Vladislav\",\"last_name\":\"Kibenko\",\"username\":\"vdkfrost\",\"language_code\":\"en\",\"is_premium\":true,\"allows_write_to_pm\":true}"
 
-    const apitoken = "7411782210:AAHe89edD-6bxxzEilQhQwzv-2SJqi20nNM"
+    const apitoken = "7467070275:AAGBRjyK7fBxK05Upv9rNkrUJinmhiTvfeQ"
     // const hash="371697738012ebd26a111ace4aff23ee265596cd64026c8c3677956a85ca1827"
     // const joined_pairs = "auth_date=1709144340\nchat_instance=-3788475317572404878\nchat_type=private\nuser={\"id\":279058397,\"first_name\":\"Vladislav\",\"last_name\":\"Kibenko\",\"username\":\"vdkfrost\",\"language_code\":\"en\",\"is_premium\":true,\"allows_write_to_pm\":true}"
 
