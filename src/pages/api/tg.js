@@ -175,7 +175,7 @@ const tgVerfiy = async (req, res) => {
         // console.log('rows[0][0]', rows[0][0])
         if (rows[0].length === 0) {
             // 没有注册过,才能记录邀请人
-            if (start_param !== undefined && start_param !== '') {
+            if (start_param !== null && start_param !== undefined && start_param !== '') {
                 // 存在邀请人
                 const tgUserId = user.id
                 const userHaveInvited = await pool.query('SELECT * FROM invite where invited = ?', [tgUserId]);
