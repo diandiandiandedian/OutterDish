@@ -35,10 +35,6 @@ export const Login: React.FC = () => {
                         setName(user.username)
                         setTgUserId(user.id)
                         setLoadFlag(true)
-                        // if (undefined !== inviter && '' !== inviter && null !== inviter) {
-                        //     // 有邀请人,记录邀请人
-                        //     recordInviter(inviter, user.id)
-                        // }
                         tgVerfiy((window as any).Telegram.WebApp.initDataUnsafe)
                     }
                 }
@@ -87,24 +83,6 @@ export const Login: React.FC = () => {
     const handleLogin = async () => {
         await saveTgUser(name);
     };
-
-    async function recordInviter(inviter: string, tgUserId: string) {
-        try {
-            const response = await fetch(BASE_URL + "/invite/save", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    // action: 'saveTgUser',
-                    inviter: inviter,
-                    invited: tgUserId
-                })
-            });
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
     async function saveTgUser(name: string) {
         setLoginLoading(true)

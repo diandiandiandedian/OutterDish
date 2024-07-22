@@ -171,19 +171,21 @@ const tgVerfiy = async (req, res) => {
     console.log(hash, _hash)
     // res.status(200).json(hash === _hash);
     if (hash === _hash) {
-        if (start_param !== undefined && start_param !== '') {
-            // 存在邀请人
-            const tgUserId = user.id
-            const userHaveInvited = await pool.query('SELECT * FROM invite where invited = ?', [tgUserId]);
-            console.log('userHaveInvited[0]', userHaveInvited[0])
-            if (userHaveInvited[0].length === 0) {
-                // 没有被邀请,记录邀请人
-                const [result] = await pool.execute('INSERT INTO `ezswap`.`invite` (`create_time`, `inviter`, `invited`) VALUES (?,?,?)', [new Date().getTime(), start_param, tgUserId]);
-            }
-
-        }
         const rows = await pool.query('SELECT * FROM tg_user where tg_user_id = ?', [user.id]);
         // console.log('rows[0][0]', rows[0][0])
+        if (rows[0].length === 0) {
+            // 没有注册过,才能记录邀请人
+            if (start_param !== undefined && start_param !== '') {
+                // 存在邀请人
+                const tgUserId = user.id
+                const userHaveInvited = await pool.query('SELECT * FROM invite where invited = ?', [tgUserId]);
+                console.log('userHaveInvited[0]', userHaveInvited[0])
+                if (userHaveInvited[0].length === 0) {
+                    // 没有被邀请,记录邀请人
+                    const [result] = await pool.execute('INSERT INTO `ezswap`.`invite` (`create_time`, `inviter`, `invited`) VALUES (?,?,?)', [new Date().getTime(), start_param, tgUserId]);
+                }
+            }
+        }
         res.status(200).json({"result": true, "user": rows[0][0]});
     } else {
         res.status(200).json({"result": false});
