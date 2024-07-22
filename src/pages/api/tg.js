@@ -141,15 +141,14 @@ const updateUserGetCoupon = async (req, res) => {
 
 const tgVerfiy = async (req, res) => {
     const {telegramInitData, user} = req.body;
-    // console.log('apiToken, telegramInitData', apiToken, telegramInitData)
     const initData = new URLSearchParams(telegramInitData);
-    // console.log('initData==',JSON.stringify(initData.get('user')),user,JSON.stringify(user))
     initData.set("user", JSON.stringify(user))
-    // console.log('initData==', initData)
     initData.sort();
 
-    // // console.log('initData',initData)
+    console.log('initData', initData)
     const hash = initData.get("hash");
+    // 邀请人
+    const start_param = initData.get("start_param");
     initData.delete("hash");
     const dataToCheck = [...initData.entries()].map(([key, value]) => key + "=" + value).join("\n");
     // console.log('dataToCheck', dataToCheck)
@@ -159,6 +158,9 @@ const tgVerfiy = async (req, res) => {
     // const hash="371697738012ebd26a111ace4aff23ee265596cd64026c8c3677956a85ca1827"
     // const joined_pairs = "auth_date=1709144340\nchat_instance=-3788475317572404878\nchat_type=private\nuser={\"id\":279058397,\"first_name\":\"Vladislav\",\"last_name\":\"Kibenko\",\"username\":\"vdkfrost\",\"language_code\":\"en\",\"is_premium\":true,\"allows_write_to_pm\":true}"
 
+    // todo 修改bot,还要修改数据库连接
+    // 正式版 7467070275:AAGBRjyK7fBxK05Upv9rNkrUJinmhiTvfeQ
+    // 测试版 5726185691:AAH84b6CYTZRE8KuT7oAnxDtkjYI5fhtbNs
     const apitoken = "7467070275:AAGBRjyK7fBxK05Upv9rNkrUJinmhiTvfeQ"
     // const hash="371697738012ebd26a111ace4aff23ee265596cd64026c8c3677956a85ca1827"
     // const joined_pairs = "auth_date=1709144340\nchat_instance=-3788475317572404878\nchat_type=private\nuser={\"id\":279058397,\"first_name\":\"Vladislav\",\"last_name\":\"Kibenko\",\"username\":\"vdkfrost\",\"language_code\":\"en\",\"is_premium\":true,\"allows_write_to_pm\":true}"
@@ -169,6 +171,17 @@ const tgVerfiy = async (req, res) => {
     console.log(hash, _hash)
     // res.status(200).json(hash === _hash);
     if (hash === _hash) {
+        if (start_param !== undefined && start_param !== '') {
+            // 存在邀请人
+            const tgUserId = user.id
+            const userHaveInvited = await pool.query('SELECT * FROM invite where invited = ?', [tgUserId]);
+            console.log('userHaveInvited[0]', userHaveInvited[0])
+            if (userHaveInvited[0].length === 0) {
+                // 没有被邀请,记录邀请人
+                const [result] = await pool.execute('INSERT INTO `ezswap`.`invite` (`create_time`, `inviter`, `invited`) VALUES (?,?,?)', [new Date().getTime(), start_param, tgUserId]);
+            }
+
+        }
         const rows = await pool.query('SELECT * FROM tg_user where tg_user_id = ?', [user.id]);
         // console.log('rows[0][0]', rows[0][0])
         res.status(200).json({"result": true, "user": rows[0][0]});
@@ -178,15 +191,4 @@ const tgVerfiy = async (req, res) => {
 };
 
 
-// console.log('aaaaaa')
-// const token = '7411782210:AAHe89edD-6bxxzEilQhQwzv-2SJqi20nNM'; // Replace with your own bot token
-// const bot = new TelegramBot(token, {polling: true});
-//
-// bot.on('message', (msg) => {
-//     const chatId = msg.chat.id;
-//     const messageText = msg.text;
-//     console.log('chatId,messageText', chatId, messageText)
-//     if (messageText === '/start') {
-//         bot.sendMessage(chatId, 'Welcome to the bot!');
-//     }
-// });
+

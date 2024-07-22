@@ -35,10 +35,10 @@ export const Login: React.FC = () => {
                         setName(user.username)
                         setTgUserId(user.id)
                         setLoadFlag(true)
-                        if (undefined !== inviter && '' !== inviter && null !== inviter) {
-                            // 有邀请人,记录邀请人
-                            recordInviter(inviter, user.id)
-                        }
+                        // if (undefined !== inviter && '' !== inviter && null !== inviter) {
+                        //     // 有邀请人,记录邀请人
+                        //     recordInviter(inviter, user.id)
+                        // }
                         tgVerfiy((window as any).Telegram.WebApp.initDataUnsafe)
                     }
                 }
@@ -52,6 +52,7 @@ export const Login: React.FC = () => {
     });
 
     async function tgVerfiy(telegramInitData: any) {
+        console.log('telegramInitData', telegramInitData)
         setLoginLoading(true)
         try {
             const response = await fetch("/api/tg", {
