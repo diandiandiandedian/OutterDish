@@ -29,14 +29,14 @@ export const Login: React.FC = () => {
         };
         const timer = setTimeout(() => {
             if (!loadFlag) {
-                tgVerfiyAndLogin()
+                tgVerfiyAndLogin(true)
                 setLoadFlag(true)
             }
         }, 600); // 延迟1秒
         return () => clearTimeout(timer); // 清除定时器
     });
 
-    async function tgVerfiyAndLogin() {
+    async function tgVerfiyAndLogin(onlyVerfiy: boolean) {
         // console.log('telegramInitData', telegramInitData)
         if ((window as any).Telegram === undefined || (window as any).Telegram.WebApp.initDataUnsafe.user === undefined) {
             // console.log((window as any).Telegram.WebApp)
@@ -76,7 +76,9 @@ export const Login: React.FC = () => {
                     // 注册过了,跳转主页
                     router.push('/game');
                 } else {
-                    saveTgUser(telegramInitData.user.username, telegramInitData.user.id)
+                    if (!onlyVerfiy) {
+                        saveTgUser(telegramInitData.user.username, telegramInitData.user.id)
+                    }
                 }
             } else {
                 showError("An authentication failure occurred")
@@ -160,7 +162,7 @@ export const Login: React.FC = () => {
                 <div className="flex flex-col justify-center items-center text-center">
                     <h2 className="text-3xl mb-4">Help Chef Otter to collect more food!</h2>
                     <img src="/SquirrelChef.png" alt="Chef Squirrel" className="mb-4"/>
-                    <button className="p-4 rounded-full" onClick={tgVerfiyAndLogin}>
+                    <button className="p-4 rounded-full" onClick={() => tgVerfiyAndLogin(false)}>
                         {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}
 
                     </button>
