@@ -1,6 +1,7 @@
 import pool from '../../db/db';
 import Cors from 'cors';
 import crypto from 'crypto';
+import {BOT_TOKEN} from "../../config/constant";
 
 
 function initMiddleware(middleware) {
@@ -161,12 +162,11 @@ const tgVerfiy = async (req, res) => {
     // todo 修改bot,还要修改数据库连接
     // 正式版 7467070275:AAGBRjyK7fBxK05Upv9rNkrUJinmhiTvfeQ
     // 测试版 5726185691:AAH84b6CYTZRE8KuT7oAnxDtkjYI5fhtbNs
-    const apitoken = "7467070275:AAGBRjyK7fBxK05Upv9rNkrUJinmhiTvfeQ"
     // const hash="371697738012ebd26a111ace4aff23ee265596cd64026c8c3677956a85ca1827"
     // const joined_pairs = "auth_date=1709144340\nchat_instance=-3788475317572404878\nchat_type=private\nuser={\"id\":279058397,\"first_name\":\"Vladislav\",\"last_name\":\"Kibenko\",\"username\":\"vdkfrost\",\"language_code\":\"en\",\"is_premium\":true,\"allows_write_to_pm\":true}"
 
     // 可以用的
-    const secretKey = crypto.createHmac("sha256", "WebAppData").update(apitoken).digest();
+    const secretKey = crypto.createHmac("sha256", "WebAppData").update(BOT_TOKEN).digest();
     const _hash = crypto.createHmac("sha256", secretKey).update(dataToCheck).digest("hex");
     console.log(hash, _hash)
     // res.status(200).json(hash === _hash);
