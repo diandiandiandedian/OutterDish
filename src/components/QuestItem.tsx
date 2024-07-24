@@ -31,7 +31,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
 
     const handleJoinClick = async () => {
         const os = getOS();
-        alert(os)
+        // alert(os)
         if (id === 'tg') {
             window.location.href = 'https://t.me/OutterDishGang';
         } else if (id === 'x') {
