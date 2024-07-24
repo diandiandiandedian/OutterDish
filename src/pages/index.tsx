@@ -14,7 +14,7 @@ export default function Index() {
             aaaa.ready();
             // console.log('isVersionAtLeast',aaaa.isVersionAtLeast(111));
             // aaaa.disableVerticalSwipes();
-            // aaaa.enableClosingConfirmation();
+            aaaa.enableClosingConfirmation();
             // console.log('(window as any).Telegram.BackButton',aaaa);
             // console.log('(window as any).Telegram.BackButton',aaaa.BackButton);
             // aaaa.BackButton.show();
@@ -23,7 +23,7 @@ export default function Index() {
             //     window.history.back();
             // });
             // 左上角关闭,弹出确认框
-            (window as any).Telegram.WebView.postEvent('web_app_setup_closing_behavior', false, {need_confirmation: true});
+            // (window as any).Telegram.WebView.postEvent('web_app_setup_closing_behavior', false, {need_confirmation: true});
 
             // const [swipeBehavior] = initSwipeBehavior();
             // swipeBehavior.disableVerticalSwipe();
