@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {BASE_URL} from "../config/constant";
 import {useNotification} from "../context/NotificationContext";
 import {useRouter} from 'next/router';
+import { getOS } from '../utils/detectOS'; // 导入工具函数
+
 
 interface QuestItemProps {
     imgSrc: string;
@@ -20,6 +22,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
     const router = useRouter();
 
     useEffect(() => {
+        console.log('(window as any).Telegram', (window as any).Telegram)
         const tgUserId = localStorage.getItem('tgUserId');
         const token = localStorage.getItem('token');
         setTgUserId(tgUserId);
@@ -27,11 +30,16 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
     }, []);
 
     const handleJoinClick = async () => {
+        const os = getOS();
+        alert(os)
         if (id === 'tg') {
             window.location.href = 'https://t.me/OutterDishGang';
         } else if (id === 'x') {
-            // window.location.href = 'https://x.com/outterdish';
-            window.open("twitter://user?screen_name=OutterDish", "_blank");
+            if (os === 'iOS'){
+                window.location.href = 'https://x.com/outterdish';
+            }else if (os === 'Android'){
+                window.open("twitter://user?screen_name=OutterDish", "_blank");
+            }
             // window.location = '';
             localStorage.setItem('xFollowed', 'true');
         } else if (id.indexOf('invite') !== -1) {
