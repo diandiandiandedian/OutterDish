@@ -31,7 +31,8 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             window.location.href = 'https://t.me/OutterDishGang';
         } else if (id === 'x') {
             // window.location.href = 'https://x.com/outterdish';
-            window.location.href = 'twitter://user?screen_name=@OutterDish';
+            window.open("twitter://user?screen_name=OutterDish", "_blank");
+            // window.location = '';
             localStorage.setItem('xFollowed', 'true');
         } else if (id.indexOf('invite') !== -1) {
             const text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
