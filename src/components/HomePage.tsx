@@ -8,6 +8,7 @@ const HomePage: React.FC = () => {
     const [balance, setBalance] = useState(0);
     const [rankings, setRankings] = useState('--');
     const [coupons, setCoupons] = useState(0);
+    const [userName, setUserName] = useState("");
     const { showSuccess, showError } = useNotification();
     const router = useRouter();
 
@@ -32,6 +33,7 @@ const HomePage: React.FC = () => {
 
                 const data = await response.json();
 
+                setBalance(data.data.user['userName']);
                 setBalance(data.data.user['gameScore']);
                 // setRankings(data.data.user['gameScore'] < 2000 ? '--' : data.data['rank']);
                 setRankings(data.data['rank']);
@@ -55,7 +57,7 @@ const HomePage: React.FC = () => {
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center">
                         <img src="/ottercoin.svg" alt="Logo" className="w-16 h-16 mr-4" />
-                        <h1 className="text-2xl">OutterDish</h1>
+                        <h1 className="text-2xl">{userName}</h1>
                     </div>
                     <div className="flex space-x-4">
                         {/*<img src="/chat.svg" alt="Chat" className="w-8 h-8" />*/}

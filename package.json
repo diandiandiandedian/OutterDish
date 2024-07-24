@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NEXT_PUBLIC_APP_ENV=dev next dev",
+    "buildForTest": "cross-env NEXT_PUBLIC_APP_ENV=test next build",
     "build": "cross-env NEXT_PUBLIC_APP_ENV=pro next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,6 +15,7 @@
     "cross-env": "^7.0.3",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
+    "lucky-canvas": "^1.7.27",
     "mysql2": "^3.10.2",
     "next": "14.2.4",
     "react": "^18",

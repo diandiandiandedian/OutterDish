@@ -250,7 +250,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
                 {fromLogin === "1" && <progress className="progress progress-success mb-4 h-[30px] w-[75%] border border-[#000000] bg-transparent [&::-webkit-progress-value]:bg-[#FFB641] [&::-moz-progress-bar]:bg-[#FFB641]" value={score} max={200}></progress>}
                 <div className="text-black opacity-10 text-[70px] pointer-events-none font-kg">{fromLogin === "1" ? score + " / 200" : score}</div>
                 {fromLogin !== "1" && (
-                    <div className={`bg-[#FFBF59] rounded-[16px] px-6 py-2 text-center ${shake ? 'animate__animated animate__shakeX' : ''}`}>
+                    <div className={`bg-[#FFBF59] rounded-[16px] fixed top-10 left-3 px-6 py-2 text-center ${shake ? 'animate__animated animate__shakeX' : ''}`}>
                         <div className="text-[#787878] mb-1">Daily Energy</div>
                         <div>{clickCount}/500</div>
                     </div>
