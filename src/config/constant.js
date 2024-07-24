@@ -9,13 +9,6 @@ export const BASE_URL = {
     pro: "https://api.ezswap.io/",
 }[nextConfig.publicRuntimeConfig.env.API];
 
-export const BOT_TOKEN = {
-    dev: "5726185691:AAH84b6CYTZRE8KuT7oAnxDtkjYI5fhtbNs",
-    test: "5726185691:AAH84b6CYTZRE8KuT7oAnxDtkjYI5fhtbNs",
-    pro: "7467070275:AAGBRjyK7fBxK05Upv9rNkrUJinmhiTvfeQ",
-}[nextConfig.publicRuntimeConfig.env.API];
-
-
 export const defaultCoupons = [
     {id: 1, brand: 'Temu', discount: '30% OFF', cost: 1000, image: '/temu.svg', code: "fav19288"},
     {id: 2, brand: 'Shein', discount: '15% OFF', cost: 1000, image: '/couponimage1.svg', code: "Cozy03A41"},

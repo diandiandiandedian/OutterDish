@@ -1,7 +1,7 @@
 import pool from '../../db/db';
 import Cors from 'cors';
 import crypto from 'crypto';
-import {BOT_TOKEN} from "../../config/constant";
+import {BOT_TOKEN} from "../../config/server-constant";
 
 
 function initMiddleware(middleware) {
