@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
 
                 const data = await response.json();
 
-                setBalance(data.data.user['userName']);
+                setUserName(data.data.user['userName']);
                 setBalance(data.data.user['gameScore']);
                 // setRankings(data.data.user['gameScore'] < 2000 ? '--' : data.data['rank']);
                 setRankings(data.data['rank']);
