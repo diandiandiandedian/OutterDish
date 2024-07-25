@@ -47,7 +47,9 @@ export const Login: React.FC = () => {
             // setName(user.username)
             // setTgUserId(user.id)
             // setLoadFlag(true)
-            showError("Failed to get information")
+            if (!onlyVerfiy) {
+                showError("Failed to get information")
+            }
             return
         }
         const telegramInitData = (window as any).Telegram.WebApp.initDataUnsafe
