@@ -1,7 +1,10 @@
 import React, {useRef, useState} from 'react';
 import {restaurants} from "../config/constant";
+import {useNotification} from "../context/NotificationContext";
 
 const OrderPage: React.FC = () => {
+    const [clickCount, setClickCount] = useState(0);
+    const { showSuccess, showError } = useNotification();
     const handleRestaurantClick = (url: string) => {
         // window.location.href = url;
         setShowConfirmRedeem(true);
@@ -10,8 +13,12 @@ const OrderPage: React.FC = () => {
         // }
     };
     const loginOut = () => {
-        localStorage.removeItem("tgUserId")
-        localStorage.removeItem("token")
+        setClickCount(clickCount + 1)
+        if (clickCount === 5) {
+            localStorage.removeItem("tgUserId")
+            localStorage.removeItem("token")
+            showSuccess('login out')
+        }
     };
 
     const [showConfirmRedeem, setShowConfirmRedeem] = useState<boolean>(false);
@@ -81,9 +88,9 @@ const OrderPage: React.FC = () => {
                 )}
                 <div className='h-[100px]'>
 
-                    {/*<button className="" onClick={() => loginOut()}>*/}
-                    {/*    login out*/}
-                    {/*</button>*/}
+                    <button className="opacity-0" onClick={() => loginOut()}>
+                        login out
+                    </button>
 
                 </div>
             </div>
