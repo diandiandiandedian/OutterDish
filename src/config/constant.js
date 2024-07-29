@@ -5,7 +5,7 @@ import nextConfig from "../../next.config.mjs";
 // https://testapi.ezswap.io/
 export const BASE_URL = {
     dev: "https://testapi.ezswap.io/",
-    test: "https://testapi.ezswap.io/",
+    test: "https://api.ezswap.io/",
     pro: "https://api.ezswap.io/",
 }[nextConfig.publicRuntimeConfig.env.API];
 
