@@ -80,6 +80,13 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="text-2xl mb-4 text-left">Quests</div>
                 <QuestItem
+                    imgSrc="/LogoCat.jpg"
+                    title="Play Chipigo"
+                    description="Play Outter‘s friend Chipigo‘s game"
+                    points={inviteScoreLevel3}
+                    id="Chipigo"
+                />
+                <QuestItem
                     imgSrc="/tg.svg"
                     title="Join OutterDish Chat"
                     description="Join the OutterDish Telegram channel"
@@ -114,6 +121,7 @@ const HomePage: React.FC = () => {
                     points={inviteScoreLevel3}
                     id="invite3"
                 />
+
 
                 <div className='h-[100px]'></div>
             </div>

@@ -12,6 +12,7 @@ export default function Index() {
         if ((window as any).Telegram !== undefined) {
             const aaaa = (window as any).Telegram.WebApp
             aaaa.ready();
+            console.log('aaaa', aaaa)
             // console.log('isVersionAtLeast',aaaa.isVersionAtLeast(111));
             // aaaa.disableVerticalSwipes();
             aaaa.enableClosingConfirmation();

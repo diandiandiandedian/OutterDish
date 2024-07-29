@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {BASE_URL} from "../config/constant";
 import {useNotification} from "../context/NotificationContext";
 import {useRouter} from 'next/router';
-import { getOS } from '../utils/detectOS'; // 导入工具函数
+import {getOS} from '../utils/detectOS'; // 导入工具函数
 
 
 interface QuestItemProps {
@@ -35,9 +35,9 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
         if (id === 'tg') {
             window.location.href = 'https://t.me/OutterDishGang';
         } else if (id === 'x') {
-            if (os === 'iOS'){
+            if (os === 'iOS') {
                 window.location.href = 'https://x.com/outterdish';
-            }else if (os === 'Android'){
+            } else if (os === 'Android') {
                 window.open("twitter://user?screen_name=OutterDish", "_blank");
             }
             // window.location = '';
@@ -48,6 +48,9 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             (window as any).Telegram.WebApp.openTelegramLink(
                 `https://t.me/share/url?url=${text}`
             );
+        } else if (id === 'Chipigo') {
+            localStorage.setItem('Chipigo', 'true');
+            window.location.href = 'https://t.me/Chipigo_bot/Chipigo?startapp=uid_7334273897';
         }
     };
 
@@ -57,9 +60,26 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             showError('You must follow on X before claim');
             return;
         }
+        const chipigo = localStorage.getItem('Chipigo');
+        console.log(chipigo)
+        if (id === 'Chipigo' && !chipigo) {
+            showError('You must play Chipigo before claim');
+            return;
+        }
 
         setClaimLoading(true);
-        const tgOrX = id === 'tg' ? 2 : id === 'x' ? 3 : id === 'invite1' ? 5 : id === 'invite2' ? 6 : 7;
+        let tgOrX = 2;
+        if (id === 'x') {
+            tgOrX = 3
+        } else if (id === 'invite1') {
+            tgOrX = 5
+        } else if (id === 'invite2') {
+            tgOrX = 6
+        } else if (id === 'invite3') {
+            tgOrX = 7
+        } else if (id === 'Chipigo') {
+            tgOrX = 8
+        }
 
         if (tgUserId && token) {
             const response = await fetch(BASE_URL + '/tg/addGavePoint', {
@@ -109,7 +129,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                     </div>
                     <div className="flex flex-col">
                         <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
-                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite')!==-1 ? 'Share' : 'Follow'}
+                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite') !== -1 ? 'Share' : id === 'Chipigo' ? 'Play' : 'Follow'}
                         </button>
                         <button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={handleClaimClick}>
                             {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}

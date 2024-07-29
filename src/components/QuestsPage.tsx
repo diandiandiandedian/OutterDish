@@ -10,6 +10,13 @@ const QuestsPage: React.FC = () => {
             <div className="w-full p-4 overflow-y-auto">
                 <div className="text-2xl mb-4 text-left">Quests</div>
                 <QuestItem
+                    imgSrc="/LogoCat.jpg"
+                    title="Play Chipigo"
+                    description="Play Outter‘s friend Chipigo‘s game"
+                    points={inviteScoreLevel3}
+                    id="Chipigo"
+                />
+                <QuestItem
                     imgSrc="/tg.svg"
                     title="Join OutterDish Chat"
                     description="Join the OutterDish Telegram channel"
