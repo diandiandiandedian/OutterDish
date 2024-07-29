@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import QuestItem from "./QuestItem";
-import {BASE_URL, inviteScoreLevel1, inviteScoreLevel2, inviteScoreLevel3, tgScoreGift, xScoreGift} from "../config/constant";
+import {BASE_URL, inviteScoreLevel1, inviteScoreLevel2, inviteScoreLevel3, playgame, tgScoreGift, xScoreGift} from "../config/constant";
 import { useNotification } from "../context/NotificationContext";
 
 const HomePage: React.FC = () => {
@@ -83,7 +83,7 @@ const HomePage: React.FC = () => {
                     imgSrc="/chipigo.png"
                     title="Play Chipigo"
                     description="Play Outter‘s friend Chipigo‘s game"
-                    points={inviteScoreLevel3}
+                    points={playgame}
                     id="Chipigo"
                 />
                 <QuestItem

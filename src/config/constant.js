@@ -20,6 +20,7 @@ export const xScoreGift = 1000
 export const inviteScoreLevel1 = 500
 export const inviteScoreLevel2 = 5000
 export const inviteScoreLevel3 = 20000
+export const playgame = 5000
 
 export const restaurants = [
     {

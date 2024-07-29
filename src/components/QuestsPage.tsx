@@ -1,6 +1,6 @@
 import React from 'react';
 import QuestItem from '../components/QuestItem';
-import {BASE_URL, inviteScoreLevel1, inviteScoreLevel2, inviteScoreLevel3, tgScoreGift, xScoreGift} from "../config/constant";
+import {BASE_URL, inviteScoreLevel1, inviteScoreLevel2, inviteScoreLevel3, playgame, tgScoreGift, xScoreGift} from "../config/constant";
 import { useNotification } from "../context/NotificationContext";
 
 const QuestsPage: React.FC = () => {
@@ -13,7 +13,7 @@ const QuestsPage: React.FC = () => {
                     imgSrc="/chipigo.png"
                     title="Play Chipigo"
                     description="Play Outter‘s friend Chipigo‘s game"
-                    points={inviteScoreLevel3}
+                    points={playgame}
                     id="Chipigo"
                 />
                 <QuestItem
