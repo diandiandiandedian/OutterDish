@@ -138,7 +138,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                     </div>
                     <div className="flex flex-col">
                         <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
-                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite') !== -1 ? 'Share' : id === 'Chipigo' ? 'Play' : 'Follow'}
+                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite') !== -1 ? 'Share' : (id === 'Chipigo' || id === 'startAI') ? 'Play' : 'Follow'}
                         </button>
                         <button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={handleClaimClick}>
                             {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}

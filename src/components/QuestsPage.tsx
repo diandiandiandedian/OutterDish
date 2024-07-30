@@ -10,18 +10,18 @@ const QuestsPage: React.FC = () => {
             <div className="w-full p-4 overflow-y-auto">
                 <div className="text-2xl mb-4 text-left">Quests</div>
                 <QuestItem
+                    imgSrc="/panter/startai.jpg"
+                    title="Use StarAI"
+                    description="Play StarAI for Airdrop"
+                    points={playgame}
+                    id="startAI"
+                />
+                <QuestItem
                     imgSrc="/chipigo.png"
                     title="Play Chipigo"
                     description="Play Outter‘s friend Chipigo‘s game"
                     points={playgame}
                     id="Chipigo"
-                />
-                <QuestItem
-                    imgSrc="/panter/startai.jpg"
-                    title="Play Chipigo"
-                    description="Play Outter‘s friend Chipigo‘s game"
-                    points={playgame}
-                    id="startAI"
                 />
                 <QuestItem
                     imgSrc="/tg.svg"
