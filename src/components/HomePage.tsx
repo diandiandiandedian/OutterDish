@@ -80,12 +80,20 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="text-2xl mb-4 text-left">Quests</div>
                 <QuestItem
-                    imgSrc="/chipigo.png"
+                    imgSrc="/panter/startai.jpg"
                     title="Play Chipigo"
                     description="Play Outter‘s friend Chipigo‘s game"
                     points={playgame}
+                    id="startAI"
+                />
+                <QuestItem
+                    imgSrc="/chipigo.png"
+                    title="Use StarAI"
+                    description="Play StarAI for Airdrop"
+                    points={playgame}
                     id="Chipigo"
                 />
+
                 <QuestItem
                     imgSrc="/tg.svg"
                     title="Join OutterDish Chat"

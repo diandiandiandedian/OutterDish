@@ -51,6 +51,9 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
         } else if (id === 'Chipigo') {
             localStorage.setItem('Chipigo', 'true');
             window.location.href = 'https://t.me/Chipigo_bot/Chipigo?startapp=uid_7334273897';
+        } else if (id === 'startAI') {
+            localStorage.setItem('startAI', 'true');
+            window.location.href = 'https://t.me/TheStarAIBot/StarAI?startapp=431dBz';
         }
     };
 
@@ -61,9 +64,13 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             return;
         }
         const chipigo = localStorage.getItem('Chipigo');
-        console.log(chipigo)
         if (id === 'Chipigo' && !chipigo) {
             showError('You must play Chipigo before claim');
+            return;
+        }
+        const startAI = localStorage.getItem('startAI');
+        if (id === 'startAI' && !startAI) {
+            showError('You must play startAI before claim');
             return;
         }
 
@@ -79,6 +86,8 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             tgOrX = 7
         } else if (id === 'Chipigo') {
             tgOrX = 8
+        } else if (id === 'startAI') {
+            tgOrX = 9
         }
 
         if (tgUserId && token) {

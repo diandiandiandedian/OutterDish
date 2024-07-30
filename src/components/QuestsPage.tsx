@@ -17,6 +17,13 @@ const QuestsPage: React.FC = () => {
                     id="Chipigo"
                 />
                 <QuestItem
+                    imgSrc="/panter/startai.jpg"
+                    title="Play Chipigo"
+                    description="Play Outter‘s friend Chipigo‘s game"
+                    points={playgame}
+                    id="startAI"
+                />
+                <QuestItem
                     imgSrc="/tg.svg"
                     title="Join OutterDish Chat"
                     description="Join the OutterDish Telegram channel"
