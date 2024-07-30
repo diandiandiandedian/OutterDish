@@ -96,9 +96,9 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     const [shake, setShake] = useState(false);
     const [playLimit, setPlayLimit] = useState(false);
     const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-    const audioRef = useRef(null)
-    const addScoreAudioRef = useRef(null)
-    const reduceScoreAudioRef = useRef(null)
+    const audioRef = useRef<ReactAudioPlayer>(null)
+    const addScoreAudioRef = useRef<ReactAudioPlayer>(null)
+    const reduceScoreAudioRef = useRef<ReactAudioPlayer>(null)
     const [userStopBackground, setUserStopBackground] = useState(false);
 
     const clearEggsInterval = () => {
@@ -283,10 +283,10 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         if (audioRef.current) {
             if (!isMusicPlaying) {
                 setUserStopBackground(false)
-                audioRef.current.audioEl.current.play();
+                audioRef.current?.audioEl.current!.play();
             } else {
                 setUserStopBackground(true)
-                audioRef.current.audioEl.current.pause();
+                audioRef.current?.audioEl.current!.pause();
             }
             setIsMusicPlaying(!isMusicPlaying);
         }
@@ -294,9 +294,9 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
 
     function playAddScore() {
         if (!userStopBackground) {
-            addScoreAudioRef.current.audioEl.current.play();
+            addScoreAudioRef.current?.audioEl.current!.play();
             if (!isMusicPlaying) {
-                audioRef.current.audioEl.current.play();
+                audioRef.current?.audioEl.current!.play();
                 setIsMusicPlaying(true)
             }
         }
@@ -304,9 +304,9 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
 
     function playReduceScore() {
         if (!userStopBackground) {
-            reduceScoreAudioRef.current.audioEl.current.play();
+            reduceScoreAudioRef.current?.audioEl.current!.play();
             if (!isMusicPlaying) {
-                audioRef.current.audioEl.current.play();
+                audioRef.current?.audioEl.current!.play();
                 setIsMusicPlaying(true)
             }
 
