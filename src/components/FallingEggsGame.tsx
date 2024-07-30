@@ -250,7 +250,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     useEffect(() => {
-        // audioRef.current.audioEl.current.play()
+        audioRef.current?.audioEl.current!.play();
 
         const fetchData = async () => {
             try {
