@@ -31,6 +31,22 @@ export default function Index() {
             // 禁止最小化
             (window as any).Telegram.WebView.postEvent('web_app_setup_swipe_behavior', false, {allow_vertical_swipe: false});
         }
+        const audio = new Audio();
+        audio.src = '/music/backgroundMusic.mp3';
+        audio.oncanplaythrough = () => {
+            console.log('Audio file is preloaded and can be played.');
+        };
+        audio.load(); // This initiates the preloading process
+        audio.src = '/music/addscore.wav';
+        audio.oncanplaythrough = () => {
+            console.log('Audio file is preloaded and can be played.');
+        };
+        audio.load(); // This initiates the preloading process
+        audio.src = '/music/reducescore.wav';
+        audio.oncanplaythrough = () => {
+            console.log('Audio file is preloaded and can be played.');
+        };
+        audio.load(); // This initiates the preloading process
     });
 
     const router = useRouter();

@@ -3,7 +3,8 @@ import CryptoJS from 'crypto-js';
 import {useRouter} from 'next/router';
 import {BASE_URL} from "../config/constant";
 import {useNotification} from "../context/NotificationContext";
-import 'animate.css'; // 导入 animate.css
+import 'animate.css';
+import ReactAudioPlayer from "react-audio-player"; // 导入 animate.css
 
 interface EggProps {
     id: number;
@@ -11,11 +12,15 @@ interface EggProps {
     left: number;
     playLimit: boolean;
     onRemove: (id: number, points: number) => void;
+    playAddScore: () => void;
+    playReduceScore: () => void;
 }
 
-const Egg: React.FC<EggProps> = React.memo(({id, type, left, onRemove, playLimit}) => {
+const Egg: React.FC<EggProps> = React.memo(({id, type, left, onRemove, playLimit, playAddScore, playReduceScore}) => {
     const points = type === 'egg-large' ? 10 : type === 'egg-medium' ? 20 : type === 'egg-small' ? 30 : -10;
     const [visible, setVisible] = useState(true);
+    // const addScoreAudioRef = useRef<HTMLAudioElement | null>(null);
+    // const reduceScoreAudioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -36,8 +41,10 @@ const Egg: React.FC<EggProps> = React.memo(({id, type, left, onRemove, playLimit
         const bbb = webApp.HapticFeedback;
 
         if (type === 'bomb') {
+            playReduceScore()
             bbb.impactOccurred("heavy");
         } else {
+            playAddScore()
             bbb.impactOccurred("light");
         }
 
@@ -63,12 +70,16 @@ const Egg: React.FC<EggProps> = React.memo(({id, type, left, onRemove, playLimit
     if (!visible) return null;
 
     return (
-        <div
-            className={`absolute ${type} bg-cover cursor-pointer animate-fall`}
-            style={{left: `${left}px`, top: '-96px'}}
-            onClick={handleClick}
-            onTouchStart={handleClick}
-        />
+        <>
+            {/*<audio ref={addScoreAudioRef} src="/music/addscore.wav"/>*/}
+            {/*<audio ref={reduceScoreAudioRef} src="/music/reducescore.wav"/>*/}
+            <div
+                className={`absolute ${type} bg-cover cursor-pointer animate-fall`}
+                style={{left: `${left}px`, top: '-96px'}}
+                onClick={handleClick}
+                onTouchStart={handleClick}
+            />
+        </>
     );
 });
 
@@ -84,12 +95,35 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     const [showConfirmRedeem, setShowConfirmRedeem] = useState<boolean>(false);
     const [shake, setShake] = useState(false);
     const [playLimit, setPlayLimit] = useState(false);
+    const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+    const audioRef = useRef(null)
+    const addScoreAudioRef = useRef(null)
+    const reduceScoreAudioRef = useRef(null)
+    const [userStopBackground, setUserStopBackground] = useState(false);
 
     const clearEggsInterval = () => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
     };
+    // useEffect(() => {
+    //     const playAudio = () => {
+    //         if (audioRef.current) {
+    //             audioRef.current.muted = true;
+    //             audioRef.current.play().then(() => {
+    //                 setTimeout(() => {
+    //                     if (audioRef.current) {
+    //                         audioRef.current.muted = false;
+    //                     }
+    //                 }, 1000); // 在1秒后取消静音
+    //             }).catch(error => {
+    //                 console.error("Error playing audio:", error);
+    //             });
+    //         }
+    //     };
+    //
+    //     playAudio();
+    // }, []);
 
     const startEggsInterval = () => {
         clearEggsInterval();
@@ -212,6 +246,8 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     useEffect(() => {
+        // audioRef.current.audioEl.current.play()
+
         const fetchData = async () => {
             try {
                 const tgUserId = localStorage.getItem('tgUserId');
@@ -243,8 +279,47 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         router.push('/home');
     };
 
+    const toggleMusic = () => {
+        if (audioRef.current) {
+            if (!isMusicPlaying) {
+                setUserStopBackground(false)
+                audioRef.current.audioEl.current.play();
+            } else {
+                setUserStopBackground(true)
+                audioRef.current.audioEl.current.pause();
+            }
+            setIsMusicPlaying(!isMusicPlaying);
+        }
+    };
+
+    function playAddScore() {
+        if (!userStopBackground) {
+            addScoreAudioRef.current.audioEl.current.play();
+            if (!isMusicPlaying) {
+                audioRef.current.audioEl.current.play();
+                setIsMusicPlaying(true)
+            }
+        }
+    }
+
+    function playReduceScore() {
+        if (!userStopBackground) {
+            reduceScoreAudioRef.current.audioEl.current.play();
+            if (!isMusicPlaying) {
+                audioRef.current.audioEl.current.play();
+                setIsMusicPlaying(true)
+            }
+
+        }
+    }
+
+
     return (
         <div className="relative w-full h-full bg-[#e9c99c] overflow-hidden">
+            {/*<audio ref={audioRef} src="/music/backgroundMusic.mp3" autoPlay loop/>*/}
+            <ReactAudioPlayer ref={audioRef} src="/music/backgroundMusic.mp3" loop/>
+            <ReactAudioPlayer ref={addScoreAudioRef} src="music/addscore.wav"/>
+            <ReactAudioPlayer ref={reduceScoreAudioRef} src="music/reducescore.wav"/>
             <div className="h-full flex justify-center items-center flex-col">
                 <img src="/logo.svg" alt="Logo" className="w-24 h-24 mb-4"/>
                 {fromLogin === "1" && <progress className="progress progress-success mb-4 h-[30px] w-[75%] border border-[#000000] bg-transparent [&::-webkit-progress-value]:bg-[#FFB641] [&::-moz-progress-bar]:bg-[#FFB641]" value={score} max={200}></progress>}
@@ -255,9 +330,12 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
                         <div>{clickCount}/500</div>
                     </div>
                 )}
+                <button className="absolute bottom-24 left-5 p-2 text-white rounded-full" onClick={toggleMusic}>
+                    {isMusicPlaying ? <img src="/music/close.svg" alt=""/> : <img src="/music/mute.svg" alt=""/>}
+                </button>
             </div>
             {eggs.map((egg) => (
-                <Egg key={egg.id} id={egg.id} type={egg.type} left={egg.left} playLimit={playLimit} onRemove={handleRemoveEgg}/>
+                <Egg key={egg.id} id={egg.id} type={egg.type} left={egg.left} playLimit={playLimit} playReduceScore={playReduceScore} playAddScore={playAddScore} onRemove={handleRemoveEgg}/>
             ))}
             {showConfirmRedeem && (
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-30 flex justify-center items-center z-50 w-[80%] rounded-lg">
