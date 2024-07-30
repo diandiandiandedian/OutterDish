@@ -327,7 +327,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     return (
         <div className="relative w-full h-full bg-[#e9c99c] overflow-hidden">
             {/*<audio ref={audioRef} src="/music/backgroundMusic.mp3" autoPlay loop/>*/}
-            <ReactAudioPlayer ref={audioRef} src="/music/backgroundMusic.mp3" loop/>
+            <ReactAudioPlayer ref={audioRef} src="/music/backgroundMusic.mp3" autoPlay loop/>
             {/*<ReactAudioPlayer ref={addScoreAudioRef} src="music/addscore.wav"/>*/}
             {/*<ReactAudioPlayer ref={addScoreAudioRef2} src="music/addscore.wav"/>*/}
             {/*<ReactAudioPlayer ref={addScoreAudioRef3} src="music/addscore.wav"/>*/}
