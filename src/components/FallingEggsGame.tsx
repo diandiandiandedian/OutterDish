@@ -313,7 +313,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             // setAddScoreAudioIndex(addScoreAudioIndex + 1)
             if (audioRef.current) {
                 if (!isMusicPlaying) {
-                    alert(audioRef.current)
+                    // alert(audioRef.current)
                     audioRef.current.audioEl.current!.play();
                     setIsMusicPlaying(true)
                 }
@@ -329,6 +329,10 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
                 setIsMusicPlaying(true)
             }
         }
+    }
+
+    function playaaaa() {
+        audioRef.current?.audioEl.current!.play();
     }
 
 
@@ -355,7 +359,9 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
                 </button>
             </div>
             {eggs.map((egg) => (
-                <Egg key={egg.id} id={egg.id} type={egg.type} left={egg.left} playLimit={playLimit} playReduceScore={playReduceScore} playAddScore={playAddScore} onRemove={handleRemoveEgg}/>
+                <div onClick={() => playaaaa}>
+                    <Egg key={egg.id} id={egg.id} type={egg.type} left={egg.left} playLimit={playLimit} playReduceScore={playReduceScore} playAddScore={playAddScore} onRemove={handleRemoveEgg}/>
+                </div>
             ))}
             {showConfirmRedeem && (
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-30 flex justify-center items-center z-50 w-[80%] rounded-lg">
