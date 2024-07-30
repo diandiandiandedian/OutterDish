@@ -328,10 +328,10 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         <div className="relative w-full h-full bg-[#e9c99c] overflow-hidden">
             {/*<audio ref={audioRef} src="/music/backgroundMusic.mp3" autoPlay loop/>*/}
             <ReactAudioPlayer ref={audioRef} src="/music/backgroundMusic.mp3" loop/>
-            <ReactAudioPlayer ref={addScoreAudioRef} src="music/addscore.wav"/>
-            <ReactAudioPlayer ref={addScoreAudioRef2} src="music/addscore.wav"/>
-            <ReactAudioPlayer ref={addScoreAudioRef3} src="music/addscore.wav"/>
-            <ReactAudioPlayer ref={reduceScoreAudioRef} src="music/reducescore.wav"/>
+            {/*<ReactAudioPlayer ref={addScoreAudioRef} src="music/addscore.wav"/>*/}
+            {/*<ReactAudioPlayer ref={addScoreAudioRef2} src="music/addscore.wav"/>*/}
+            {/*<ReactAudioPlayer ref={addScoreAudioRef3} src="music/addscore.wav"/>*/}
+            {/*<ReactAudioPlayer ref={reduceScoreAudioRef} src="music/reducescore.wav"/>*/}
             <div className="h-full flex justify-center items-center flex-col">
                 <img src="/logo.svg" alt="Logo" className="w-24 h-24 mb-4"/>
                 {fromLogin === "1" && <progress className="progress progress-success mb-4 h-[30px] w-[75%] border border-[#000000] bg-transparent [&::-webkit-progress-value]:bg-[#FFB641] [&::-moz-progress-bar]:bg-[#FFB641]" value={score} max={200}></progress>}
