@@ -324,7 +324,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             // reduceScoreAudioRef.current?.audioEl.current!.play();
             // reduceScoreAudioRef.current.audioEl.current!.play();
             if (!isMusicPlaying) {
-                audioRef.current.audioEl.current!.play();
+                audioRef.current?.audioEl.current!.play();
                 setIsMusicPlaying(true)
             }
 
