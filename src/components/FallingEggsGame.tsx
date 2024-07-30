@@ -12,11 +12,11 @@ interface EggProps {
     left: number;
     playLimit: boolean;
     onRemove: (id: number, points: number) => void;
-    playAddScore: () => void;
-    playReduceScore: () => void;
+    // playAddScore: () => void;
+    // playReduceScore: () => void;
 }
 
-const Egg: React.FC<EggProps> = React.memo(({id, type, left, onRemove, playLimit, playAddScore, playReduceScore}) => {
+const Egg: React.FC<EggProps> = React.memo(({id, type, left, onRemove, playLimit}) => {
     const points = type === 'egg-large' ? 10 : type === 'egg-medium' ? 20 : type === 'egg-small' ? 30 : -10;
     const [visible, setVisible] = useState(true);
     // const addScoreAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -323,7 +323,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         }
     }
 
-    function clickPlayMusic(eggType) {
+    function clickPlayMusic(eggType:'egg-large' | 'egg-medium' | 'egg-small' | 'bomb') {
         if (!userStopBackground) {
             // reduceScoreAudioRef.current.audioEl.current!.play();
             if (!isMusicPlaying) {
