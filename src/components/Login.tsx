@@ -32,7 +32,7 @@ export const Login: React.FC = () => {
                 tgVerfiyAndLogin(true)
                 setLoadFlag(true)
             }
-        }, 600); // 延迟1秒
+        }, 800); // 延迟1秒
         return () => clearTimeout(timer); // 清除定时器
     });
 
