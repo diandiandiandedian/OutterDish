@@ -254,7 +254,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         const os = getOS();
         if (os === 'Android') {
             audioRef.current?.audioEl.current!.play();
-            setIsMusicPlaying(true)
+            // setIsMusicPlaying(true)
         }
 
         const fetchData = async () => {
@@ -313,6 +313,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             // setAddScoreAudioIndex(addScoreAudioIndex + 1)
             if (audioRef.current) {
                 if (!isMusicPlaying) {
+                    alert(audioRef.current)
                     audioRef.current.audioEl.current!.play();
                     setIsMusicPlaying(true)
                 }
