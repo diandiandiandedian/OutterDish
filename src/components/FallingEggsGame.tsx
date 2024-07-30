@@ -332,6 +332,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     }
 
     function playaaaa() {
+        console.log('aa')
         audioRef.current?.audioEl.current!.play();
     }
 
@@ -359,7 +360,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
                 </button>
             </div>
             {eggs.map((egg) => (
-                <div onClick={() => playaaaa}>
+                <div onClick={() => playaaaa()}>
                     <Egg key={egg.id} id={egg.id} type={egg.type} left={egg.left} playLimit={playLimit} playReduceScore={playReduceScore} playAddScore={playAddScore} onRemove={handleRemoveEgg}/>
                 </div>
             ))}
