@@ -283,10 +283,10 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         if (audioRef.current) {
             if (!isMusicPlaying) {
                 setUserStopBackground(false)
-                audioRef.current?.audioEl.current!.play();
+                audioRef.current.audioEl.current!.play();
             } else {
                 setUserStopBackground(true)
-                audioRef.current?.audioEl.current!.pause();
+                audioRef.current.audioEl.current!.pause();
             }
             setIsMusicPlaying(!isMusicPlaying);
         }
@@ -294,7 +294,17 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
 
     function playAddScore() {
         if (!userStopBackground) {
-            addScoreAudioRef.current?.audioEl.current!.play();
+
+            addScoreAudioRef.current?.audioEl.current!.pause();
+            const addScoreAudioElement = addScoreAudioRef.current?.audioEl.current;
+            if (addScoreAudioElement) {
+                addScoreAudioElement.currentTime = 0; // 确保从头开始播放
+                addScoreAudioElement.play()
+            }
+
+            // addScoreAudioRef.current?.audioEl.current!.currentTime = 0;
+            // addScoreAudioRef.current?.audioEl.current!.play();
+            // addScoreAudioRef.current?.audioEl.current!.play();
             if (!isMusicPlaying) {
                 audioRef.current?.audioEl.current!.play();
                 setIsMusicPlaying(true)
@@ -304,9 +314,17 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
 
     function playReduceScore() {
         if (!userStopBackground) {
-            reduceScoreAudioRef.current?.audioEl.current!.play();
+            reduceScoreAudioRef.current?.audioEl.current!.pause();
+            const reduceScoreAudioElement = reduceScoreAudioRef.current?.audioEl.current;
+            if (reduceScoreAudioElement) {
+                reduceScoreAudioElement.currentTime = 0; // 确保从头开始播放
+                reduceScoreAudioElement.play()
+            }
+            // reduceScoreAudioRef.current?.audioEl.current!.currentTime = 0;
+            // reduceScoreAudioRef.current?.audioEl.current!.play();
+            // reduceScoreAudioRef.current.audioEl.current!.play();
             if (!isMusicPlaying) {
-                audioRef.current?.audioEl.current!.play();
+                audioRef.current.audioEl.current!.play();
                 setIsMusicPlaying(true)
             }
 
