@@ -98,8 +98,12 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     const [isMusicPlaying, setIsMusicPlaying] = useState(false);
     const audioRef = useRef<ReactAudioPlayer>(null)
     const addScoreAudioRef = useRef<ReactAudioPlayer>(null)
+    const addScoreAudioRef2 = useRef<ReactAudioPlayer>(null)
+    const addScoreAudioRef3 = useRef<ReactAudioPlayer>(null)
     const reduceScoreAudioRef = useRef<ReactAudioPlayer>(null)
     const [userStopBackground, setUserStopBackground] = useState(false);
+    const [addScoreAudioIndex, setAddScoreAudioIndex] = useState(0);
+
 
     const clearEggsInterval = () => {
         if (intervalRef.current) {
@@ -294,17 +298,14 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
 
     function playAddScore() {
         if (!userStopBackground) {
-
-            addScoreAudioRef.current?.audioEl.current!.pause();
-            const addScoreAudioElement = addScoreAudioRef.current?.audioEl.current;
-            if (addScoreAudioElement) {
-                addScoreAudioElement.currentTime = 0; // 确保从头开始播放
-                addScoreAudioElement.play()
-            }
-
-            // addScoreAudioRef.current?.audioEl.current!.currentTime = 0;
-            // addScoreAudioRef.current?.audioEl.current!.play();
-            // addScoreAudioRef.current?.audioEl.current!.play();
+            // if (addScoreAudioIndex % 3 === 0) {
+            //     addScoreAudioRef.current?.audioEl.current!.play();
+            // } else if (addScoreAudioIndex % 3 === 1) {
+            //     addScoreAudioRef2.current?.audioEl.current!.play();
+            // } else {
+            //     addScoreAudioRef3.current?.audioEl.current!.play();
+            // }
+            // setAddScoreAudioIndex(addScoreAudioIndex + 1)
             if (!isMusicPlaying) {
                 audioRef.current?.audioEl.current!.play();
                 setIsMusicPlaying(true)
@@ -314,20 +315,11 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
 
     function playReduceScore() {
         if (!userStopBackground) {
-            reduceScoreAudioRef.current?.audioEl.current!.pause();
-            const reduceScoreAudioElement = reduceScoreAudioRef.current?.audioEl.current;
-            if (reduceScoreAudioElement) {
-                reduceScoreAudioElement.currentTime = 0; // 确保从头开始播放
-                reduceScoreAudioElement.play()
-            }
-            // reduceScoreAudioRef.current?.audioEl.current!.currentTime = 0;
-            // reduceScoreAudioRef.current?.audioEl.current!.play();
             // reduceScoreAudioRef.current.audioEl.current!.play();
             if (!isMusicPlaying) {
                 audioRef.current?.audioEl.current!.play();
                 setIsMusicPlaying(true)
             }
-
         }
     }
 
@@ -337,6 +329,8 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             {/*<audio ref={audioRef} src="/music/backgroundMusic.mp3" autoPlay loop/>*/}
             <ReactAudioPlayer ref={audioRef} src="/music/backgroundMusic.mp3" loop/>
             <ReactAudioPlayer ref={addScoreAudioRef} src="music/addscore.wav"/>
+            <ReactAudioPlayer ref={addScoreAudioRef2} src="music/addscore.wav"/>
+            <ReactAudioPlayer ref={addScoreAudioRef3} src="music/addscore.wav"/>
             <ReactAudioPlayer ref={reduceScoreAudioRef} src="music/reducescore.wav"/>
             <div className="h-full flex justify-center items-center flex-col">
                 <img src="/logo.svg" alt="Logo" className="w-24 h-24 mb-4"/>
