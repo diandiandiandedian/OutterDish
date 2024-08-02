@@ -311,7 +311,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     function playAddScore() {
-        // androidControlBackgroundMusic
+        // androidControlBackgroundMusic 
         // console.log('androidControlBackgroundMusic', androidControlBackgroundMusic)
         // audioRef.current?.play();
         if (!userStopBackground) {
