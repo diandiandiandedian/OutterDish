@@ -251,12 +251,17 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     useEffect(() => {
-        audioRef.current?.play();
-        const os = getOS();
-        if (os !== 'Android') {
-            setIsMusicPlaying(true)
-            // addScoreAudioRef.current?.play();
-            // setIsMusicPlaying(true)
+        const muteMusic = localStorage.getItem('muteMusic');
+        if (muteMusic === 'false') {
+            audioRef.current?.play();
+            const os = getOS();
+            if (os !== 'Android') {
+                setIsMusicPlaying(true)
+                // addScoreAudioRef.current?.play();
+                // setIsMusicPlaying(true)
+            }
+        } else {
+            setUserStopBackground(true)
         }
 
         const fetchData = async () => {
@@ -295,9 +300,11 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             if (!isMusicPlaying) {
                 setUserStopBackground(false)
                 audioRef.current?.play();
+                localStorage.setItem('muteMusic', "false");
             } else {
                 setUserStopBackground(true)
                 audioRef.current?.pause();
+                localStorage.setItem('muteMusic', "true");
             }
             setIsMusicPlaying(!isMusicPlaying);
         }
