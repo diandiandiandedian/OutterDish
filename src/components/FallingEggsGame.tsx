@@ -251,12 +251,13 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     useEffect(() => {
-        const os = getOS();
-        if (os === 'Android') {
-            audioRef.current?.play();
-            addScoreAudioRef.current?.play();
-            // setIsMusicPlaying(true)
-        }
+        // const os = getOS();
+        // if (os === 'Android') {
+        audioRef.current?.play();
+        setIsMusicPlaying(true)
+        // addScoreAudioRef.current?.play();
+        // setIsMusicPlaying(true)
+        // }
 
         const fetchData = async () => {
             try {
