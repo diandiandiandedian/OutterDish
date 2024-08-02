@@ -301,7 +301,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     function playAddScore() {
-        audioRef.current?.play();
+        // audioRef.current?.play();
         if (!userStopBackground) {
             // console.error('addScoreAudioRef.current?.audioEl.current', addScoreAudioRef.current?.audioEl.current)
             // addScoreAudioRef.current.currentTime = 0;
@@ -315,11 +315,9 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             }
             // console.log('addScoreAudioIndex',addScoreAudioIndex)
             addScoreAudioIndex.current = addScoreAudioIndex.current + 1
-            if (audioRef.current) {
-                if (!isMusicPlaying) {
-                    audioRef.current?.play();
-                    setIsMusicPlaying(true)
-                }
+            if (!isMusicPlaying) {
+                audioRef.current?.play();
+                setIsMusicPlaying(true)
             }
         }
     }
@@ -343,11 +341,11 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     return (
         <div className="relative w-full h-full bg-[#e9c99c] overflow-hidden">
             {/*<audio ref={audioRef} src="/music/backgroundMusic.mp3" autoPlay loop/>*/}
-            <audio ref={audioRef} src="/music/backgroundMusic.mp3" loop preload="auto" />
-            <audio ref={addScoreAudioRef} src="/music/click.mp3" preload="auto" />
-            <audio ref={addScoreAudioRef2} src="/music/click.mp3" preload="auto" />
-            <audio ref={addScoreAudioRef3} src="music/click.mp3" preload="auto" />
-            <audio ref={reduceScoreAudioRef} src="/music/bomb.mp3" preload="auto" />
+            <audio ref={audioRef} src="/music/backgroundMusic.mp3" loop preload="auto"/>
+            <audio ref={addScoreAudioRef} src="/music/click.mp3" preload="auto"/>
+            <audio ref={addScoreAudioRef2} src="/music/click.mp3" preload="auto"/>
+            <audio ref={addScoreAudioRef3} src="music/click.mp3" preload="auto"/>
+            <audio ref={reduceScoreAudioRef} src="/music/bomb.mp3" preload="auto"/>
             <div className="h-full flex justify-center items-center flex-col">
                 <img src="/logo.svg" alt="Logo" className="w-24 h-24 mb-4"/>
                 {fromLogin === "1" && <progress className="progress progress-success mb-4 h-[30px] w-[75%] border border-[#000000] bg-transparent [&::-webkit-progress-value]:bg-[#FFB641] [&::-moz-progress-bar]:bg-[#FFB641]" value={score} max={200}></progress>}
