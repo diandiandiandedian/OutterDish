@@ -254,12 +254,12 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         const muteMusic = localStorage.getItem('muteMusic');
         if (muteMusic === null || muteMusic === 'false') {
             audioRef.current?.play();
-            const os = getOS();
-            if (os !== 'Android') {
-                setIsMusicPlaying(true)
+            // const os = getOS();
+            // if (os !== 'Android') {
+                // setIsMusicPlaying(true)
                 // addScoreAudioRef.current?.play();
                 // setIsMusicPlaying(true)
-            }
+            // }
         } else if (muteMusic === 'true') {
             setUserStopBackground(true)
         }
