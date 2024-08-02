@@ -302,6 +302,10 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
 
     function playAddScore() {
         // audioRef.current?.play();
+        if (!isMusicPlaying) {
+            audioRef.current?.play();
+            setIsMusicPlaying(true)
+        }
         if (!userStopBackground) {
             // console.error('addScoreAudioRef.current?.audioEl.current', addScoreAudioRef.current?.audioEl.current)
             // addScoreAudioRef.current.currentTime = 0;
@@ -315,10 +319,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             }
             // console.log('addScoreAudioIndex',addScoreAudioIndex)
             addScoreAudioIndex.current = addScoreAudioIndex.current + 1
-            if (!isMusicPlaying) {
-                audioRef.current?.play();
-                setIsMusicPlaying(true)
-            }
+
         }
     }
 
