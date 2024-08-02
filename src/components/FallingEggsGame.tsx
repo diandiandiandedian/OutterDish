@@ -104,6 +104,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     const reduceScoreAudioRef = useRef<HTMLAudioElement | null>(null)
     const [userStopBackground, setUserStopBackground] = useState(false);
     let addScoreAudioIndex = useRef(0);
+    let androidControlBackgroundMusic = useRef(false);
 
     const clearEggsInterval = () => {
         if (intervalRef.current) {
@@ -301,14 +302,15 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     function playAddScore() {
-
+        // androidControlBackgroundMusic
         if (!userStopBackground) {
             if (!isMusicPlaying) {
                 audioRef.current?.play();
                 setIsMusicPlaying(true)
                 const os = getOS();
-                if (os === 'Android') {
-                    audioRef.current?.play();
+                if (os === 'Android' && !androidControlBackgroundMusic) {
+                    setIsMusicPlaying(false)
+                    // audioRef.current?.play();
                 }
             }
             // console.error('addScoreAudioRef.current?.audioEl.current', addScoreAudioRef.current?.audioEl.current)
