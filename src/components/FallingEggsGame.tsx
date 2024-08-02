@@ -301,10 +301,10 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     };
 
     function playAddScore() {
-        // audioRef.current?.play();
+        audioRef.current?.play();
         if (!userStopBackground) {
             if (!isMusicPlaying) {
-                audioRef.current?.play();
+                // audioRef.current?.play();
                 setIsMusicPlaying(true)
             }
             // console.error('addScoreAudioRef.current?.audioEl.current', addScoreAudioRef.current?.audioEl.current)
