@@ -6,15 +6,20 @@ import {useNotification} from "../context/NotificationContext";
 import CouponList from "../components/CouponList";
 import {any} from "prop-types";
 import LuckyWheel from "../components/LuckyWheel";
+import OrderPage from "../components/OrderPage";
+import LayoutWithTabs from "../components/LayoutWithTabs";
 
 
 const CouponsPage: React.FC = () => {
 
 
     return (
-        <div className=" h-screen bg-[url('/bg.svg')] object-cover bg-cover">
+        <LayoutWithTabs fromLogin="0">
             <LuckyWheel></LuckyWheel>
-        </div>
+        </LayoutWithTabs>
+        // <div className=" h-screen bg-[url('/bg.svg')] object-cover bg-cover">
+        //
+        // </div>
     );
 };
 

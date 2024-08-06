@@ -7,6 +7,7 @@ const TABS = {
     order: 'order',
     quests: 'quests',
     coupons: 'coupons',
+    spin: 'wheel',
 };
 
 const LayoutWithTabs: React.FC<{ children: React.ReactNode,fromLogin:string }> = ({children, fromLogin}) => {
@@ -41,10 +42,10 @@ const LayoutWithTabs: React.FC<{ children: React.ReactNode,fromLogin:string }> =
                     Game
                 </button>
                 <button
-                    onClick={() => setActiveTab(TABS.order)}
+                    onClick={() => setActiveTab(TABS.spin)}
                     className={`flex-1 text-center ${activeTab === TABS.order ? 'bg-[#FFB641]' : ''}`}
                 >
-                    <img src="/ordericon.svg" alt="Game" className="w-14 h-14 mx-auto"/>
+                    <img src="/spinTab.svg" alt="Game" className="w-14 h-14 mx-auto"/>
                     {/*Order*/}
                 </button>
                 {/*先注释*/}
