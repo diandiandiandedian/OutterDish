@@ -91,13 +91,13 @@ const HomePage: React.FC = () => {
                 {/*        </div>*/}
                 {/*    </div>*/}
                 {/*</div>*/}
-                <QuestItem
-                    imgSrc="/panter/TapPop.png"
-                    title="Play TapPop & earn rewards"
-                    description=""
-                    points={playgame}
-                    id="TapPop"
-                />
+                {/*<QuestItem*/}
+                {/*    imgSrc="/panter/TapPop.png"*/}
+                {/*    title="Play TapPop & earn rewards"*/}
+                {/*    description=""*/}
+                {/*    points={playgame}*/}
+                {/*    id="TapPop"*/}
+                {/*/>*/}
                 <QuestItem
                     imgSrc="/chipigo.png"
                     title="Play Chipigo"
