@@ -21,7 +21,6 @@ const LuckyWheelComponent = () => {
         {id: 4, username: 'Daniel001', action: 'just got', amount: 5},
     ];
 
-    const [tonValue, setTonValue] = useState(0);
 
     const [blocks] = useState([
         {
@@ -82,11 +81,23 @@ const LuckyWheelComponent = () => {
     const [showConfirmRedeem, setShowConfirmRedeem] = useState<boolean>(false);
     const [showMoreSpinDialog, setShowMoreSpinDialog] = useState<boolean>(false);
     const [pinPrize, setPinPrize] = useState<string>("");
-    const [spinRemainTime, setSpinRemainTime] = useState<number>(2);
+    const [spinRemainTime, setSpinRemainTime] = useState<number>(0);
     const [userPoint, setUserPoint] = useState<number>(0);
     const [showTag, setShowTag] = useState<string>("");
     const {showSuccess, showError} = useNotification();
     const router = useRouter();  // 获取router对象
+    const [tonValue, setTonValue] = useState(0);
+
+    const spinRemainTimeRef = useRef(spinRemainTime);
+    const tonValueRef = useRef(tonValue);
+
+    useEffect(() => {
+        spinRemainTimeRef.current = spinRemainTime;
+    }, [spinRemainTime]);
+
+    useEffect(() => {
+        tonValueRef.current = tonValue;
+    }, [tonValue]);
 
 
     const prizeList = ["2", "Good luck", '0.5', '0.1', '15000', 'Auto-tapper', 'Free Spin', 'Directly Withdraw']
@@ -128,8 +139,9 @@ const LuckyWheelComponent = () => {
                 prizes: prizes,
                 buttons: buttons,
                 start: async () => {
-                    if (spinRemainTime === 0) {
-                        console.error('spinRemainTime,spinRemainTime', spinRemainTime)
+                    console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef)
+                    console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef.current)
+                    if (spinRemainTimeRef.current === 0) {
                         setShowMoreSpinDialog(true)
                         return
                     }
@@ -172,7 +184,11 @@ const LuckyWheelComponent = () => {
                         setPinPrize(prize.fonts[0].text)
                         setShowConfirmRedeem(true);
                         setShowTag(prize.fonts[0].text)
-                        setSpinRemainTime(spinRemainTime - 1)
+                        if (prize.fonts[0].text === "2" || prize.fonts[0].text === "0.5" || prize.fonts[0].text === "0.1") {
+                            setTonValue(tonValueRef.current + parseFloat(prize.fonts[0].text))
+                        }
+                        console.log('spinRemainTimeRef.current end ', spinRemainTimeRef.current)
+                        setSpinRemainTime(spinRemainTimeRef.current - 1)
                         // alert('恭喜你抽到 ' + prize.fonts[0].text);
                     } else {
                         // alert('恭喜你抽到一个奖品');
@@ -274,12 +290,27 @@ const LuckyWheelComponent = () => {
         }
     }
 
+    function inviteUser() {
+        const tgUserId = localStorage.getItem('tgUserId');
+        const text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+        // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
+        (window as any).Telegram.WebApp.openTelegramLink(
+            `https://t.me/share/url?url=${text}`
+        );
+    }
+
     // const myLucky = useRef()
     // const progress = 50; // 当前进度
     const milestones = [20, 50, 100]; // 里程碑位置
     return <div className="flex flex-col justify-center h-full w-full items-center bg-[url('/bg.svg')] object-cover bg-cover">
         <div className="overflow-y-auto">
-            <div className="mt-4 flex">
+            <div className="flex mt-4">
+                <div className="text-[10px]">Invite 2 Friends to get a free spin!</div>
+                <div>
+                    <button className="bg-[#41BAFF] p-2 rounded-full text-white  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => inviteUser()}>Invite Now</button>
+                </div>
+            </div>
+            <div className="mt-2 flex">
                 <div className="flex ">
                     <img src="/spinTab.svg" alt="Spin" className="w-[20px] h-[20px] mr-2"/>
                     <span>{spinRemainTime}</span>
@@ -336,49 +367,61 @@ const LuckyWheelComponent = () => {
             </div>
 
             {showConfirmRedeem && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-30 flex justify-center items-center z-50 w-[80%] rounded-lg">
-                    <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
-                        {showTag === 'Good luck' ? <div className="mb-4">🎉Congrats! You get {pinPrize}!</div> :
-                            showTag === 'getFree' ? <div className="mb-4">🎉Congrats! <br/> You get a free spin!</div> :
-                                showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
-                                        <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
-                                    </div> :
-                                    <div className="mb-4">Play Game to earn another spin!</div>}
-                        <div className="flex justify-around">
-                            {showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
-                                    Start Spin
-                                </button> :
-                                spinRemainTime > 0 ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
-                                        Spin again
-                                    </button> :
-                                    <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push(`/game`)}>
-                                        Play
-                                    </button>
-                            }
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    {/* 半透明黑色背景层 */}
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
 
+                    {/* 弹出框 */}
+                    <div className="relative bg-[#FFBF59] px-[20px] w-[80%] rounded-lg text-[12px] pt-4 z-10">
+                        <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
+                            {showTag === 'Good luck' ? <div className="mb-4">🎉Congrats! You get {pinPrize}!</div> :
+                                showTag === 'getFree' ? <div className="mb-4">🎉Congrats! <br/> You get a free spin!</div> :
+                                    showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
+                                            <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
+                                        </div> :
+                                        <div className="mb-4">Play Game to earn another spin!</div>}
+                            <div className="flex justify-around">
+                                {showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
+                                        Start Spin
+                                    </button> :
+                                    spinRemainTime > 0 ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
+                                            Spin again
+                                        </button> :
+                                        <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push(`/game`)}>
+                                            Play
+                                        </button>
+                                }
+
+                            </div>
                         </div>
                     </div>
                 </div>
             )}
             {showMoreSpinDialog && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#FFBF59] px-[20px] z-50 w-[80%] rounded-lg text-[12px] pt-4">
-                    <div className="">
-                        <button className=" text-black" onClick={() => setShowMoreSpinDialog(false)}>
-                            <img src="/x.svg" alt=""/>
-                        </button>
-                        <h2 className="text-2xl mb-4 mt-4">Get More Spins</h2>
-                        <div className="flex items-center justify-between mb-4">
-                            <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
-                            <span className="flex-1 text-left">50,000 for daily 1 spin</span>
-                            <button className="bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => buySpin()}>Claim</button>
-                        </div>
-                        <div className="flex items-center justify-between mb-4">
-                            <span className="flex-1 text-left">Invite 2 friends get 1 spin</span>
-                            <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1">Invite</button>
-                        </div>
-                        <div className="flex items-center justify-between mb-4">
-                            <span className="flex-1 text-left">Daily Free Spin</span>
-                            <button className="bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10" onClick={() => dailySpin()}>Claim</button>
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    {/* 半透明黑色背景层 */}
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+
+                    {/* 弹出框 */}
+                    <div className="relative bg-[#FFBF59] px-[20px] w-[80%] rounded-lg text-[12px] pt-4 z-10">
+                        <div className="">
+                            <button className=" text-black" onClick={() => setShowMoreSpinDialog(false)}>
+                                <img src="/x.svg" alt=""/>
+                            </button>
+                            <h2 className="text-2xl mb-4 mt-4">Get More Spins</h2>
+                            <div className="flex items-center justify-between mb-4">
+                                <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
+                                <span className="flex-1 text-left">50,000 for daily 1 spin</span>
+                                <button className="bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => buySpin()}>Claim</button>
+                            </div>
+                            <div className="flex items-center justify-between mb-4">
+                                <span className="flex-1 text-left">Invite 2 friends get 1 spin</span>
+                                <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1">Invite</button>
+                            </div>
+                            <div className="flex items-center justify-between mb-4">
+                                <span className="flex-1 text-left">Daily Free Spin</span>
+                                <button className="bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10" onClick={() => dailySpin()}>Claim</button>
+                            </div>
                         </div>
                     </div>
                 </div>
