@@ -41,13 +41,16 @@ const LayoutWithTabs: React.FC<{ children: React.ReactNode,fromLogin:string }> =
                     <img src="/gameicon.svg" alt="Game" className="w-8 h-8 mx-auto"/>
                     Game
                 </button>
-                <button
-                    onClick={() => setActiveTab(TABS.spin)}
-                    className={`flex-1 text-center ${activeTab === TABS.order ? 'bg-[#FFB641]' : ''}`}
-                >
-                    <img src="/spinTab.svg" alt="Game" className="w-14 h-14 mx-auto"/>
-                    {/*Order*/}
-                </button>
+                    {/*todo    */}
+                    <div className="relative flex-1 text-center">
+                        <button onClick={() => setActiveTab(TABS.spin)}
+                                className={`absolute top-[-40px] left-1/2 transform -translate-x-1/2 ${activeTab === TABS.spin ? 'font-bold' : ''}`}
+                        >
+                            <img src="/spinTab.svg" alt="Spin" className="w-[100px] h-[100px]"/>
+                        </button>
+                        <div className="text-center mt-8">Lucky Spin</div>
+                    </div>
+                    {/*todo    */}
                 {/*先注释*/}
                 {/*<div className="relative flex-1 text-center">*/}
                 {/*    <button*/}
