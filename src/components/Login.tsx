@@ -84,6 +84,9 @@ export const Login: React.FC = () => {
                 }
             } else {
                 showError("An authentication failure occurred")
+                await fetch(BASE_URL + "/other/heartbeat", {method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({error: "An authentication failure occurred"})
+                });
             }
         } catch (e) {
             console.log(e)
