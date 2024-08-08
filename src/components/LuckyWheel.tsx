@@ -5,7 +5,8 @@ import {useNotification} from "../context/NotificationContext";
 import {useRouter} from "next/router";
 
 
-const LuckyWheelComponent = () => {
+const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) => {
+
 
     interface Transaction {
         id: number;
@@ -96,9 +97,12 @@ const LuckyWheelComponent = () => {
     const [claimLoading, setClaimLoading] = useState(false);
     const [claimLoading2, setClaimLoading2] = useState(false);
     const [claimLoading3, setClaimLoading3] = useState(false);
+    const [loginPlay, setLoginPlay] = useState(false);
     const spinRemainTimeRef = useRef(spinRemainTime);
     const userPointRef = useRef(userPoint);
     const tonValueRef = useRef(tonValue);
+
+    const {fromLogin} = router.query;
 
     useEffect(() => {
         spinRemainTimeRef.current = spinRemainTime;
@@ -152,6 +156,7 @@ const LuckyWheelComponent = () => {
                 prizes: prizes,
                 buttons: buttons,
                 start: async () => {
+                    setLoginPlay(true)
                     console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef)
                     console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef.current)
                     if (spinRemainTimeRef.current === 0) {
@@ -245,6 +250,14 @@ const LuckyWheelComponent = () => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        console.log(fromLogin)
+
+        if (fromLogin === "1") {
+            setShowConfirmRedeem(true)
+        }
+    }, [fromLogin]);
+
     async function buySpin() {
         try {
             const tgUserId = localStorage.getItem('tgUserId');
@@ -324,6 +337,11 @@ const LuckyWheelComponent = () => {
     // const myLucky = useRef()
     // const progress = 50; // 当前进度
     const milestones = [20, 50, 100]; // 里程碑位置
+    function closeAndOpen() {
+        setShowConfirmRedeem(false)
+        setShowMoreSpinDialog(true)
+    }
+
     return <div className="flex flex-col justify-center h-full w-full items-center bg-[url('/bg.svg')] object-cover bg-cover">
         <div className="overflow-y-auto">
             <div className="flex items-center mt-6">
@@ -398,28 +416,47 @@ const LuckyWheelComponent = () => {
 
                     {/* 弹出框 */}
                     <div className="relative bg-[#FFBF59] px-[20px] w-[80%] rounded-lg text-[12px] pt-4 z-10">
+                        <button className=" text-black" onClick={() => setShowConfirmRedeem(false)}>
+                            <img src="/x.svg" alt=""/>
+                        </button>
                         <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
-                            {showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉Congrats! You get {pinPrize}!</div> :
-                                showTag === 'getFree' ? <div className="mb-4">🎉Congrats! <br/> You get a free spin!</div> :
+                            {showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
+                                showTag === 'getFree' ? <div className="mb-4">🎉 Congrats! <br/> You get a free spin!</div> :
                                     showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
                                             <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
                                         </div> :
-                                        <div className="mb-4"></div>}
+                                        <div className=""></div>}
                             {
-                                spinRemainTime <= 0 && <div className="mb-4">Play Game to earn another spin!</div>
+                                (fromLogin === "1" && !loginPlay) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
+                            }
+                            {
+                                (fromLogin === "1" && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
                             }
                             <div className="flex justify-around">
-                                {showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
+                                {(fromLogin !== "1" && loginPlay) && (showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
                                     </button> :
                                     spinRemainTime > 0 ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                             Spin again
                                         </button> :
-                                        <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push(`/game`)}>
-                                            Play
-                                        </button>
-                                }
 
+                                        <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => closeAndOpen()}>
+                                            get more spins
+                                        </button>)
+                                }
+                                {
+                                    (fromLogin === "1" && !loginPlay) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
+                                        Start Spin
+                                    </button>
+                                }
+                                {
+                                    (fromLogin === "1" && loginPlay) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push({
+                                        pathname: '/game',
+                                        query: {fromLogin: '1'}  // 示例参数
+                                    })}>
+                                        Play
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -439,7 +476,7 @@ const LuckyWheelComponent = () => {
                             <h2 className="text-2xl mb-4 mt-4">Get More Spins</h2>
                             <div className="flex items-center justify-between mb-4">
                                 <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
-                                <span className="flex-1 text-left">50,000 for daily 1 spin</span>
+                                <span className="flex-1 text-left">10,000 for daily 1 spin</span>
                                 <button className="bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => buySpin()}>{claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
                             <div className="flex items-center justify-between mb-4">
@@ -455,28 +492,8 @@ const LuckyWheelComponent = () => {
                 </div>
             )}
             <div className='h-[100px]'>
-
-
             </div>
         </div>
-        {/*<LuckyWheel*/}
-        {/*    ref={myLucky}*/}
-        {/*    width="600px"*/}
-        {/*    height="600px"*/}
-        {/*    blocks={blocks}*/}
-        {/*    prizes={prizes}*/}
-        {/*    buttons={buttons}*/}
-        {/*    onStart={() => { // 点击抽奖按钮会触发star回调*/}
-        {/*        myLucky.current.play()*/}
-        {/*        setTimeout(() => {*/}
-        {/*            const index = Math.random() * 6 >> 0*/}
-        {/*            myLucky.current.stop(index)*/}
-        {/*        }, 2500)*/}
-        {/*    }}*/}
-        {/*    onEnd={prize => { // 抽奖结束会触发end回调*/}
-        {/*        alert('恭喜你抽到 ' + prize.fonts[0].text + ' 号奖品')*/}
-        {/*    }}*/}
-        {/*/>*/}
     </div>
 };
 

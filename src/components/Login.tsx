@@ -130,7 +130,7 @@ export const Login: React.FC = () => {
                 localStorage.setItem('tgUserId', tgId);
                 localStorage.setItem('token', resResult.data.token);
                 router.push({
-                    pathname: '/game',
+                    pathname: '/wheel',
                     query: {fromLogin: '1'}  // 示例参数
                 });
             }
