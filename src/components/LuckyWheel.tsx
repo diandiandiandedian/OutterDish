@@ -337,7 +337,7 @@ const LuckyWheelComponent = () => {
                 </div>
             </div>
             <div className="text-[14px] mb-4 mt-4">
-                <div className="flex items-center">You are only <img className="mx-2" src="/ton.svg" alt=""/> {Math.max((5 - tonValue).toFixed(2), 0)} away from withdraw</div>
+                <div className="flex items-center">You are only <img className="mx-2" src="/ton.svg" alt=""/> {Math.max(Number((5 - tonValue).toFixed(2)), 0)} away from withdraw</div>
             </div>
 
             <div ref={myLuckyRef}></div>
