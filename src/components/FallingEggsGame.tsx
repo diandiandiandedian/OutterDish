@@ -103,7 +103,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     const addScoreAudioRef3 = useRef<HTMLAudioElement | null>(null)
     const reduceScoreAudioRef = useRef<HTMLAudioElement | null>(null)
     const [userStopBackground, setUserStopBackground] = useState(false);
-    const [showMoreSpinDialog, setShowMoreSpinDialog] = useState<boolean>(true);
+    const [showMoreSpinDialog, setShowMoreSpinDialog] = useState<boolean>(false);
     const [claimLoading, setClaimLoading] = useState(false);
     const [claimLoading3, setClaimLoading3] = useState(false);
 
