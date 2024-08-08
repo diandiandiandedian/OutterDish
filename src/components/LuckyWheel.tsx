@@ -157,8 +157,8 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 buttons: buttons,
                 start: async () => {
                     setLoginPlay(true)
-                    console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef)
-                    console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef.current)
+                    // console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef)
+                    // console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef.current)
                     if (spinRemainTimeRef.current === 0) {
                         setShowMoreSpinDialog(true)
                         return
@@ -193,11 +193,11 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         return
                     }
                     let index = prizeList.findIndex((i) => i === resResult.data)
-                    console.log('index', index, resResult)
+                    // console.log('index', index, resResult)
                     myLucky.stop(index);
                 },
                 end: (prize: any) => {
-                    console.log(prize)
+                    // console.log(prize)
                     if (prize.fonts && prize.fonts.length > 0) {
                         setPinPrize(prize.fonts[0].text)
                         setShowConfirmRedeem(true);
