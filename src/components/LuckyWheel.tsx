@@ -330,7 +330,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         const tgUserId = localStorage.getItem('tgUserId');
         const envConfig = nextConfig?.publicRuntimeConfig?.env?.API
         let text;
-        if (envConfig === 'dev') {
+        if (envConfig === 'dev' || envConfig === 'test') {
             text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/afdafadf_bot/gggghhhhh?startapp=` + tgUserId);
         } else {
             text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
