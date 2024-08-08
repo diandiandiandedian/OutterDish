@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
 import QuestItem from "./QuestItem";
 import {BASE_URL, inviteScoreLevel1, inviteScoreLevel2, inviteScoreLevel3, playgame, tgScoreGift, xScoreGift} from "../config/constant";
-import { useNotification } from "../context/NotificationContext";
+import {useNotification} from "../context/NotificationContext";
 
 const HomePage: React.FC = () => {
     const [balance, setBalance] = useState(0);
     const [rankings, setRankings] = useState('--');
     const [coupons, setCoupons] = useState(0);
     const [userName, setUserName] = useState("");
-    const { showSuccess, showError } = useNotification();
+    const {showSuccess, showError} = useNotification();
     const router = useRouter();
+    const [showConfirmRedeem, setShowConfirmRedeem] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const HomePage: React.FC = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ tgUserId: tgUserId, token }),
+                    body: JSON.stringify({tgUserId: tgUserId, token}),
                 });
 
                 const data = await response.json();
@@ -38,6 +39,9 @@ const HomePage: React.FC = () => {
                 // setRankings(data.data.user['gameScore'] < 2000 ? '--' : data.data['rank']);
                 setRankings(data.data['rank']);
                 setCoupons(data.data['coupon'].length);
+                if (data.data['openAutoTapper'] === true){
+                    setShowConfirmRedeem(true)
+                }
 
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -51,12 +55,38 @@ const HomePage: React.FC = () => {
         router.push('/coupons?myCoupons=true');
     };
 
+    async function claimAutoTapper() {
+        try {
+            const tgUserId = localStorage.getItem('tgUserId');
+            const token = localStorage.getItem('token');
+            if (!tgUserId || !token) {
+                console.error('Username or token not found in local storage');
+                return;
+            }
+
+            const response = await fetch(BASE_URL + '/spin/autoTapper', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({tgUserId: tgUserId, token}),
+            });
+
+            const data = await response.json();
+            setShowConfirmRedeem(false)
+            showSuccess("Claim Success")
+            setBalance(data.data['gameScore']);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
+
     return (
         <div className="flex flex-col justify-center items-center h-screen text-center bg-[url('/bg.svg')] object-cover bg-cover">
             <div className="w-full p-4 overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center">
-                        <img src="/ottercoin.svg" alt="Logo" className="w-16 h-16 mr-4" />
+                        <img src="/ottercoin.svg" alt="Logo" className="w-16 h-16 mr-4"/>
                         <h1 className="text-2xl">{userName}</h1>
                     </div>
                     <div className="flex space-x-4">
@@ -141,7 +171,27 @@ const HomePage: React.FC = () => {
                     points={inviteScoreLevel3}
                     id="invite3"
                 />
+                {showConfirmRedeem && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50">
+                        {/* 半透明黑色背景层 */}
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
 
+                        {/* 弹出框 */}
+                        <div className="relative bg-[#FFBF59] px-[20px] w-[80%] rounded-lg text-[12px] pt-4 z-10">
+                            <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
+
+                                <div className="mb-4">Today Tapper</div>
+                                <div className="flex justify-around">
+
+                                    <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => claimAutoTapper()}>
+                                        claim
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <div className='h-[100px]'></div>
             </div>

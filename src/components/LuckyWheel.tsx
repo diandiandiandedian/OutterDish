@@ -37,6 +37,12 @@ const LuckyWheelComponent = () => {
         width: '40%',
         top: '40%'
     }
+    const prizeImgTon2 = {
+        src: '/spin/ton2.svg',
+        width: '40%',
+        top: '40%'
+    }
+
     const prizeImg2 = {
         src: '/spin/goodluck-gift.svg',
         width: '40%',
@@ -89,11 +95,16 @@ const LuckyWheelComponent = () => {
     const [tonValue, setTonValue] = useState(0);
 
     const spinRemainTimeRef = useRef(spinRemainTime);
+    const userPointRef = useRef(userPoint);
     const tonValueRef = useRef(tonValue);
 
     useEffect(() => {
         spinRemainTimeRef.current = spinRemainTime;
     }, [spinRemainTime]);
+
+    useEffect(() => {
+        userPointRef.current = userPoint;
+    }, [userPoint]);
 
     useEffect(() => {
         tonValueRef.current = tonValue;
@@ -103,14 +114,14 @@ const LuckyWheelComponent = () => {
     const prizeList = ["2", "Good luck", '0.5', '0.1', '15000', 'Auto-tapper', 'Free Spin', 'Directly Withdraw']
     const prizeFontSize = "10px"
     const [prizes] = useState([
-        {background: '#F8F0A0', fonts: [{text: '2', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#ffffff', fonts: [{text: 'Good luck', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg2]},
-        {background: '#F8F0A0', fonts: [{text: '0.5', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
         {background: '#ffffff', fonts: [{text: '0.1', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#F8F0A0', fonts: [{text: '15000', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg3]},
-        {background: '#ffffff', fonts: [{text: 'Auto-tapper', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg4]},
-        {background: '#F8F0A0', fonts: [{text: 'Free Spin', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg5]},
-        {background: '#ffffff', fonts: [{text: 'Directly Withdraw', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
+        {background: '#F8F0A0', fonts: [{text: '2', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#ffffff', fonts: [{text: 'Free Spin', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg5]},
+        {background: '#F8F0A0', fonts: [{text: 'Directly Withdraw', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
+        {background: '#ffffff', fonts: [{text: '0.5', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#F8F0A0', fonts: [{text: 'Auto-tapper', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg4]},
+        {background: '#ffffff', fonts: [{text: '15000', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg3]},
+        {background: '#F8F0A0', fonts: [{text: 'Good luck', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg2]},
     ])
     const [buttons] = useState([
         // { radius: '40%', background: '#EC0A53' },
@@ -186,6 +197,9 @@ const LuckyWheelComponent = () => {
                         setShowTag(prize.fonts[0].text)
                         if (prize.fonts[0].text === "2" || prize.fonts[0].text === "0.5" || prize.fonts[0].text === "0.1") {
                             setTonValue(tonValueRef.current + parseFloat(prize.fonts[0].text))
+                        }
+                        if (prize.fonts[0].text === "15000") {
+                            setUserPoint(userPointRef.current + 15000)
                         }
                         console.log('spinRemainTimeRef.current end ', spinRemainTimeRef.current)
                         setSpinRemainTime(spinRemainTimeRef.current - 1)
@@ -377,7 +391,7 @@ const LuckyWheelComponent = () => {
                     {/* 弹出框 */}
                     <div className="relative bg-[#FFBF59] px-[20px] w-[80%] rounded-lg text-[12px] pt-4 z-10">
                         <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
-                            {showTag === 'Good luck' ? <div className="mb-4">🎉Congrats! You get {pinPrize}!</div> :
+                            {showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉Congrats! You get {pinPrize}!</div> :
                                 showTag === 'getFree' ? <div className="mb-4">🎉Congrats! <br/> You get a free spin!</div> :
                                     showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
                                             <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
