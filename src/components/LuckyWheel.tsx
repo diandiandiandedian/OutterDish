@@ -16,10 +16,10 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     }
 
     const transactions: Transaction[] = [
-        {id: 1, username: 'Daniel001', action: 'just got', amount: 5},
-        {id: 2, username: 'Daniel001', action: 'just withdraw', amount: 5},
-        {id: 3, username: 'Daniel001', action: 'just got', amount: 5},
-        {id: 4, username: 'Daniel001', action: 'just got', amount: 5},
+        {id: 1, username: 'Pamela Willis', action: 'just got', amount: 2},
+        {id: 2, username: 'pop absolute', action: 'just withdraw', amount: 5},
+        {id: 3, username: 'xaong Li', action: 'just got', amount: 0.5},
+        {id: 4, username: 'Fred', action: 'just got', amount: 0.1},
     ];
 
 
@@ -34,44 +34,44 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         },
     ])
     const prizeImg = {
-        src: '/spin/ton-gift.svg',
-        width: '40%',
+        src: '/ton.svg',
+        width: '30%',
         top: '40%'
     }
     const prizeImgTon2 = {
-        src: '/spin/ton2.svg',
-        width: '40%',
+        src: '/ton.svg',
+        width: '30%',
         top: '40%'
     }
 
     const prizeImg2 = {
-        src: '/spin/goodluck-gift.svg',
-        width: '40%',
+        src: '/spin/goodluck-gift2.svg',
+        width: '30%',
         top: '40%'
     }
 
     const prizeImg3 = {
-        src: '/spin/point-gift.svg',
-        width: '40%',
+        src: '/ottercoin.svg',
+        width: '30%',
         top: '40%'
     }
 
     const prizeImg4 = {
-        src: '/spin/auto-tappper-gift.svg',
-        width: '40%',
+        src: '/spin/auto-tappper-gift2.svg',
+        width: '35%',
         top: '40%'
     }
 
     const prizeImg5 = {
         src: '/spinTab.svg',
-        width: '40%',
+        width: '30%',
         top: '40%'
     }
 
     const prizeImg6 = {
-        src: '/spin/withdrwa-gift.svg',
-        width: '40%',
-        top: '40%'
+        src: '/spin/withdrwa-gift2.svg',
+        width: '30%',
+        top: '50%'
     }
 
 
@@ -187,7 +187,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                     }
                     const resResult = await response.json();
                     if (resResult.success === false) {
-                        // showError(resResult['msg'])
+                        showError(resResult['msg'])
                         setShowMoreSpinDialog(true)
                         myLucky.stop(-1);
                         return
@@ -395,15 +395,15 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 {transactions.map((transaction, index) => (
                     <div
                         key={transaction.id}
-                        className={`flex justify-between items-center p-2 ${
-                            index % 2 === 0 ? 'bg-[#FFBF59]' : 'bg-[#FFB388]'
-                        }`}
+                        className={`flex justify-start items-center p-2 ${index % 2 === 0 ? 'bg-[#FFBF59]' : 'bg-[#FFB388]'}`}
                     >
-                        <span className="text-black font-bold pl-6">{transaction.username}</span>
-                        <span className="text-black">{transaction.action}</span>
-                        <div className="flex items-center pr-6">
-                            <img src="/ton.svg" alt="Icon" className="w-6 h-6 mr-2"/>
-                            <span className="text-black font-bold">{transaction.amount}</span>
+                        <div className="flex w-full gap-4">
+                            <span className="text-black font-bold text-left pl-6 w-[40%]">{transaction.username}</span>
+                            <span className="text-black text-left w-[40%]">{transaction.action}</span>
+                            <div className="flex items-center text-left w-[20%]">
+                                <img src="/ton.svg" alt="Icon" className="w-6 h-6 mr-2"/>
+                                <span className="text-black font-bold">{transaction.amount}</span>
+                            </div>
                         </div>
                     </div>
                 ))}

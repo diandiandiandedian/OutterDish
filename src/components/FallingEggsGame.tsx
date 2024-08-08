@@ -103,7 +103,8 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     const addScoreAudioRef3 = useRef<HTMLAudioElement | null>(null)
     const reduceScoreAudioRef = useRef<HTMLAudioElement | null>(null)
     const [userStopBackground, setUserStopBackground] = useState(false);
-    const [showMoreSpinDialog, setShowMoreSpinDialog] = useState<boolean>(false);
+    const [showMoreSpinDialog, setShowMoreSpinDialog] = useState<boolean>(true);
+    const [claimLoading, setClaimLoading] = useState(false);
     const [claimLoading3, setClaimLoading3] = useState(false);
 
     let addScoreAudioIndex = useRef(0);
@@ -197,21 +198,34 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         }
     };
 
-    async function loginInitGame() {
+    async function loginInitGame(flag) {
 
         const tgUserId = localStorage.getItem('tgUserId');
         const token = localStorage.getItem('token');
-        setClaimLoading3(true)
-        const response = await fetch(BASE_URL + '/coupon/save', {
+        if (flag === 2) {
+            setClaimLoading(true)
+        } else {
+            setClaimLoading3(true)
+        }
+        const response = await fetch(BASE_URL + '/tg/giveGiftFirstTime', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({tgUserId, token, coupon: 100, isInit: 1}),
+            body: JSON.stringify({tgUserId, token, pointOrSpin: flag}),
         });
         const resResult = await response.json()
+        setClaimLoading(false)
         setClaimLoading3(false)
-        router.push('/home');
+        if (resResult.success === false) {
+            showError(resResult['msg'])
+            return
+        }
+        if (flag === 2) {
+            router.push('/wheel');
+        } else {
+            router.push('/home');
+        }
     }
 
     const encryptData = (data: object, secretKey: string): string => {
@@ -276,9 +290,9 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             audioRef.current?.play();
             // const os = getOS();
             // if (os !== 'Android') {
-                // setIsMusicPlaying(true)
-                // addScoreAudioRef.current?.play();
-                // setIsMusicPlaying(true)
+            // setIsMusicPlaying(true)
+            // addScoreAudioRef.current?.play();
+            // setIsMusicPlaying(true)
             // }
         } else if (muteMusic === 'true') {
             setUserStopBackground(true)
@@ -429,13 +443,17 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
                         </button>
                         <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
 
-                                        <div className="">🎉 Congrats! You get 12000!</div>
+                            <div className="flex items-center">🎉 Claim 1 spin with <img className="w-[30px] mx-2" src="/ottercoin.svg" alt=""/> 12000</div>
 
-                            <div className="flex justify-around">
+                            <div className="">
 
-                                <button className="bg-[#FFE541] text-black p-2 rounded-full w-full mt-4" onClick={() => loginInitGame()}>
-                                    {claimLoading3 ?(<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}
-                                    </button>
+                                <button className="bg-[#FFE541] text-black p-2 rounded-full w-full mt-4" onClick={() => loginInitGame(2)}>
+                                    {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'claim 1 spin'}
+                                </button>
+
+                                <button className="bg-[#FFE541] text-black p-2 rounded-full w-full mt-4" onClick={() => loginInitGame(1)}>
+                                    {claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : <span className="flex items-center justify-center">claim <img className="w-[20px] mx-2 mb-1" src="/ottercoin.svg" alt=""/> 12000</span>}
+                                </button>
 
                             </div>
                         </div>

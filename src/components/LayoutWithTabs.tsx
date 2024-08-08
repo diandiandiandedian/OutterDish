@@ -46,7 +46,7 @@ const LayoutWithTabs: React.FC<{ children: React.ReactNode, fromLogin: string }>
                         <button onClick={() => setActiveTab(TABS.spin)}
                                 className={`absolute top-[-40px] left-1/2 transform -translate-x-1/2 ${activeTab === TABS.spin ? 'font-bold' : ''}`}
                         >
-                            <img src="/spinTab.svg" alt="Spin" className="w-[100px] h-[100px]"/>
+                            <img src="/spin-bg.svg" alt="Spin" className="w-[100px] h-[100px]"/>
                         </button>
                         <div className="text-center mt-8">Lucky Spin</div>
                     </div>
