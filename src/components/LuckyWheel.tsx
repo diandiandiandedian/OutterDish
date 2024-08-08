@@ -328,7 +328,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     function inviteUser() {
         const tgUserId = localStorage.getItem('tgUserId');
-        const envConfig = nextConfig.publicRuntimeConfig.env.API
+        const envConfig = nextConfig?.publicRuntimeConfig?.env?.API
         let text;
         if (envConfig === 'dev') {
             text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/afdafadf_bot/gggghhhhh?startapp=` + tgUserId);
