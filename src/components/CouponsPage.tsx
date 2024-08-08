@@ -88,9 +88,21 @@ const CouponsPage: React.FC = () => {
         setShowConfirmRedeem(false);
     };
 
+    const [clickCount, setClickCount] = useState(0);
+
+    const loginOut = () => {
+        setClickCount(clickCount + 1)
+        if (clickCount === 5) {
+            localStorage.removeItem("tgUserId")
+            localStorage.removeItem("token")
+            showSuccess('login out')
+        }
+    };
+
     return (
         <div className="flex flex-col justify-center h-screen text-center bg-[url('/bg.svg')] bg-cover">
             <div className="text-left ml-8 mt-4">
+
                 <h1 className="text-xl leading-relaxed mx-2">{router.query.myCoupons ? "My Coupons" : "Grab latest promo with your $DISH"}</h1>
                 <h1 className="text-xl leading-relaxed mx-2">{router.query.myCoupons ? "" : "Balance: " + balance}</h1>
             </div>
@@ -102,6 +114,10 @@ const CouponsPage: React.FC = () => {
                         </div>
                     ))}
             </div>
+            <button className="opacity-0 mb-[100px]" onClick={() => loginOut()}>
+                login out
+            </button>
+
 
             {/*确认兑换框*/}
             {showConfirmRedeem && selectedCoupon && (
