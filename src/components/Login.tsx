@@ -15,13 +15,13 @@ export const Login: React.FC = () => {
     const {showSuccess, showError} = useNotification();
 
 
-    const handleNextStep = () => {
+    // const handleNextStep = () => {
         // if (step === 2) {
         // showError("Please set name")
         // return
         // }
-        setStep(step + 1);
-    };
+        // setStep(step + 1);
+    // };
 
     useEffect(() => {
         const img = new Image();
@@ -37,12 +37,12 @@ export const Login: React.FC = () => {
         return () => clearTimeout(timer); // 清除定时器
     });
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setStep(2);
-        }, 1600); // 延迟1秒
-        return () => clearTimeout(timer); // 清除定时器
-    },[]);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setStep(2);
+    //     }, 1600); // 延迟1秒
+    //     return () => clearTimeout(timer); // 清除定时器
+    // },[]);
 
     async function tgVerfiyAndLogin(onlyVerfiy: boolean) {
         // console.log('telegramInitData', telegramInitData)
@@ -144,12 +144,27 @@ export const Login: React.FC = () => {
     return (
         <div className="flex flex-col justify-center items-center h-screen bg-[url('/bg.svg')] bg-cover">
             {step === 1 && (
-                <div className="flex flex-col justify-center items-center text-center animate__animated animate__fadeOut" style={{ animationDelay: '0.6s' }}>
+                <div className="flex flex-col justify-center items-center text-center animate__animated animate__fadeIn" style={{ animationDelay: '0.3s' }}>
                     <div className="text-2xl mb-10 ">Welcome to</div>
                     <h1 className="text-6xl mb-6">OutterDish</h1>
                     <p className="text-2xl mb-4">Order, play & earn</p>
-                    <button className="p-4 rounded-full" onClick={handleNextStep}>
-                        {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}
+                    {/*<button className="p-4 rounded-full" onClick={handleNextStep}>*/}
+                    {/*    {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}*/}
+                    {/*</button>*/}
+                    {/*<button className="p-4 rounded-full" onClick={() => tgVerfiyAndLogin(false)}>*/}
+                    {/*    {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}*/}
+                    {/*</button>*/}
+                    {/*<button className="p-4 rounded-full" onClick={handleNextStep}>*/}
+                    {/*    {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}*/}
+                    {/*</button>*/}
+                    {/*<button className="p-4 rounded-full" onClick={() => tgVerfiyAndLogin(false)}>*/}
+                    {/*    {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}*/}
+                    {/*</button>*/}
+                    {/*<button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => tgVerfiyAndLogin(false)}>*/}
+                    {/*    {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}*/}
+                    {/*</button>*/}
+                    <button className="bg-[#FFE541] text-black p-2 rounded-full w-[90%] mt-3" onClick={() => tgVerfiyAndLogin(false)}>
+                        Earn Free Ton Now
                     </button>
                 </div>
             )}
