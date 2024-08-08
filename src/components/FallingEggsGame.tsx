@@ -198,7 +198,7 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         }
     };
 
-    async function loginInitGame(flag) {
+    async function loginInitGame(flag:number) {
 
         const tgUserId = localStorage.getItem('tgUserId');
         const token = localStorage.getItem('token');
