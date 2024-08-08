@@ -111,7 +111,7 @@ const LuckyWheelComponent = () => {
     }, [tonValue]);
 
 
-    const prizeList = ["2", "Good luck", '0.5', '0.1', '15000', 'Auto-tapper', 'Free Spin', 'Directly Withdraw']
+    const prizeList = ["0.1", "2", 'Free Spin', 'Directly Withdraw', '0.5', 'Auto-tapper', '15000', 'Good luck']
     const prizeFontSize = "10px"
     const [prizes] = useState([
         {background: '#ffffff', fonts: [{text: '0.1', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
@@ -396,7 +396,10 @@ const LuckyWheelComponent = () => {
                                     showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
                                             <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
                                         </div> :
-                                        <div className="mb-4">Play Game to earn another spin!</div>}
+                                        <div className="mb-4"></div>}
+                            {
+                                spinRemainTime <= 0 && <div className="mb-4">Play Game to earn another spin!</div>
+                            }
                             <div className="flex justify-around">
                                 {showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
