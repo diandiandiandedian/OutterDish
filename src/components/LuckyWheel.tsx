@@ -3,6 +3,7 @@ import {LuckyWheel, LuckyGrid} from 'lucky-canvas'
 import {BASE_URL} from "../config/constant";
 import {useNotification} from "../context/NotificationContext";
 import {useRouter} from "next/router";
+import nextConfig from "../../next.config.mjs";
 
 
 const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) => {
@@ -208,7 +209,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         if (prize.fonts[0].text === "15000") {
                             setUserPoint(userPointRef.current + 15000)
                         }
-                        console.log('spinRemainTimeRef.current end ', spinRemainTimeRef.current)
+                        // console.log('spinRemainTimeRef.current end ', spinRemainTimeRef.current)
                         setSpinRemainTime(spinRemainTimeRef.current - 1)
                         // alert('恭喜你抽到 ' + prize.fonts[0].text);
                     } else {
@@ -327,7 +328,13 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     function inviteUser() {
         const tgUserId = localStorage.getItem('tgUserId');
-        const text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+        const envConfig = nextConfig.publicRuntimeConfig.env.API
+        let text;
+        if (envConfig === 'dev') {
+            text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/afdafadf_bot/gggghhhhh?startapp=` + tgUserId);
+        } else {
+            text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+        }
         // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
         (window as any).Telegram.WebApp.openTelegramLink(
             `https://t.me/share/url?url=${text}`
@@ -393,10 +400,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
             <div className="w-[100%] mx-auto rounded-lg overflow-hidden shadow-lg text-[12px]">
                 {transactions.map((transaction, index) => (
-                    <div
-                        key={transaction.id}
-                        className={`flex justify-start items-center p-2 ${index % 2 === 0 ? 'bg-[#FFBF59]' : 'bg-[#FFB388]'}`}
-                    >
+                    <div key={transaction.id} className={`flex justify-start items-center p-2 ${index % 2 === 0 ? 'bg-[#FFBF59]' : 'bg-[#FFB388]'}`}>
                         <div className="flex w-full gap-4">
                             <span className="text-black font-bold text-left pl-6 w-[40%]">{transaction.username}</span>
                             <span className="text-black text-left w-[40%]">{transaction.action}</span>
