@@ -163,8 +163,8 @@ export const Login: React.FC = () => {
                     {/*<button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => tgVerfiyAndLogin(false)}>*/}
                     {/*    {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : (<img src="/nextStep.svg" alt="Next" className="w-12 h-12"/>)}*/}
                     {/*</button>*/}
-                    <button className="bg-[#FFE541] text-black p-2 rounded-full w-[90%] mt-3" onClick={() => tgVerfiyAndLogin(false)}>
-                        Earn Free Ton Now
+                    <button className="bg-[#FFE541] text-black p-2 rounded-full w-[90%] mt-6" onClick={() => tgVerfiyAndLogin(false)}>
+                        {loginLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Earn Free Ton Now'}
                     </button>
                 </div>
             )}
