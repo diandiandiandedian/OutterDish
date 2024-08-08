@@ -62,7 +62,7 @@ const LuckyWheelComponent = () => {
     }
 
     const prizeImg5 = {
-        src: '/spin/free-gift.svg',
+        src: '/spinTab.svg',
         width: '40%',
         top: '40%'
     }
@@ -93,7 +93,9 @@ const LuckyWheelComponent = () => {
     const {showSuccess, showError} = useNotification();
     const router = useRouter();  // 获取router对象
     const [tonValue, setTonValue] = useState(0);
-
+    const [claimLoading, setClaimLoading] = useState(false);
+    const [claimLoading2, setClaimLoading2] = useState(false);
+    const [claimLoading3, setClaimLoading3] = useState(false);
     const spinRemainTimeRef = useRef(spinRemainTime);
     const userPointRef = useRef(userPoint);
     const tonValueRef = useRef(tonValue);
@@ -251,6 +253,7 @@ const LuckyWheelComponent = () => {
                 console.error('Username or token not found in local storage');
                 return;
             }
+            setClaimLoading(true);
             const response = await fetch(BASE_URL + '/spin/buySpin', {
                 method: 'POST',
                 headers: {
@@ -269,7 +272,9 @@ const LuckyWheelComponent = () => {
                 setSpinRemainTime(data.data['spinRemainTime']);
                 setUserPoint(data.data['gameScore'])
             }
+            setClaimLoading(false);
         } catch (error) {
+            setClaimLoading(false);
             console.error('Error fetching user data:', error);
         }
     }
@@ -282,6 +287,7 @@ const LuckyWheelComponent = () => {
                 console.error('Username or token not found in local storage');
                 return;
             }
+            setClaimLoading3(true);
             const response = await fetch(BASE_URL + '/spin/dailySpin', {
                 method: 'POST',
                 headers: {
@@ -299,7 +305,9 @@ const LuckyWheelComponent = () => {
                 setShowTag('getFree')
                 setSpinRemainTime(data.data['spinRemainTime']);
             }
+            setClaimLoading3(false);
         } catch (error) {
+            setClaimLoading3(false);
             console.error('Error fetching user data:', error);
         }
     }
@@ -330,7 +338,7 @@ const LuckyWheelComponent = () => {
                     <span>{spinRemainTime}</span>
                 </div>
                 <div className="flex ml-4">
-                    <img src="/spin/point-gift.svg" alt="Spin" className="w-[20px] h-[20px] mr-2"/>
+                    <img src="/ottercoin.svg" alt="Spin" className="w-[20px] h-[20px] mr-2"/>
                     <span>{userPoint}</span>
                 </div>
             </div>
@@ -432,15 +440,15 @@ const LuckyWheelComponent = () => {
                             <div className="flex items-center justify-between mb-4">
                                 <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
                                 <span className="flex-1 text-left">50,000 for daily 1 spin</span>
-                                <button className="bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => buySpin()}>Claim</button>
+                                <button className="bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => buySpin()}>{claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Invite 2 friends get 1 spin</span>
-                                <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1" onClick={() => inviteUser()}>Invite</button>
+                                <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1" onClick={() => inviteUser()}>{claimLoading2 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Invite'}</button>
                             </div>
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Daily Free Spin</span>
-                                <button className="bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10" onClick={() => dailySpin()}>Claim</button>
+                                <button className="bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10" onClick={() => dailySpin()}>{claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
                         </div>
                     </div>
