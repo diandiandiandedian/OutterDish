@@ -146,7 +146,7 @@ const tgVerfiy = async (req, res) => {
     initData.set("user", JSON.stringify(user))
     initData.sort();
 
-    console.log('initData', initData)
+    // console.log('initData', initData)
     const hash = initData.get("hash");
     // 邀请人
     const start_param = initData.get("start_param");
@@ -168,7 +168,7 @@ const tgVerfiy = async (req, res) => {
     // 可以用的
     const secretKey = crypto.createHmac("sha256", "WebAppData").update(BOT_TOKEN).digest();
     const _hash = crypto.createHmac("sha256", secretKey).update(dataToCheck).digest("hex");
-    console.log(hash, _hash)
+    // console.log(hash, _hash)
     // res.status(200).json(hash === _hash);
     if (hash === _hash) {
         const rows = await pool.query('SELECT * FROM tg_user where tg_user_id = ?', [user.id]);
@@ -183,6 +183,12 @@ const tgVerfiy = async (req, res) => {
                 if (userHaveInvited[0].length === 0) {
                     // 没有被邀请,记录邀请人
                     const [result] = await pool.execute('INSERT INTO `ezswap`.`invite` (`create_time`, `inviter`, `invited`) VALUES (?,?,?)', [new Date().getTime(), start_param, tgUserId]);
+
+                    const invitedCount = await pool.query('SELECT count(distinct invited) FROM invite where inviter = ?', [start_param]);
+                    if (invitedCount % 2 === 0){
+                        // 赠送一次spin
+                        await pool.execute('UPDATE ezswap.tg_user set spin_remain_time = spin_remain_time + 1 where tg_user_id = ?' , [start_param]);
+                    }
                 }
             }
         }

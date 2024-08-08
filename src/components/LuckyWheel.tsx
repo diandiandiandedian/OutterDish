@@ -304,24 +304,24 @@ const LuckyWheelComponent = () => {
     const milestones = [20, 50, 100]; // 里程碑位置
     return <div className="flex flex-col justify-center h-full w-full items-center bg-[url('/bg.svg')] object-cover bg-cover">
         <div className="overflow-y-auto">
-            <div className="flex mt-4">
-                <div className="text-[10px]">Invite 2 Friends to get a free spin!</div>
+            <div className="flex items-center mt-6">
+                <div className="text-[12px]">Invite <span className="text-[#FF8641] text-[18px]">2</span> Friends to get a free spin!</div>
                 <div>
-                    <button className="bg-[#41BAFF] p-2 rounded-full text-white  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => inviteUser()}>Invite Now</button>
+                    <button className="bg-[#41BAFF] rounded-full text-white text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-6" onClick={() => inviteUser()}>Invite Now</button>
                 </div>
             </div>
-            <div className="mt-2 flex">
+            <div className="mt-4 flex">
                 <div className="flex ">
                     <img src="/spinTab.svg" alt="Spin" className="w-[20px] h-[20px] mr-2"/>
                     <span>{spinRemainTime}</span>
                 </div>
-                <div className="flex ml-6">
+                <div className="flex ml-4">
                     <img src="/spin/point-gift.svg" alt="Spin" className="w-[20px] h-[20px] mr-2"/>
                     <span>{userPoint}</span>
                 </div>
             </div>
-            <div className="flex items-center mt-6">You’ve earned <img className="mx-2" src="/ton.svg" alt=""/> {tonValue} </div>
-            <div className="relative w-full mt-6 mb-6">
+            <div className="flex items-center mt-4">You’ve earned <img className="mx-2" src="/ton.svg" alt=""/> {tonValue} </div>
+            <div className="relative w-full mt-4 mb-6">
                 <div className="relative w-full h-6 bg-transparent rounded-full border-2 border-black">
                     <div
                         className="absolute top-0 left-0 h-full bg-[#FFBF59] rounded-full"
@@ -336,10 +336,13 @@ const LuckyWheelComponent = () => {
                     ))}
                 </div>
             </div>
+            <div className="text-[14px] mb-4 mt-4">
+                <div className="flex items-center">You are only <img className="mx-2" src="/ton.svg" alt=""/> {Math.max((5 - tonValue).toFixed(2), 0)} away from withdraw</div>
+            </div>
 
             <div ref={myLuckyRef}></div>
 
-            <div className="absolute top-[30%] right-[10px] transform -translate-y-1/2">
+            <div className="absolute top-[44%] right-[10px] transform -translate-y-1/2">
                 <button onClick={() => setShowMoreSpinDialog(true)}>
                     <div className="relative flex flex-col items-center">
                         {/* 使用图片作为按钮背景 */}
@@ -416,7 +419,7 @@ const LuckyWheelComponent = () => {
                             </div>
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Invite 2 friends get 1 spin</span>
-                                <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1">Invite</button>
+                                <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1" onClick={() => inviteUser()}>Invite</button>
                             </div>
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Daily Free Spin</span>

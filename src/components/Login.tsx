@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {BASE_URL} from '../config/constant';
 import {useNotification} from "../context/NotificationContext";
+import 'animate.css';
 
 export const Login: React.FC = () => {
     const [step, setStep] = useState(1);
@@ -35,6 +36,13 @@ export const Login: React.FC = () => {
         }, 800); // 延迟1秒
         return () => clearTimeout(timer); // 清除定时器
     });
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setStep(2);
+        }, 1600); // 延迟1秒
+        return () => clearTimeout(timer); // 清除定时器
+    },[]);
 
     async function tgVerfiyAndLogin(onlyVerfiy: boolean) {
         // console.log('telegramInitData', telegramInitData)
@@ -136,8 +144,8 @@ export const Login: React.FC = () => {
     return (
         <div className="flex flex-col justify-center items-center h-screen bg-[url('/bg.svg')] bg-cover">
             {step === 1 && (
-                <div className="flex flex-col justify-center items-center text-center">
-                    <div className="text-2xl mb-10">Welcome to</div>
+                <div className="flex flex-col justify-center items-center text-center animate__animated animate__fadeOut" style={{ animationDelay: '0.6s' }}>
+                    <div className="text-2xl mb-10 ">Welcome to</div>
                     <h1 className="text-6xl mb-6">OutterDish</h1>
                     <p className="text-2xl mb-4">Order, play & earn</p>
                     <button className="p-4 rounded-full" onClick={handleNextStep}>

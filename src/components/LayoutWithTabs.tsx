@@ -42,26 +42,26 @@ const LayoutWithTabs: React.FC<{ children: React.ReactNode, fromLogin: string }>
                         Game
                     </button>
                     {/*新版*/}
-                    {/*<div className="relative flex-1 text-center">*/}
-                    {/*    <button onClick={() => setActiveTab(TABS.spin)}*/}
-                    {/*            className={`absolute top-[-40px] left-1/2 transform -translate-x-1/2 ${activeTab === TABS.spin ? 'font-bold' : ''}`}*/}
-                    {/*    >*/}
-                    {/*        <img src="/spinTab.svg" alt="Spin" className="w-[100px] h-[100px]"/>*/}
-                    {/*    </button>*/}
-                    {/*    <div className="text-center mt-8">Lucky Spin</div>*/}
-                    {/*</div>*/}
+                    <div className="relative flex-1 text-center">
+                        <button onClick={() => setActiveTab(TABS.spin)}
+                                className={`absolute top-[-40px] left-1/2 transform -translate-x-1/2 ${activeTab === TABS.spin ? 'font-bold' : ''}`}
+                        >
+                            <img src="/spinTab.svg" alt="Spin" className="w-[100px] h-[100px]"/>
+                        </button>
+                        <div className="text-center mt-8">Lucky Spin</div>
+                    </div>
                     {/*新版*/}
                     {/*先注释*/}
-                    <div className="relative flex-1 text-center">
-                        <button
-                            onClick={() => setActiveTab(TABS.order)}
-                            className={`absolute transform translate-y-[-25%] translate-x-[-85%] ${activeTab === TABS.order ? '' : ''}`}
-                            style={{ borderRadius: '50%' }}
-                        >
-                            <img src="/ordericon.svg" alt="Order" className="w-16 h-16 mx-auto max-w-[2000%] " />
-                        </button>
-                        {/*<span className="block text-center mt-12">Order</span>*/}
-                    </div>
+                    {/*<div className="relative flex-1 text-center">*/}
+                    {/*    <button*/}
+                    {/*        onClick={() => setActiveTab(TABS.order)}*/}
+                    {/*        className={`absolute transform translate-y-[-25%] translate-x-[-85%] ${activeTab === TABS.order ? '' : ''}`}*/}
+                    {/*        style={{ borderRadius: '50%' }}*/}
+                    {/*    >*/}
+                    {/*        <img src="/ordericon.svg" alt="Order" className="w-16 h-16 mx-auto max-w-[2000%] " />*/}
+                    {/*    </button>*/}
+                    {/*    /!*<span className="block text-center mt-12">Order</span>*!/*/}
+                    {/*</div>*/}
                     {/*先注释*/}
                     <button
                         onClick={() => setActiveTab(TABS.quests)}
