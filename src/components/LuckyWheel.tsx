@@ -367,7 +367,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                     <span>{userPoint}</span>
                 </div>
             </div>
-            <div className="flex items-center mt-4">You’ve earned <img className="mx-2" src="/ton.svg" alt=""/> {tonValue} </div>
+            <div className="flex items-center mt-4">You’ve earned <img className="mx-2" src="/ton.svg" alt=""/> {tonValue.toFixed(1)} </div>
             <div className="relative w-full mt-4 mb-6">
                 <div className="relative w-full h-6 bg-transparent rounded-full border-2 border-black">
                     <div className="absolute top-0 left-0 h-full bg-[#FFBF59] rounded-full" style={{width: `${Math.min(tonValue / 5.0 * 100, 100)}%`}}></div>
@@ -386,7 +386,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
             <div ref={myLuckyRef}></div>
 
-            <div className="absolute top-[42%] right-[10px] transform -translate-y-1/2">
+            <div className="absolute top-[40%] right-[10px] transform -translate-y-1/2">
                 <button onClick={() => setShowMoreSpinDialog(true)}>
                     <div className="relative flex flex-col items-center">
                         {/* 使用图片作为按钮背景 */}
