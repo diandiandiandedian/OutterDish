@@ -103,6 +103,10 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
     const addScoreAudioRef3 = useRef<HTMLAudioElement | null>(null)
     const reduceScoreAudioRef = useRef<HTMLAudioElement | null>(null)
     const [userStopBackground, setUserStopBackground] = useState(false);
+    const [showMoreSpinDialog, setShowMoreSpinDialog] = useState<boolean>(false);
+    const [claimLoading, setClaimLoading] = useState(false);
+    const [claimLoading3, setClaimLoading3] = useState(false);
+
     let addScoreAudioIndex = useRef(0);
     let androidControlBackgroundMusic = useRef(false);
 
@@ -190,9 +194,39 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
         }
 
         if (fromLogin === "1" && newScore >= 200) {
-            router.push('/reward');
+            setShowMoreSpinDialog(true)
         }
     };
+
+    async function loginInitGame(flag:number) {
+
+        const tgUserId = localStorage.getItem('tgUserId');
+        const token = localStorage.getItem('token');
+        if (flag === 2) {
+            setClaimLoading(true)
+        } else {
+            setClaimLoading3(true)
+        }
+        const response = await fetch(BASE_URL + '/tg/giveGiftFirstTime', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({tgUserId, token, pointOrSpin: flag}),
+        });
+        const resResult = await response.json()
+        setClaimLoading(false)
+        setClaimLoading3(false)
+        if (resResult.success === false) {
+            showError(resResult['msg'])
+            return
+        }
+        if (flag === 2) {
+            router.push('/wheel');
+        } else {
+            router.push('/home');
+        }
+    }
 
     const encryptData = (data: object, secretKey: string): string => {
         return CryptoJS.AES.encrypt(JSON.stringify(data), CryptoJS.enc.Utf8.parse(secretKey), {
@@ -256,9 +290,9 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
             audioRef.current?.play();
             // const os = getOS();
             // if (os !== 'Android') {
-                // setIsMusicPlaying(true)
-                // addScoreAudioRef.current?.play();
-                // setIsMusicPlaying(true)
+            // setIsMusicPlaying(true)
+            // addScoreAudioRef.current?.play();
+            // setIsMusicPlaying(true)
             // }
         } else if (muteMusic === 'true') {
             setUserStopBackground(true)
@@ -396,6 +430,56 @@ const FallingEggsGame: React.FC<{ fromLogin?: string }> = ({fromLogin}) => {
                     </div>
                 </div>
             )}
+
+            {showMoreSpinDialog && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    {/* 半透明黑色背景层 */}
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+
+                    {/* 弹出框 */}
+                    <div className="relative bg-[#FFBF59] px-[20px] w-[80%] rounded-lg text-[12px] pt-4 z-10">
+                        <button className=" text-black" onClick={() => setShowConfirmRedeem(false)}>
+                            <img src="/x.svg" alt=""/>
+                        </button>
+                        <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
+
+                            <div className="flex items-center">🎉 Claim 1 spin with <img className="w-[30px] mx-2" src="/ottercoin.svg" alt=""/> 12000</div>
+
+                            <div className="">
+
+                                <button className="bg-[#FFE541] text-black p-2 rounded-full w-full mt-4" onClick={() => loginInitGame(2)}>
+                                    {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'claim 1 spin'}
+                                </button>
+
+                                <button className="bg-[#FFE541] text-black p-2 rounded-full w-full mt-4" onClick={() => loginInitGame(1)}>
+                                    {claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : <span className="flex items-center justify-center">claim <img className="w-[20px] mx-2 mb-1" src="/ottercoin.svg" alt=""/> 12000</span>}
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+            {/*{showMoreSpinDialog && (*/}
+            {/*    <div className="fixed inset-0 flex items-center justify-center z-50">*/}
+            {/*        /!* 半透明黑色背景层 *!/*/}
+            {/*        <div className="absolute inset-0 bg-black opacity-50"></div>*/}
+
+            {/*        /!* 弹出框 *!/*/}
+            {/*        <div className="relative bg-[#FFBF59] px-[20px] w-[80%] rounded-lg text-[12px] pt-4 z-10">*/}
+            {/*            <div className="">*/}
+            {/*                <button className=" text-black" onClick={() => setShowMoreSpinDialog(false)}>*/}
+            {/*                    <img src="/x.svg" alt=""/>*/}
+            {/*                </button>*/}
+            {/*                <h2 className="text-2xl mb-4 mt-4">🎉 Congrats! <br/> You get 12000!</h2>*/}
+            {/*                <button className="bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10" onClick={() => loginInitGame()}>{claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>*/}
+
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*)}*/}
         </div>
     );
 };

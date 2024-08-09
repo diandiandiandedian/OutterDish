@@ -13,18 +13,18 @@ const QuestsPage: React.FC = () => {
         <div className="flex flex-col justify-center items-center h-screen text-center bg-[url('/bg.svg')] bg-cover">
             <div className="w-full p-4 overflow-y-auto">
                 <div className="text-2xl mb-4 text-left">Quests</div>
-                {/*<div className="cursor-pointer mb-4" onClick={() => router.push('/wheel')}>*/}
-                {/*    <div className="flex flex-col text-white font-bold text-[15px] bg-cover rounded-xl" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/QuestBanner.jpg')" }}>*/}
-                {/*        <div className="ml-6 mt-4">*/}
-                {/*            <div className="text-left">Outter Family Racing</div>*/}
-                {/*            <div className="text-left">Season 1</div>*/}
-                {/*        </div>*/}
-                {/*        <div className="text-[40px]">*/}
-                {/*            <div className="mt-8">100,000 Ton</div>*/}
-                {/*            <div className="mb-6 mt-2">Giveaway</div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                <div className="cursor-pointer mb-4" onClick={() => router.push('/wheel')}>
+                    <div className="flex flex-col text-white font-bold text-[15px] bg-cover rounded-xl" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/QuestBanner.jpg')" }}>
+                        <div className="ml-6 mt-4">
+                            <div className="text-left">Outter Family Racing</div>
+                            <div className="text-left">Season 1</div>
+                        </div>
+                        <div className="text-[40px]">
+                            <div className="mt-8">100,000 Ton</div>
+                            <div className="mb-6 mt-2">Giveaway</div>
+                        </div>
+                    </div>
+                </div>
                 <QuestItem
                     imgSrc="/panter/TapPop.png"
                     title="Play TapPop & earn rewards"

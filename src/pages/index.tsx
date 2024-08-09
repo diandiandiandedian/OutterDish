@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Login} from "../components/Login";
 import {useRouter} from "next/router";
-// import Game from "./game";
-// import HomePage from "../components/HomePage";
-// import Home from "./home";
 
 export default function Index() {
     // const [activeTab, setActiveTab] = useState<'home' | 'game' | 'order' | 'coupon' | 'quests'>('game');
@@ -51,12 +48,12 @@ export default function Index() {
 
     const router = useRouter();
 
-    // useEffect(() => {
-    //     const tgUserId = localStorage.getItem('tgUserId');
-    //     if (tgUserId) {
-    //         router.push('/game');
-    //     }
-    // }, [router]);
+    useEffect(() => {
+        const tgUserId = localStorage.getItem('tgUserId');
+        if (tgUserId) {
+            router.push('/wheel');
+        }
+    }, [router]);
 
     return (
         <div className="w-full h-full">

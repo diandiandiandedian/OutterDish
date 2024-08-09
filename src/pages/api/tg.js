@@ -1,7 +1,7 @@
 import pool from '../../db/db';
 import Cors from 'cors';
 import crypto from 'crypto';
-import {BOT_TOKEN} from "../../config/server-constant";
+import {BOT_TOKEN, partern} from "../../config/server-constant";
 
 
 function initMiddleware(middleware) {
@@ -184,10 +184,12 @@ const tgVerfiy = async (req, res) => {
                     // 没有被邀请,记录邀请人
                     const [result] = await pool.execute('INSERT INTO `ezswap`.`invite` (`create_time`, `inviter`, `invited`) VALUES (?,?,?)', [new Date().getTime(), start_param, tgUserId]);
 
-                    const invitedCount = await pool.query('SELECT count(distinct invited) FROM invite where inviter = ?', [start_param]);
-                    if (invitedCount % 2 === 0){
+                    const invitedCount = await pool.query('SELECT count(distinct invited) as inviteCount FROM invite where inviter = ?', [start_param]);
+                    console.log('start_param', invitedCount,start_param,partern.indexOf(Number(start_param)) === -1)
+                    if (invitedCount[0][0].inviteCount % 2 === 0 && partern.indexOf(Number(start_param)) === -1) {
+                        console.log('我进来了')
                         // 赠送一次spin
-                        await pool.execute('UPDATE ezswap.tg_user set spin_remain_time = spin_remain_time + 1 where tg_user_id = ?' , [start_param]);
+                        await pool.execute('UPDATE ezswap.tg_user set spin_remain_time = spin_remain_time + 1 where tg_user_id = ?', [start_param]);
                     }
                 }
             }
