@@ -26,11 +26,13 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     const [blocks] = useState([
         {
-            padding: '50px',
+            padding: '40px',
             imgs: [{
                 src: '/spin-bg.png',
                 width: '100%',
-                height: '100%'
+                height: '100%',
+                top: '2%',
+                left:'1%'
             }]
         },
     ])
@@ -120,15 +122,16 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     const prizeList = ["0.1", "2", 'Free Spin', 'Directly Withdraw', '0.5', 'Auto-tapper', '15000', 'Good luck']
     const prizeFontSize = "10px"
+    const fontPosion = "8px"
     const [prizes] = useState([
-        {background: '#ffffff', fonts: [{text: '0.1', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#F8F0A0', fonts: [{text: '2', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#ffffff', fonts: [{text: 'Free Spin', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg5]},
-        {background: '#F8F0A0', fonts: [{text: 'Directly \n Withdraw', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
-        {background: '#ffffff', fonts: [{text: '0.5', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#F8F0A0', fonts: [{text: 'Auto-tapper', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg4]},
-        {background: '#ffffff', fonts: [{text: '15000', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg3]},
-        {background: '#F8F0A0', fonts: [{text: 'Good luck', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg2]},
+        {background: '#ffffff', fonts: [{top:fontPosion,text: '0.1', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#F8F0A0', fonts: [{top:fontPosion,text: '2', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#ffffff', fonts: [{top:fontPosion,text: 'Free Spin', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg5]},
+        {background: '#F8F0A0', fonts: [{top:fontPosion,text: 'Withdraw Now', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
+        {background: '#ffffff', fonts: [{top:fontPosion,text: '0.5', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#F8F0A0', fonts: [{top:fontPosion,text: 'Auto-tapper', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg4]},
+        {background: '#ffffff', fonts: [{top:fontPosion,text: '15000', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg3]},
+        {background: '#F8F0A0', fonts: [{top:fontPosion,text: 'Good luck', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg2]},
     ])
     const [buttons] = useState([
         // { radius: '40%', background: '#EC0A53' },
@@ -140,19 +143,19 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         //     fonts: [{ text: '开始抽奖', top: '-10px' }]
         // }
         {
-            radius: '45%',
+            radius: '40%',
             imgs: [{
                 src: '/start2.png',
                 width: '100%',
-                top: '-130%'
+                top: '-120%'
             }]
         }
     ])
     useEffect(() => {
         if (myLuckyRef.current) {
             const myLucky = new LuckyWheel(myLuckyRef.current, {
-                width: '300px',
-                height: '300px',
+                width: '325px',
+                height: '325px',
                 blocks: blocks,
                 prizes: prizes,
                 buttons: buttons,
@@ -409,7 +412,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 </button>
             </div>
 
-            <div className="w-[100%] mx-auto rounded-lg overflow-hidden shadow-lg text-[12px]">
+            <div className="w-[100%] mx-auto rounded-lg overflow-hidden shadow-lg text-[12px] mt-5">
                 {transactions.map((transaction, index) => (
                     <div key={transaction.id} className={`flex justify-start items-center p-2 ${index % 2 === 0 ? 'bg-[#FFBF59]' : 'bg-[#FFB388]'}`}>
                         <div className="flex w-full gap-4">
