@@ -18,7 +18,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     const transactions: Transaction[] = [
         {id: 1, username: 'Pamela Willis', action: 'just got', amount: 2},
-        {id: 2, username: 'pop absolute', action: 'just withdraw', amount: 5},
+        {id: 2, username: 'pop', action: 'just withdraw', amount: 5},
         {id: 3, username: 'xaong Li', action: 'just got', amount: 0.5},
         {id: 4, username: 'Fred', action: 'just got', amount: 0.1},
     ];
@@ -415,7 +415,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
             <div className="w-[100%] mx-auto rounded-lg overflow-hidden shadow-lg text-[12px] mt-5">
                 {transactions.map((transaction, index) => (
                     <div key={transaction.id} className={`flex justify-start items-center p-2 ${index % 2 === 0 ? 'bg-[#FFBF59]' : 'bg-[#FFB388]'}`}>
-                        <div className="flex w-full gap-4">
+                        <div className="flex w-full gap-4 items-center">
                             <span className="text-black font-bold text-left pl-6 w-[40%]">{transaction.username}</span>
                             <span className="text-black text-left w-[40%]">{transaction.action}</span>
                             <div className="flex items-center text-left w-[20%]">
