@@ -124,7 +124,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         {background: '#ffffff', fonts: [{text: '0.1', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
         {background: '#F8F0A0', fonts: [{text: '2', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
         {background: '#ffffff', fonts: [{text: 'Free Spin', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg5]},
-        {background: '#F8F0A0', fonts: [{text: 'Directly Withdraw', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
+        {background: '#F8F0A0', fonts: [{text: 'Directly \n Withdraw', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
         {background: '#ffffff', fonts: [{text: '0.5', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
         {background: '#F8F0A0', fonts: [{text: 'Auto-tapper', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg4]},
         {background: '#ffffff', fonts: [{text: '15000', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg3]},
@@ -206,8 +206,13 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         if (prize.fonts[0].text === "2" || prize.fonts[0].text === "0.5" || prize.fonts[0].text === "0.1") {
                             setTonValue(tonValueRef.current + parseFloat(prize.fonts[0].text))
                         }
+
                         if (prize.fonts[0].text === "15000") {
                             setUserPoint(userPointRef.current + 15000)
+                        }
+                        if (tonValueRef.current + parseFloat(prize.fonts[0].text) >= 5) {
+                            // 达到5ton了,直接让提现
+                            setShowTag('full Ton')
                         }
                         // console.log('spinRemainTimeRef.current end ', spinRemainTimeRef.current)
                         setSpinRemainTime(spinRemainTimeRef.current - 1)
@@ -294,6 +299,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     }
 
     async function dailySpin() {
+        // sendMessageToTg()
         try {
             const tgUserId = localStorage.getItem('tgUserId');
             const token = localStorage.getItem('token');
@@ -347,6 +353,14 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     function closeAndOpen() {
         setShowConfirmRedeem(false)
         setShowMoreSpinDialog(true)
+    }
+
+    function sendMessageToTg() {
+        // let text = encodeURIComponent(`withdraw ton`);
+        // (window as any).Telegram.WebApp.openTelegramLink(
+        //     `https://t.me/share/url?url=${text}`
+        // );
+        window.location.href = `tg://resolve?domain=@Knightlau`;
     }
 
     return <div className="flex flex-col justify-center h-full w-full items-center bg-[url('/bg.svg')] object-cover bg-cover">
@@ -420,8 +434,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         <button className=" text-black" onClick={() => setShowConfirmRedeem(false)}>
                             <img src="/x.svg" alt=""/>
                         </button>
+                        {/*显示文案*/}
                         <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
-                            {showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
+                            {showTag === 'full Ton' ? <div className="mb-4"> 🎉Congrats! U get 5 $Ton, get your rewards now!</div>:showTag === 'Directly Withdraw' ? <div className="mb-4"> 🎉Congrats! U can directly get ur rewards!</div> : showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
                                 showTag === 'getFree' ? <div className="mb-4">🎉 Congrats! <br/> You get a free spin!</div> :
                                     showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
                                             <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
@@ -433,8 +448,11 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             {
                                 (fromLogin === "1" && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
                             }
+                            {/*按钮*/}
                             <div className="flex justify-around">
-                                {(fromLogin !== "1" && loginPlay) && (showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
+                                {(fromLogin !== "1" && loginPlay) && ((showTag === 'Directly Withdraw'||showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
+                                    Contact @Knightlau
+                                </button> : showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
                                     </button> :
                                     spinRemainTime > 0 ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
