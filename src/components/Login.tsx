@@ -84,7 +84,7 @@ export const Login: React.FC = () => {
                     localStorage.setItem('token', result['user'].token);
                     localStorage.setItem('tgUserId', result['user']['tg_user_id']);
                     // 注册过了,跳转主页
-                    router.push('/game');
+                    router.push('/wheel');
                 } else {
                     if (!onlyVerfiy) {
                         saveTgUser(telegramInitData.user.username, telegramInitData.user.id)
