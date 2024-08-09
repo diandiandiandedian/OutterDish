@@ -208,15 +208,16 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         setShowTag(prize.fonts[0].text)
                         if (prize.fonts[0].text === "2" || prize.fonts[0].text === "0.5" || prize.fonts[0].text === "0.1") {
                             setTonValue(tonValueRef.current + parseFloat(prize.fonts[0].text))
+                            if (tonValueRef.current + parseFloat(prize.fonts[0].text) >= 5) {
+                                // 达到5ton了,直接让提现
+                                setShowTag('full Ton')
+                            }
                         }
-
                         if (prize.fonts[0].text === "15000") {
                             setUserPoint(userPointRef.current + 15000)
                         }
-                        if (tonValueRef.current + parseFloat(prize.fonts[0].text) >= 5) {
-                            // 达到5ton了,直接让提现
-                            setShowTag('full Ton')
-                        }
+                        // console.log('tonValueRef.current + parseFloat(prize.fonts[0].text) >= 5',tonValueRef.current + parseFloat(prize.fonts[0].text) >= 5)
+
                         // console.log('spinRemainTimeRef.current end ', spinRemainTimeRef.current)
                         setSpinRemainTime(spinRemainTimeRef.current - 1)
                         // alert('恭喜你抽到 ' + prize.fonts[0].text);
