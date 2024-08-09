@@ -440,7 +440,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         </button>
                         {/*显示文案*/}
                         <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
-                            {showTag === 'full Ton' ? <div className="mb-4"> 🎉Congrats! U get 5 $Ton, get your rewards now!</div>:showTag === 'Directly Withdraw' ? <div className="mb-4"> 🎉Congrats! U can directly get ur rewards!</div> : showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
+                            {showTag === 'Auto-tapper' ? <div className="mb-4"> You get 3 days Auto-tapper usage! </div>:showTag === 'full Ton' ? <div className="mb-4"> 🎉Congrats! U get 5 $Ton, get your rewards now!</div>:showTag === 'Directly Withdraw' ? <div className="mb-4"> 🎉Congrats! U can directly get ur rewards!</div> : showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
                                 showTag === 'getFree' ? <div className="mb-4">🎉 Congrats! <br/> You get a free spin!</div> :
                                     showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
                                             <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
