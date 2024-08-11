@@ -341,9 +341,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         const envConfig = nextConfig?.publicRuntimeConfig?.env?.API
         let text;
         if (envConfig === 'dev' || envConfig === 'test') {
-            text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/afdafadf_bot/gggghhhhh?startapp=` + tgUserId);
+            text = encodeURIComponent(`💰New users get free 2 $TON! Come join the Outter Family together: t.me/afdafadf_bot/gggghhhhh?startapp=` + tgUserId);
         } else {
-            text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+            text = encodeURIComponent(`💰New users get free 2 $TON! Come join the Outter Family together: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
         }
         // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
         (window as any).Telegram.WebApp.openTelegramLink(

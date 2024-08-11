@@ -43,7 +43,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             // window.location = '';
             localStorage.setItem('xFollowed', 'true');
         } else if (id.indexOf('invite') !== -1) {
-            const text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+            const text = encodeURIComponent(`💰New users get free 2 $TON! Come join the Outter Family together: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
             // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
             (window as any).Telegram.WebApp.openTelegramLink(
                 `https://t.me/share/url?url=${text}`
