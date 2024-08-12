@@ -43,14 +43,14 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             // window.location = '';
             localStorage.setItem('xFollowed', 'true');
         } else if (id.indexOf('invite') !== -1) {
-            const text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+            const text = encodeURIComponent(`💰New users get free 2 $TON! Come join the Outter Family together: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
             // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
             (window as any).Telegram.WebApp.openTelegramLink(
                 `https://t.me/share/url?url=${text}`
             );
-        } else if (id === 'Chipigo') {
-            localStorage.setItem('Chipigo', 'true');
-            window.location.href = 'https://t.me/Chipigo_bot/Chipigo?startapp=uid_7334273897';
+        } else if (id === 'noton') {
+            localStorage.setItem('noton', 'true');
+            window.location.href = 'https://t.me/NotonOffice_bot/game';
         } else if (id === 'TapPop') {
             localStorage.setItem('TapPop', 'true');
             window.location.href = 'https://t.me/tappopbot?start=7432874170';
@@ -63,9 +63,9 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             showError('You must follow on X before claim');
             return;
         }
-        const chipigo = localStorage.getItem('Chipigo');
-        if (id === 'Chipigo' && !chipigo) {
-            showError('You must play Chipigo before claim');
+        const noton = localStorage.getItem('noton');
+        if (id === 'noton' && !noton) {
+            showError('You must play noton before claim');
             return;
         }
         const startAI = localStorage.getItem('TapPop');
@@ -84,7 +84,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             tgOrX = 6
         } else if (id === 'invite3') {
             tgOrX = 7
-        } else if (id === 'Chipigo') {
+        } else if (id === 'noton') {
             tgOrX = 8
         } else if (id === 'TapPop') {
             tgOrX = 9
@@ -128,8 +128,8 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             <div className="flex items-center justify-between mb-2">
                 <img src={imgSrc} alt={title} className="w-10 h-10"/>
                 <div className="flex-1 mx-4 text-left">
-                    <div className="text-base mb-2">{title}</div>
-                    <div className="text-xs text-[#6A6A6A] text-left">{description}</div>
+                    <div className="text-base">{title}</div>
+                    {description !== "" &&<div className="text-xs text-[#6A6A6A] mt-2 text-left">{description}</div>}
                 </div>
                 <div className="flex flex-col">
                     <div className="text-xs mb-2 flex items-center">
@@ -138,7 +138,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                     </div>
                     <div className="flex flex-col">
                         <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
-                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite') !== -1 ? 'Share' : (id === 'Chipigo' || id === 'TapPop') ? 'Play' : 'Follow'}
+                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite') !== -1 ? 'Share' : (id === 'noton' || id === 'TapPop') ? 'Play' : 'Follow'}
                         </button>
                         <button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={handleClaimClick}>
                             {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}

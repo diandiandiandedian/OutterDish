@@ -42,6 +42,7 @@ const LayoutWithTabs: React.FC<{ children: React.ReactNode, fromLogin: string }>
                         Game
                     </button>
                     {/*新版*/}
+
                     <div className="relative flex-1 text-center">
                         <button onClick={() => setActiveTab(TABS.spin)}
                                 className={`absolute top-[-40px] left-1/2 transform -translate-x-1/2 ${activeTab === TABS.spin ? 'font-bold' : ''}`}

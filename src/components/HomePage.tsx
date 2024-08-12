@@ -122,18 +122,18 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
                 <QuestItem
+                    imgSrc="/panter/noton.jpg"
+                    title="Use NOTON mine $NOT"
+                    description=""
+                    points={playgame}
+                    id="noton"
+                />
+                <QuestItem
                     imgSrc="/panter/TapPop.png"
                     title="Play TapPop & earn rewards"
                     description=""
                     points={playgame}
                     id="TapPop"
-                />
-                <QuestItem
-                    imgSrc="/chipigo.png"
-                    title="Play Chipigo"
-                    description="Play Outter‘s friend Chipigo‘s game"
-                    points={playgame}
-                    id="Chipigo"
                 />
 
                 <QuestItem

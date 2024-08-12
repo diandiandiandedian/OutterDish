@@ -32,7 +32,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 width: '100%',
                 height: '100%',
                 top: '2%',
-                left:'1%'
+                left: '1%'
             }]
         },
     ])
@@ -99,7 +99,13 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     const [tonValue, setTonValue] = useState(0);
     const [claimLoading, setClaimLoading] = useState(false);
     const [claimLoading2, setClaimLoading2] = useState(false);
+
+    const [notonPlayOrClaim, setNotonPlayOrClaim] = useState(1);
+    const [coinpupsPlayOrClaim, setCoinpupsPlayOrClaim] = useState(1);
     const [claimLoading3, setClaimLoading3] = useState(false);
+    const [notonLoading, setNotonLoading] = useState(false);
+    const [coinpupsLoading, setCoinpupsLoading] = useState(false);
+
     const [loginPlay, setLoginPlay] = useState(false);
     const spinRemainTimeRef = useRef(spinRemainTime);
     const userPointRef = useRef(userPoint);
@@ -124,14 +130,14 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     const prizeFontSize = "10px"
     const fontPosion = "8px"
     const [prizes] = useState([
-        {background: '#ffffff', fonts: [{top:fontPosion,text: '0.1', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#F8F0A0', fonts: [{top:fontPosion,text: '2', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#ffffff', fonts: [{top:fontPosion,text: 'Free Spin', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg5]},
-        {background: '#F8F0A0', fonts: [{top:fontPosion,text: 'Withdraw Now', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
-        {background: '#ffffff', fonts: [{top:fontPosion,text: '0.5', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
-        {background: '#F8F0A0', fonts: [{top:fontPosion,text: 'Auto-tapper', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg4]},
-        {background: '#ffffff', fonts: [{top:fontPosion,text: '15000', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg3]},
-        {background: '#F8F0A0', fonts: [{top:fontPosion,text: 'Good luck', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg2]},
+        {background: '#ffffff', fonts: [{top: fontPosion, text: '0.1', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#F8F0A0', fonts: [{top: fontPosion, text: '2', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#ffffff', fonts: [{top: fontPosion, text: 'Free Spin', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg5]},
+        {background: '#F8F0A0', fonts: [{top: fontPosion, text: 'Withdraw Now', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg6]},
+        {background: '#ffffff', fonts: [{top: fontPosion, text: '0.5', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg]},
+        {background: '#F8F0A0', fonts: [{top: fontPosion, text: 'Auto-tapper', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg4]},
+        {background: '#ffffff', fonts: [{top: fontPosion, text: '15000', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg3]},
+        {background: '#F8F0A0', fonts: [{top: fontPosion, text: 'Good luck', fontSize: prizeFontSize, fontStyle: "KGTenThousandReasons"}], imgs: [prizeImg2]},
     ])
     const [buttons] = useState([
         // { radius: '40%', background: '#EC0A53' },
@@ -261,12 +267,81 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     }, []);
 
     useEffect(() => {
-        console.log(fromLogin)
-
         if (fromLogin === "1") {
             setShowConfirmRedeem(true)
         }
     }, [fromLogin]);
+
+    useEffect(() => {
+        const wheelNOTON = localStorage.getItem("wheelNOTON");
+        const wheelCoinPUPs = localStorage.getItem("wheelCoinPUPs");
+        setNotonPlayOrClaim(parseInt(wheelNOTON || "1"))
+        setCoinpupsPlayOrClaim(parseInt(wheelCoinPUPs || "1"))
+    }, []);
+
+
+    async function goOtherApp(jumpUrl, jumpFlag) {
+        if (jumpFlag === "wheelNOTON") {
+            if (notonPlayOrClaim === 1) {
+                setNotonPlayOrClaim(2)
+                localStorage.setItem(jumpFlag, "2");
+                window.location.href = jumpUrl;
+            } else if (notonPlayOrClaim === 2) {
+                localStorage.setItem(jumpFlag, "3");
+                setNotonPlayOrClaim(3)
+                handleClaimClick(22)
+            }
+        } else if (jumpFlag === "wheelCoinPUPs") {
+            if (coinpupsPlayOrClaim === 1) {
+                setCoinpupsPlayOrClaim(2)
+                localStorage.setItem(jumpFlag, "2");
+                window.location.href = jumpUrl;
+            } else if (coinpupsPlayOrClaim === 2) {
+                localStorage.setItem(jumpFlag, "3");
+                setCoinpupsPlayOrClaim(3)
+                handleClaimClick(23)
+            }
+        }
+    }
+
+    const handleClaimClick = async (jumpFlag) => {
+        const jumpFlagResult = localStorage.getItem(jumpFlag);
+        if (jumpFlagResult) {
+            showError('You must play before claim');
+            return;
+        }
+        if (jumpFlag === 22) {
+            setNotonLoading(true)
+        } else if (jumpFlag === 23) {
+            setCoinpupsLoading(true)
+        }
+        const tgUserId = localStorage.getItem('tgUserId');
+        const token = localStorage.getItem('token');
+        if (tgUserId && token) {
+            const response = await fetch(BASE_URL + '/tg/addGavePoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({tgUserId, token, tgOrX: jumpFlag}),
+            });
+            //
+            const resResult = await response.json();
+            if (!resResult.success) {
+                showError(resResult.msg);
+            } else {
+                showSuccess('Claim Success');
+                setSpinRemainTime(spinRemainTime + 1)
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        } else {
+            showError('Network Error');
+        }
+        setNotonLoading(false)
+        setCoinpupsLoading(false)
+    };
 
     async function buySpin() {
         try {
@@ -341,9 +416,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         const envConfig = nextConfig?.publicRuntimeConfig?.env?.API
         let text;
         if (envConfig === 'dev' || envConfig === 'test') {
-            text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/afdafadf_bot/gggghhhhh?startapp=` + tgUserId);
+            text = encodeURIComponent(`💰New users get free 2 $TON! Come join the Outter Family together: t.me/afdafadf_bot/gggghhhhh?startapp=` + tgUserId);
         } else {
-            text = encodeURIComponent(`I'm earning money on Telegram with just tapping, come and join us: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
+            text = encodeURIComponent(`💰New users get free 2 $TON! Come join the Outter Family together: t.me/OutterDish_bot/Main?startapp=` + tgUserId);
         }
         // window.open(`https://telegram.me/share/url?text=` + text, '_blank');
         (window as any).Telegram.WebApp.openTelegramLink(
@@ -440,7 +515,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         </button>
                         {/*显示文案*/}
                         <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
-                            {showTag === 'Auto-tapper' ? <div className="mb-4"> You get 3 days Auto-tapper usage! </div>:showTag === 'full Ton' ? <div className="mb-4"> 🎉Congrats! U get 5 $Ton, get your rewards now!</div>:showTag === 'Directly Withdraw' ? <div className="mb-4"> 🎉Congrats! U can directly get ur rewards!</div> : showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
+                            {showTag === 'Auto-tapper' ? <div className="mb-4"> You get 3 days Auto-tapper usage! </div> : showTag === 'full Ton' ? <div className="mb-4"> 🎉Congrats! U get 5 $Ton, get your rewards now!</div> : showTag === 'Directly Withdraw' ? <div className="mb-4"> 🎉Congrats! U can directly get ur rewards!</div> : showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
                                 showTag === 'getFree' ? <div className="mb-4">🎉 Congrats! <br/> You get a free spin!</div> :
                                     showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
                                             <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
@@ -454,7 +529,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             }
                             {/*按钮*/}
                             <div className="flex justify-around">
-                                {(fromLogin !== "1" && loginPlay) && ((showTag === 'Directly Withdraw'||showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
+                                {(fromLogin !== "1" && loginPlay) && ((showTag === 'Directly Withdraw' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
                                     Contact @Knightlau
                                 </button> : showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
@@ -498,10 +573,19 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             </button>
                             <h2 className="text-2xl mb-4 mt-4">Get More Spins</h2>
                             <div className="flex items-center justify-between mb-4">
+                                <span className="flex-1 text-left">Use NOTON mine $NOT</span>
+                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${notonPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/NotonOffice_bot/game", 'wheelNOTON')}>{notonLoading ? (<span className="loading loading-spinner loading-sm"></span>) : notonPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
+                            </div>
+                            <div className="flex items-center justify-between mb-4">
+                                <span className="flex-1 text-left">Play CoinPUPs</span>
+                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${coinpupsPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/NotonOffice_bot/game", "wheelCoinPUPs")}>{coinpupsLoading ? (<span className="loading loading-spinner loading-sm"></span>) : coinpupsPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
+                            </div>
+                            <div className="flex items-center justify-between mb-4">
                                 <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
                                 <span className="flex-1 text-left">10,000 for daily 1 spin</span>
                                 <button className="bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => buySpin()}>{claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
+
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Invite 2 friends get 1 spin</span>
                                 <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1" onClick={() => inviteUser()}>{claimLoading2 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Invite'}</button>
