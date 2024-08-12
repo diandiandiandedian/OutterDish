@@ -586,11 +586,11 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             </button>
                             <h2 className="text-2xl mb-4 mt-4">Get More Spins</h2>
                             <div className="flex items-center justify-between mb-4">
-                                <span className="flex-1 text-left">Use NOTON mine $NOT</span>
+                                <span className="flex-1 text-left">Use NOTON mine $NOT get 1 spin</span>
                                 <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${notonPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/NotonOffice_bot/game", 'wheelNOTON')}>{notonLoading ? (<span className="loading loading-spinner loading-sm"></span>) : notonPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
                             </div>
                             <div className="flex items-center justify-between mb-4">
-                                <span className="flex-1 text-left">Play CoinPUPs</span>
+                                <span className="flex-1 text-left">Play CoinPUPs get 1 spin</span>
                                 <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${coinpupsPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/CoinPupsBot?start=30001218", "wheelCoinPUPs")}>{coinpupsLoading ? (<span className="loading loading-spinner loading-sm"></span>) : coinpupsPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
                             </div>
                             <div className="flex items-center justify-between mb-4">
