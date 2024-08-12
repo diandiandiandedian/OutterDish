@@ -16,11 +16,11 @@ export const Login: React.FC = () => {
 
 
     // const handleNextStep = () => {
-        // if (step === 2) {
-        // showError("Please set name")
-        // return
-        // }
-        // setStep(step + 1);
+    // if (step === 2) {
+    // showError("Please set name")
+    // return
+    // }
+    // setStep(step + 1);
     // };
 
     useEffect(() => {
@@ -92,8 +92,9 @@ export const Login: React.FC = () => {
                 }
             } else {
                 showError("An authentication failure occurred")
-                await fetch(BASE_URL + "/other/heartbeat", {method: 'POST', headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({error: "An authentication failure occurred"})
+                await fetch(BASE_URL + "/other/heartbeat", {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({error: JSON.stringify(result), userInfo: JSON.stringify(telegramInitData)})
                 });
             }
         } catch (e) {
@@ -144,7 +145,7 @@ export const Login: React.FC = () => {
     return (
         <div className="flex flex-col justify-center items-center h-screen bg-[url('/bg.svg')] bg-cover">
             {step === 1 && (
-                <div className="flex flex-col justify-center items-center text-center animate__animated animate__fadeIn" style={{ animationDelay: '0.3s' }}>
+                <div className="flex flex-col justify-center items-center text-center animate__animated animate__fadeIn" style={{animationDelay: '0.3s'}}>
                     <div className="text-2xl mb-10 ">Welcome to</div>
                     <h1 className="text-6xl mb-6">OutterDish</h1>
                     <p className="text-2xl mb-4">Order, play & earn</p>

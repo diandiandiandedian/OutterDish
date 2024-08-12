@@ -196,7 +196,7 @@ const tgVerfiy = async (req, res) => {
         }
         res.status(200).json({"result": true, "user": rows[0][0]});
     } else {
-        res.status(200).json({"result": false});
+        res.status(200).json({"result": false,"msg":"hash error"});
     }
 };
 
