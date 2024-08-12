@@ -106,6 +106,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     const [notonLoading, setNotonLoading] = useState(false);
     const [coinpupsLoading, setCoinpupsLoading] = useState(false);
 
+    const [todayHaveClaim, setTodayHaveClaim] = useState(false);
+    const [haveDailyFreeSpin, setHaveDailyFreeSpin] = useState(false);
+
     const [loginPlay, setLoginPlay] = useState(false);
     const spinRemainTimeRef = useRef(spinRemainTime);
     const userPointRef = useRef(userPoint);
@@ -258,6 +261,8 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 setTonValue(data.data.user['tonValue'])
                 setSpinRemainTime(data.data.user['spinRemainTime']);
                 setUserPoint(data.data.user['gameScore']);
+                setTodayHaveClaim(data.data['todayHaveClaim']);
+                setHaveDailyFreeSpin(data.data['HaveDailyFreeSpin']);
 
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -369,6 +374,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 showSuccess("claim success")
                 setSpinRemainTime(data.data['spinRemainTime']);
                 setUserPoint(data.data['gameScore'])
+                setTodayHaveClaim(true);
             }
             setClaimLoading(false);
         } catch (error) {
@@ -403,6 +409,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 setShowConfirmRedeem(true)
                 setShowTag('getFree')
                 setSpinRemainTime(data.data['spinRemainTime']);
+                setHaveDailyFreeSpin(true);
             }
             setClaimLoading3(false);
         } catch (error) {
@@ -583,16 +590,16 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             <div className="flex items-center justify-between mb-4">
                                 <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
                                 <span className="flex-1 text-left">10,000 for daily 1 spin</span>
-                                <button className="bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1" onClick={() => buySpin()}>{claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
+                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${todayHaveClaim && 'disabled bg-gray-300'}`} onClick={() => buySpin()}>{claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
 
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Invite 2 friends get 1 spin</span>
-                                <button className="bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1" onClick={() => inviteUser()}>{claimLoading2 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Invite'}</button>
+                                <button className={`bg-[#FFE541] p-2 rounded-full text-black shadow-[0px_4px_4px_0px_#FEA75CDE;] text-[12px] px-3 py-1`} onClick={() => inviteUser()}>{claimLoading2 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Invite'}</button>
                             </div>
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Daily Free Spin</span>
-                                <button className="bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10" onClick={() => dailySpin()}>{claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
+                                <button className={`bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10 ${haveDailyFreeSpin && 'disabled bg-gray-300'}`} onClick={() => dailySpin()}>{claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
                         </div>
                     </div>
