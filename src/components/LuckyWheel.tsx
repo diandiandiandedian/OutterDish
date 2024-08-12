@@ -590,7 +590,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             <div className="flex items-center justify-between mb-4">
                                 <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
                                 <span className="flex-1 text-left">10,000 for daily 1 spin</span>
-                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${todayHaveClaim && 'disabled bg-gray-300'}`} onClick={() => buySpin()}>{claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
+                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${todayHaveClaim && 'disabled bg-gray-300'}`} disabled={todayHaveClaim} onClick={() => buySpin()}>{claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
 
                             <div className="flex items-center justify-between mb-4">
@@ -599,7 +599,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             </div>
                             <div className="flex items-center justify-between mb-4">
                                 <span className="flex-1 text-left">Daily Free Spin</span>
-                                <button className={`bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10 ${haveDailyFreeSpin && 'disabled bg-gray-300'}`} onClick={() => dailySpin()}>{claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
+                                <button className={`bg-[#FFE541] rounded-full text-black text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ml-10 ${haveDailyFreeSpin && ' bg-gray-300'}`} disabled={haveDailyFreeSpin} onClick={() => dailySpin()}>{claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}</button>
                             </div>
                         </div>
                     </div>
