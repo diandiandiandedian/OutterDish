@@ -285,7 +285,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     }, []);
 
 
-    async function goOtherApp(jumpUrl:string, jumpFlag:string) {
+    async function goOtherApp(jumpUrl: string, jumpFlag: string) {
         if (jumpFlag === "wheelNOTON") {
             if (notonPlayOrClaim === 1) {
                 setNotonPlayOrClaim(2)
@@ -309,7 +309,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         }
     }
 
-    const handleClaimClick = async (jumpFlag:any) => {
+    const handleClaimClick = async (jumpFlag: any) => {
         // const jumpFlagResult = localStorage.getItem(jumpFlag);
         // if (jumpFlagResult) {
         //     showError('You must play before claim');
@@ -349,6 +349,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     };
 
     async function buySpin() {
+        if (todayHaveClaim) {
+            return
+        }
         try {
             const tgUserId = localStorage.getItem('tgUserId');
             const token = localStorage.getItem('token');
@@ -385,6 +388,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     async function dailySpin() {
         // sendMessageToTg()
+        if (haveDailyFreeSpin) {
+            return
+        }
         try {
             const tgUserId = localStorage.getItem('tgUserId');
             const token = localStorage.getItem('token');
