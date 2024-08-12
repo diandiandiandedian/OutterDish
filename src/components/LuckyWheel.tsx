@@ -280,7 +280,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     }, []);
 
 
-    async function goOtherApp(jumpUrl, jumpFlag) {
+    async function goOtherApp(jumpUrl:string, jumpFlag:string) {
         if (jumpFlag === "wheelNOTON") {
             if (notonPlayOrClaim === 1) {
                 setNotonPlayOrClaim(2)
@@ -304,12 +304,12 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         }
     }
 
-    const handleClaimClick = async (jumpFlag) => {
-        const jumpFlagResult = localStorage.getItem(jumpFlag);
-        if (jumpFlagResult) {
-            showError('You must play before claim');
-            return;
-        }
+    const handleClaimClick = async (jumpFlag:any) => {
+        // const jumpFlagResult = localStorage.getItem(jumpFlag);
+        // if (jumpFlagResult) {
+        //     showError('You must play before claim');
+        //     return;
+        // }
         if (jumpFlag === 22) {
             setNotonLoading(true)
         } else if (jumpFlag === 23) {
@@ -332,9 +332,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
             } else {
                 showSuccess('Claim Success');
                 setSpinRemainTime(spinRemainTime + 1)
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 1000);
             }
         } else {
             showError('Network Error');
