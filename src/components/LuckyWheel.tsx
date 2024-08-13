@@ -459,7 +459,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         // (window as any).Telegram.WebApp.openTelegramLink(
         //     `https://t.me/share/url?url=${text}`
         // );
-        window.location.href = `tg://resolve?domain=@Knightlau`;
+        window.location.href = `https://t.me/Knightlau`;
     }
 
     return <div className="flex flex-col justify-center h-full w-full items-center bg-[url('/bg.svg')] object-cover bg-cover">
