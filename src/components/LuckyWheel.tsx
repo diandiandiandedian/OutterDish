@@ -170,6 +170,13 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 buttons: buttons,
                 start: async () => {
                     setLoginPlay(true)
+                    console.log('tonValueRef.current',tonValueRef.current)
+                    if (tonValueRef.current >= 5) {
+                        // 达到5ton了,直接让提现
+                        setShowTag('full Ton')
+                        setShowConfirmRedeem(true)
+                        return
+                    }
                     // console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef)
                     // console.error('spinRemainTime,spinRemainTime', spinRemainTimeRef.current)
                     if (spinRemainTimeRef.current === 0) {
