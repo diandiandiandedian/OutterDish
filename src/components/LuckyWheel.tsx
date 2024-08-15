@@ -535,7 +535,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                         </button>
                         {/*显示文案*/}
                         <div className="bg-[#FFBF59] p-6 rounded-lg text-center mx-auto w-[100%] ">
-                            {showTag === 'Auto-tapper' ? <div className="mb-4"> You get 3 days Auto-tapper usage! </div> : showTag === 'full Ton' ? <div className="mb-4"> 🎉Congrats! U get 5 $Ton, get your rewards now!</div> : showTag === 'Directly Withdraw' ? <div className="mb-4"> 🎉Congrats! U can directly get ur rewards!</div> : showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
+                            {showTag === 'Auto-tapper' ? <div className="mb-4"> You get 3 days Auto-tapper usage! </div> : showTag === 'full Ton' ? <div className="mb-4"> 🎉Congrats! U get 5 $Ton, get your rewards now!</div> : showTag === 'Withdraw Now' ? <div className="mb-4"> 🎉Congrats! U can directly get ur rewards!</div> : showTag === 'Good luck' ? <div className="mb-4"> {pinPrize}!</div> : showTag === '15000' ? <div className="mb-4">🎉 Congrats! You get {pinPrize}!</div> :
                                 showTag === 'getFree' ? <div className="mb-4">🎉 Congrats! <br/> You get a free spin!</div> :
                                     showTag === '2' || showTag === '0.5' || showTag === '0.1' ? <div className="mb-4">🎉You get <br/>
                                             <div className="flex items-center justify-center mt-2"><img className="mr-2" src="/ton.svg" alt=""/>{showTag}</div>
@@ -549,7 +549,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             }
                             {/*按钮*/}
                             <div className="flex justify-around">
-                                {(fromLogin !== "1" && loginPlay) && ((showTag === 'Directly Withdraw' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
+                                {(fromLogin !== "1" && loginPlay) && ((showTag === 'Withdraw Now' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
                                     Contact @Knightlau
                                 </button> : showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
