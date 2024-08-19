@@ -108,6 +108,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     const [todayHaveClaim, setTodayHaveClaim] = useState(false);
     const [haveDailyFreeSpin, setHaveDailyFreeSpin] = useState(false);
+    const [firstTimeClaim, setFirstTimeClaim] = useState(1);
 
     const [loginPlay, setLoginPlay] = useState(false);
     const spinRemainTimeRef = useRef(spinRemainTime);
@@ -170,7 +171,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 buttons: buttons,
                 start: async () => {
                     setLoginPlay(true)
-                    console.log('tonValueRef.current',tonValueRef.current)
+                    console.log('tonValueRef.current', tonValueRef.current)
                     if (tonValueRef.current >= 5) {
                         // 达到5ton了,直接让提现
                         setShowTag('full Ton')
@@ -279,7 +280,8 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     }, []);
 
     useEffect(() => {
-        if (fromLogin === "1") {
+        console.log('fromLogin222222', fromLogin)
+        if (fromLogin === "1" || fromLogin === "3") {
             setShowConfirmRedeem(true)
         }
     }, [fromLogin]);
@@ -462,6 +464,52 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         window.location.href = `https://t.me/Knightlau`;
     }
 
+    async function goTgGroup() {
+        if (firstTimeClaim === 1) {
+            setFirstTimeClaim(2)
+            const envConfig = nextConfig?.publicRuntimeConfig?.env?.API
+            let text;
+            if (envConfig === 'dev' || envConfig === 'test') {
+                text = "https://t.me/+fB39gfCC13EyMDY1";
+            } else {
+                text = "";
+            }
+            window.location.href = text;
+        } else if (firstTimeClaim === 2) {
+            // claim第一次机会
+            const tgUserId = localStorage.getItem('tgUserId');
+            const token = localStorage.getItem('token');
+            if (!tgUserId || !token) {
+                console.error('Username or token not found in local storage');
+                return;
+            }
+            setClaimLoading3(true)
+            const response = await fetch(BASE_URL + '/tg/claimFirstSpin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({tgUserId: tgUserId, token}),
+            });
+            const data = await response.json();
+            setClaimLoading3(false)
+            if (data.success === false) {
+                showError(data['msg'])
+                setFirstTimeClaim(1)
+            } else {
+                if (data.data === true) {
+                    setSpinRemainTime(spinRemainTime + 1);
+                    setFirstTimeClaim(3)
+                }
+            }
+        }
+    }
+
+    function ReceiveFirstSpinClose() {
+        setShowConfirmRedeem(false)
+        setFirstTimeClaim(4)
+    }
+
     return <div className="flex flex-col justify-center h-full w-full items-center bg-[url('/bg.svg')] object-cover bg-cover">
         <div className="overflow-y-auto">
             <div className="flex items-center mt-6">
@@ -545,11 +593,17 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 (fromLogin === "1" && !loginPlay) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
                             }
                             {
-                                (fromLogin === "1" && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
+                                (fromLogin === "3" &&  (firstTimeClaim === 1||firstTimeClaim === 2)) && <div className="mb-4">chat to get free spin</div>
+                            }
+                            {
+                                (fromLogin === "3" && firstTimeClaim === 3) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
+                            }
+                            {
+                                ((fromLogin === "1" || fromLogin === "3") && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
                             }
                             {/*按钮*/}
                             <div className="flex justify-around">
-                                {(fromLogin !== "1" && loginPlay) && ((showTag === 'Withdraw Now' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
+                                {(fromLogin !== "1" && fromLogin !== "3" && loginPlay) && ((showTag === 'Withdraw Now' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
                                     Contact @Knightlau
                                 </button> : showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
@@ -568,7 +622,17 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                     </button>
                                 }
                                 {
-                                    (fromLogin === "1" && loginPlay) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push({
+                                    (fromLogin === "3" && (firstTimeClaim === 1 || firstTimeClaim === 2)) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => goTgGroup()}>
+                                        {firstTimeClaim === 1 ? "Send Message" : claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : "Claim"}
+                                    </button>
+                                }
+                                {
+                                    (fromLogin === "3" && firstTimeClaim === 3) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => ReceiveFirstSpinClose()}>
+                                        Start Spin
+                                    </button>
+                                }
+                                {
+                                    ((fromLogin === "1" || fromLogin === "3") && loginPlay) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push({
                                         pathname: '/game',
                                         query: {fromLogin: '1'}  // 示例参数
                                     })}>
