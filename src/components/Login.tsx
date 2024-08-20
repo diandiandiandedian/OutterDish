@@ -45,6 +45,7 @@ export const Login: React.FC = () => {
     // },[]);
 
     async function tgVerfiyAndLogin(onlyVerfiy: boolean) {
+        console.log('aaaa')
         // console.log('telegramInitData', telegramInitData)
         if ((window as any).Telegram === undefined || (window as any).Telegram.WebApp.initDataUnsafe.user === undefined) {
             // console.log((window as any).Telegram.WebApp)
@@ -130,10 +131,18 @@ export const Login: React.FC = () => {
                 localStorage.setItem('username', name);
                 localStorage.setItem('tgUserId', tgId);
                 localStorage.setItem('token', resResult.data.token);
-                router.push({
-                    pathname: '/wheel',
-                    query: {fromLogin: '1'}  // 示例参数
-                });
+                if (resResult.data['spinRemainTime'] === 1){
+                    router.push({
+                        pathname: '/wheel',
+                        query: {fromLogin: '1'}  // 示例参数
+                    });
+                }else {
+                    router.push({
+                        pathname: '/wheel',
+                        query: {fromLogin: '3'}  // 示例参数
+                    });
+                }
+
             }
             setLoginLoading(false)
         } catch (e) {

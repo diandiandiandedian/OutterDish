@@ -25,7 +25,7 @@ const LayoutWithTabs: React.FC<{ children: React.ReactNode, fromLogin: string }>
         <div className="flex flex-col h-screen">
             <div className="flex-1">{children}</div>
             {/* 增加底部填充以避免与导航栏重叠 */}
-            {fromLogin === "1" ? <div></div> :
+            {fromLogin === "1" || fromLogin === "3"  ? <div></div> :
                 <div className="fixed bottom-6 left-0 right-0 bg-[#FFE541AD] text-black flex justify-around rounded-t-lg text-xs">
                     <button
                         onClick={() => setActiveTab(TABS.home)}

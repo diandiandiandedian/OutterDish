@@ -4,7 +4,7 @@ import nextConfig from "../../next.config.mjs";
 // 172.20.10.3
 // https://testapi.ezswap.io/
 export const BASE_URL = {
-    dev: "http://172.20.10.6:8085/",
+    dev: "https://testapi.ezswap.io/",
     test: "https://testapi.ezswap.io/",
     pro: "https://api.ezswap.io/",
 }[nextConfig.publicRuntimeConfig.env.API];
