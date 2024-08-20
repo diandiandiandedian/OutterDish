@@ -95,6 +95,8 @@ const CouponsPage: React.FC = () => {
         if (clickCount === 5) {
             localStorage.removeItem("tgUserId")
             localStorage.removeItem("token")
+            localStorage.removeItem("sendMsgForFirstSpin")
+            localStorage.removeItem("sendMsgShowTime")
             showSuccess('login out')
         }
     };
