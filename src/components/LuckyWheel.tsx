@@ -108,6 +108,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     const [todayHaveClaim, setTodayHaveClaim] = useState(false);
     const [haveDailyFreeSpin, setHaveDailyFreeSpin] = useState(false);
+    const [flagForSendMsg, setFlagForSendMsg] = useState(1);
     const [firstTimeClaim, setFirstTimeClaim] = useState(1);
 
     const [loginPlay, setLoginPlay] = useState(false);
@@ -115,7 +116,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     const userPointRef = useRef(userPoint);
     const tonValueRef = useRef(tonValue);
 
-    const {fromLogin} = router.query;
+    let {fromLogin} = router.query;
 
     useEffect(() => {
         spinRemainTimeRef.current = spinRemainTime;
@@ -473,6 +474,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
             localStorage.setItem('sendMsgShowTime', (sendMsgShowTime + 1).toString());
             setShowConfirmRedeem(true)
             setFirstTimeClaim(2)
+            setFlagForSendMsg(2)
         }
     }, []);
 
@@ -607,17 +609,17 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 (fromLogin === "1" && !loginPlay) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
                             }
                             {
-                                (fromLogin === "3" && (firstTimeClaim === 1 || firstTimeClaim === 2)) && <div className="mb-4">Say Hi in OutterDish Family to get ur first spin!</div>
+                                ((flagForSendMsg === 2 || fromLogin === "3") && (firstTimeClaim === 1 || firstTimeClaim === 2)) && <div className="mb-4">Say Hi in OutterDish Family to get ur first spin!</div>
                             }
                             {
-                                (fromLogin === "3" && firstTimeClaim === 3) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
+                                (  (flagForSendMsg === 2 || fromLogin === "3") && firstTimeClaim === 3) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
                             }
                             {
-                                ((fromLogin === "1" || fromLogin === "3") && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
+                                ((fromLogin === "1" || fromLogin === "3" || flagForSendMsg === 2 ) && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
                             }
                             {/*按钮*/}
                             <div className="flex justify-around">
-                                {(fromLogin !== "1" && fromLogin !== "3" && loginPlay) && ((showTag === 'Withdraw Now' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
+                                {(flagForSendMsg !== 2 && fromLogin !== "1" && fromLogin !== "3" && loginPlay) && ((showTag === 'Withdraw Now' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
                                     Contact @Knightlau
                                 </button> : showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
@@ -636,17 +638,17 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                     </button>
                                 }
                                 {
-                                    (fromLogin === "3" && (firstTimeClaim === 1 || firstTimeClaim === 2)) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => goTgGroup()}>
+                                    ((flagForSendMsg === 2 || fromLogin === "3") && (firstTimeClaim === 1 || firstTimeClaim === 2)) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => goTgGroup()}>
                                         {firstTimeClaim === 1 ? "Send Message" : claimLoading3 ? (<span className="loading loading-spinner loading-sm"></span>) : "Claim"}
                                     </button>
                                 }
                                 {
-                                    (fromLogin === "3" && firstTimeClaim === 3) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => ReceiveFirstSpinClose()}>
+                                    ((flagForSendMsg === 2 || fromLogin === "3") && firstTimeClaim === 3) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => ReceiveFirstSpinClose()}>
                                         Start Spin
                                     </button>
                                 }
                                 {
-                                    ((fromLogin === "1" || fromLogin === "3") && loginPlay) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push({
+                                    ((flagForSendMsg === 2 || fromLogin === "1" || fromLogin === "3") && loginPlay) && <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => router.push({
                                         pathname: '/game',
                                         query: {fromLogin: '1'}  // 示例参数
                                     })}>
@@ -670,14 +672,14 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 <img src="/x.svg" alt=""/>
                             </button>
                             <h2 className="text-2xl mb-4 mt-4">Get More Spins</h2>
-                            <div className="flex items-center justify-between mb-4">
-                                <span className="flex-1 text-left">Use NOTON mine $NOT get 1 spin</span>
-                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${notonPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/NotonOffice_bot/game", 'wheelNOTON')}>{notonLoading ? (<span className="loading loading-spinner loading-sm"></span>) : notonPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
-                            </div>
-                            <div className="flex items-center justify-between mb-4">
-                                <span className="flex-1 text-left">Play CoinPUPs get 1 spin</span>
-                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${coinpupsPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/CoinPupsBot?start=30001218", "wheelCoinPUPs")}>{coinpupsLoading ? (<span className="loading loading-spinner loading-sm"></span>) : coinpupsPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
-                            </div>
+                            {/*<div className="flex items-center justify-between mb-4">*/}
+                            {/*    <span className="flex-1 text-left">Use NOTON mine $NOT get 1 spin</span>*/}
+                            {/*    <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${notonPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/NotonOffice_bot/game", 'wheelNOTON')}>{notonLoading ? (<span className="loading loading-spinner loading-sm"></span>) : notonPlayOrClaim === 1 ? 'Play' : "Claim"}</button>*/}
+                            {/*</div>*/}
+                            {/*<div className="flex items-center justify-between mb-4">*/}
+                            {/*    <span className="flex-1 text-left">Play CoinPUPs get 1 spin</span>*/}
+                            {/*    <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${coinpupsPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/CoinPupsBot?start=30001218", "wheelCoinPUPs")}>{coinpupsLoading ? (<span className="loading loading-spinner loading-sm"></span>) : coinpupsPlayOrClaim === 1 ? 'Play' : "Claim"}</button>*/}
+                            {/*</div>*/}
                             <div className="flex items-center justify-between mb-4">
                                 <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
                                 <span className="flex-1 text-left">10,000 for daily 1 spin</span>
