@@ -470,9 +470,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
             const envConfig = nextConfig?.publicRuntimeConfig?.env?.API
             let text;
             if (envConfig === 'dev' || envConfig === 'test') {
-                text = "https://t.me/+fB39gfCC13EyMDY1";
+                text = "https://t.me/+sMA_u7T_i4RkMjc1";
             } else {
-                text = "";
+                text = "https://t.me/+sMA_u7T_i4RkMjc1";
             }
             window.location.href = text;
         } else if (firstTimeClaim === 2) {
@@ -593,7 +593,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 (fromLogin === "1" && !loginPlay) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
                             }
                             {
-                                (fromLogin === "3" &&  (firstTimeClaim === 1||firstTimeClaim === 2)) && <div className="mb-4">chat to get free spin</div>
+                                (fromLogin === "3" &&  (firstTimeClaim === 1||firstTimeClaim === 2)) && <div className="mb-4">Say Hi in OutterDish Family to get ur first spin!</div>
                             }
                             {
                                 (fromLogin === "3" && firstTimeClaim === 3) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
