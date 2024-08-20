@@ -25,13 +25,13 @@ const QuestsPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <QuestItem
-                    imgSrc="/panter/noton.jpg"
-                    title="Use NOTON mine $NOT"
-                    description=""
-                    points={playgame}
-                    id="noton"
-                />
+                {/*<QuestItem*/}
+                {/*    imgSrc="/panter/noton.jpg"*/}
+                {/*    title="Use NOTON mine $NOT"*/}
+                {/*    description=""*/}
+                {/*    points={playgame}*/}
+                {/*    id="noton"*/}
+                {/*/>*/}
                 <QuestItem
                     imgSrc="/panter/TapPop.png"
                     title="Play TapPop & earn rewards"
