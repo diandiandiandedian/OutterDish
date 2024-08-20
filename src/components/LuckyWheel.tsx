@@ -464,9 +464,22 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         window.location.href = `https://t.me/Knightlau`;
     }
 
+
+    useEffect(() => {
+        const sendMsgForFirstSpin = localStorage.getItem('sendMsgForFirstSpin');
+        const sendMsgShowTime = parseInt(localStorage.getItem('sendMsgShowTime') || "0");
+
+        if (sendMsgShowTime < 3 && sendMsgForFirstSpin === 'haveSendMsg') {
+            localStorage.setItem('sendMsgShowTime', (sendMsgShowTime + 1).toString());
+            setShowConfirmRedeem(true)
+            setFirstTimeClaim(2)
+        }
+    }, []);
+
     async function goTgGroup() {
         if (firstTimeClaim === 1) {
             setFirstTimeClaim(2)
+            localStorage.setItem('sendMsgForFirstSpin', "haveSendMsg");
             const envConfig = nextConfig?.publicRuntimeConfig?.env?.API
             let text;
             if (envConfig === 'dev' || envConfig === 'test') {
@@ -498,6 +511,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 setFirstTimeClaim(1)
             } else {
                 if (data.data === true) {
+                    localStorage.setItem('sendMsgForFirstSpin', "haveClaim");
                     setSpinRemainTime(spinRemainTime + 1);
                     setFirstTimeClaim(3)
                 }
@@ -593,7 +607,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 (fromLogin === "1" && !loginPlay) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
                             }
                             {
-                                (fromLogin === "3" &&  (firstTimeClaim === 1||firstTimeClaim === 2)) && <div className="mb-4">Say Hi in OutterDish Family to get ur first spin!</div>
+                                (fromLogin === "3" && (firstTimeClaim === 1 || firstTimeClaim === 2)) && <div className="mb-4">Say Hi in OutterDish Family to get ur first spin!</div>
                             }
                             {
                                 (fromLogin === "3" && firstTimeClaim === 3) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
