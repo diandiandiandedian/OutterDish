@@ -302,9 +302,11 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     async function goOtherApp(jumpUrl: string, jumpFlag: string) {
         // if (jumpFlag === "squirrelLegendPlayOrClaim") {
         if (squirrelLegendPlayOrClaim === 1) {
-            setSquirrelLegendPlayOrClaim(2)
             localStorage.setItem(jumpFlag, "2");
             window.location.href = jumpUrl;
+            setTimeout(() => {
+                setSquirrelLegendPlayOrClaim(2)
+            }, 2000); // 延迟1秒
         } else if (squirrelLegendPlayOrClaim === 2) {
             localStorage.setItem(jumpFlag, "3");
             setSquirrelLegendPlayOrClaim(3)

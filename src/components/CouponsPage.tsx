@@ -97,6 +97,7 @@ const CouponsPage: React.FC = () => {
             localStorage.removeItem("token")
             localStorage.removeItem("sendMsgForFirstSpin")
             localStorage.removeItem("sendMsgShowTime")
+            localStorage.removeItem("SquirrelLegend")
             showSuccess('login out')
         }
     };
