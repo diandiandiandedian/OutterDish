@@ -345,7 +345,8 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         if (jumpFlag === 22) {
             setNotonLoading(true)
         } else if (jumpFlag === 23) {
-            setCoinpupsLoading(true)
+            // setCoinpupsLoading(true)
+            setSquirrelLegendLoading(true)
         }
         const tgUserId = localStorage.getItem('tgUserId');
         const token = localStorage.getItem('token');
@@ -373,6 +374,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         }
         setNotonLoading(false)
         setCoinpupsLoading(false)
+        setSquirrelLegendLoading(false)
     };
 
     async function buySpin() {
