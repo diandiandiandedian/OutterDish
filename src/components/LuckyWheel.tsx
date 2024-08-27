@@ -101,9 +101,11 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     const [claimLoading2, setClaimLoading2] = useState(false);
 
     const [notonPlayOrClaim, setNotonPlayOrClaim] = useState(1);
+    const [squirrelLegendPlayOrClaim, setSquirrelLegendPlayOrClaim] = useState(1);
     const [coinpupsPlayOrClaim, setCoinpupsPlayOrClaim] = useState(1);
     const [claimLoading3, setClaimLoading3] = useState(false);
     const [notonLoading, setNotonLoading] = useState(false);
+    const [squirrelLegendLoading, setSquirrelLegendLoading] = useState(false);
     const [coinpupsLoading, setCoinpupsLoading] = useState(false);
 
     const [todayHaveClaim, setTodayHaveClaim] = useState(false);
@@ -290,33 +292,48 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     useEffect(() => {
         const wheelNOTON = localStorage.getItem("wheelNOTON");
         const wheelCoinPUPs = localStorage.getItem("wheelCoinPUPs");
+        const SquirrelLegend = localStorage.getItem("SquirrelLegend");
         setNotonPlayOrClaim(parseInt(wheelNOTON || "1"))
         setCoinpupsPlayOrClaim(parseInt(wheelCoinPUPs || "1"))
+        setSquirrelLegendPlayOrClaim(parseInt(SquirrelLegend || "1"))
     }, []);
 
 
     async function goOtherApp(jumpUrl: string, jumpFlag: string) {
-        if (jumpFlag === "wheelNOTON") {
-            if (notonPlayOrClaim === 1) {
-                setNotonPlayOrClaim(2)
-                localStorage.setItem(jumpFlag, "2");
-                window.location.href = jumpUrl;
-            } else if (notonPlayOrClaim === 2) {
-                localStorage.setItem(jumpFlag, "3");
-                setNotonPlayOrClaim(3)
-                handleClaimClick(22)
-            }
-        } else if (jumpFlag === "wheelCoinPUPs") {
-            if (coinpupsPlayOrClaim === 1) {
-                setCoinpupsPlayOrClaim(2)
-                localStorage.setItem(jumpFlag, "2");
-                window.location.href = jumpUrl;
-            } else if (coinpupsPlayOrClaim === 2) {
-                localStorage.setItem(jumpFlag, "3");
-                setCoinpupsPlayOrClaim(3)
-                handleClaimClick(23)
-            }
+        // if (jumpFlag === "squirrelLegendPlayOrClaim") {
+        if (squirrelLegendPlayOrClaim === 1) {
+            localStorage.setItem(jumpFlag, "2");
+            window.location.href = jumpUrl;
+            setTimeout(() => {
+                setSquirrelLegendPlayOrClaim(2)
+            }, 2000); // 延迟1秒
+        } else if (squirrelLegendPlayOrClaim === 2) {
+            localStorage.setItem(jumpFlag, "3");
+            setSquirrelLegendPlayOrClaim(3)
+            handleClaimClick(23)
         }
+        // }
+        // if (jumpFlag === "wheelNOTON") {
+        //     if (notonPlayOrClaim === 1) {
+        //         setNotonPlayOrClaim(2)
+        //         localStorage.setItem(jumpFlag, "2");
+        //         window.location.href = jumpUrl;
+        //     } else if (notonPlayOrClaim === 2) {
+        //         localStorage.setItem(jumpFlag, "3");
+        //         setNotonPlayOrClaim(3)
+        //         handleClaimClick(22)
+        //     }
+        // } else if (jumpFlag === "wheelCoinPUPs") {
+        //     if (coinpupsPlayOrClaim === 1) {
+        //         setCoinpupsPlayOrClaim(2)
+        //         localStorage.setItem(jumpFlag, "2");
+        //         window.location.href = jumpUrl;
+        //     } else if (coinpupsPlayOrClaim === 2) {
+        //         localStorage.setItem(jumpFlag, "3");
+        //         setCoinpupsPlayOrClaim(3)
+        //         handleClaimClick(23)
+        //     }
+        // }
     }
 
     const handleClaimClick = async (jumpFlag: any) => {
@@ -612,10 +629,10 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 ((flagForSendMsg === 2 || fromLogin === "3") && (firstTimeClaim === 1 || firstTimeClaim === 2)) && <div className="mb-4">Say Hi in OutterDish Family to get ur first spin!</div>
                             }
                             {
-                                (  (flagForSendMsg === 2 || fromLogin === "3") && firstTimeClaim === 3) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
+                                ((flagForSendMsg === 2 || fromLogin === "3") && firstTimeClaim === 3) && <div className="mb-4">🎉 Congrats! You get a free spin!</div>
                             }
                             {
-                                ((fromLogin === "1" || fromLogin === "3" || flagForSendMsg === 2 ) && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
+                                ((fromLogin === "1" || fromLogin === "3" || flagForSendMsg === 2) && loginPlay) && <div className="mb-4">Play Game to earn another spin!</div>
                             }
                             {/*按钮*/}
                             <div className="flex justify-around">
@@ -672,10 +689,10 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 <img src="/x.svg" alt=""/>
                             </button>
                             <h2 className="text-2xl mb-4 mt-4">Get More Spins</h2>
-                            {/*<div className="flex items-center justify-between mb-4">*/}
-                            {/*    <span className="flex-1 text-left">Use NOTON mine $NOT get 1 spin</span>*/}
-                            {/*    <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${notonPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/NotonOffice_bot/game", 'wheelNOTON')}>{notonLoading ? (<span className="loading loading-spinner loading-sm"></span>) : notonPlayOrClaim === 1 ? 'Play' : "Claim"}</button>*/}
-                            {/*</div>*/}
+                            <div className="flex items-center justify-between mb-4">
+                                <span className="flex-1 text-left">Play Squirrel Legend to win $700 and 1 free spin</span>
+                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${squirrelLegendPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/squirrel_legend_bot/sqlegend?startapp=bKuYBadfB", 'SquirrelLegend')}>{squirrelLegendLoading ? (<span className="loading loading-spinner loading-sm"></span>) : squirrelLegendPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
+                            </div>
                             {/*<div className="flex items-center justify-between mb-4">*/}
                             {/*    <span className="flex-1 text-left">Play CoinPUPs get 1 spin</span>*/}
                             {/*    <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${coinpupsPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/CoinPupsBot?start=30001218", "wheelCoinPUPs")}>{coinpupsLoading ? (<span className="loading loading-spinner loading-sm"></span>) : coinpupsPlayOrClaim === 1 ? 'Play' : "Claim"}</button>*/}

@@ -48,9 +48,9 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             (window as any).Telegram.WebApp.openTelegramLink(
                 `https://t.me/share/url?url=${text}`
             );
-        } else if (id === 'noton') {
-            localStorage.setItem('noton', 'true');
-            window.location.href = 'https://t.me/NotonOffice_bot/game';
+        } else if (id === 'Hunt') {
+            localStorage.setItem('Hunt', 'true');
+            window.location.href = 'https://t.me/NifisHuntBot/app?startapp=2070531098';
         } else if (id === 'TapPop') {
             localStorage.setItem('TapPop', 'true');
             window.location.href = 'https://t.me/tappopbot?start=7432874170';
@@ -63,9 +63,9 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             showError('You must follow on X before claim');
             return;
         }
-        const noton = localStorage.getItem('noton');
-        if (id === 'noton' && !noton) {
-            showError('You must play noton before claim');
+        const Hunt = localStorage.getItem('Hunt');
+        if (id === 'Hunt' && !Hunt) {
+            showError('You must play Nifi\'s Hunt before claim');
             return;
         }
         const startAI = localStorage.getItem('TapPop');
@@ -84,7 +84,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
             tgOrX = 6
         } else if (id === 'invite3') {
             tgOrX = 7
-        } else if (id === 'noton') {
+        } else if (id === 'Hunt') {
             tgOrX = 8
         } else if (id === 'TapPop') {
             tgOrX = 9
@@ -138,7 +138,7 @@ const QuestItem: React.FC<QuestItemProps> = ({imgSrc, title, description, points
                     </div>
                     <div className="flex flex-col">
                         <button className="bg-[#41BAFF] text-sm text-white px-2 py-1 rounded-full mb-1" onClick={handleJoinClick}>
-                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite') !== -1 ? 'Share' : (id === 'noton' || id === 'TapPop') ? 'Play' : 'Follow'}
+                            {joinLoading ? (<span className="loading loading-spinner loading-sm"></span>) : id.indexOf('invite') !== -1 ? 'Share' : (id === 'Hunt' || id === 'TapPop') ? 'Play' : 'Follow'}
                         </button>
                         <button className="bg-[#FFE541] text-sm text-black px-2 py-1 rounded-full" onClick={handleClaimClick}>
                             {claimLoading ? (<span className="loading loading-spinner loading-sm"></span>) : 'Claim'}
