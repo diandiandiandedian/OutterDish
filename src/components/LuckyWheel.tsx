@@ -112,6 +112,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     const [haveDailyFreeSpin, setHaveDailyFreeSpin] = useState(false);
     const [flagForSendMsg, setFlagForSendMsg] = useState(1);
     const [firstTimeClaim, setFirstTimeClaim] = useState(1);
+    const [tempTgUserId, setTempTgUserId] = useState("");
 
     const [loginPlay, setLoginPlay] = useState(false);
     const spinRemainTimeRef = useRef(spinRemainTime);
@@ -131,6 +132,11 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
     useEffect(() => {
         tonValueRef.current = tonValue;
     }, [tonValue]);
+
+    useEffect(() => {
+        const tgUserId = localStorage.getItem('tgUserId');
+        setTempTgUserId(tgUserId)
+    }, []);
 
 
     const prizeList = ["0.1", "2", 'Free Spin', 'Directly Withdraw', '0.5', 'Auto-tapper', '15000', 'Good luck']
@@ -638,7 +644,8 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                             }
                             {/*按钮*/}
                             <div className="flex justify-around">
-                                {(flagForSendMsg !== 2 && fromLogin !== "1" && fromLogin !== "3" && loginPlay) && ((showTag === 'Withdraw Now' || showTag === 'full Ton') ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
+                                {(flagForSendMsg !== 2 && fromLogin !== "1" && fromLogin !== "3" && loginPlay) && ((showTag === 'Withdraw Now' || showTag === 'full Ton') ?
+                                    tempTgUserId === "6724663127"?<div></div>:<button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => sendMessageToTg()}>
                                     Contact @Knightlau
                                 </button> : showTag === 'getFree' ? <button className="bg-[#FFE541] text-black p-2 rounded-full w-full" onClick={() => setShowConfirmRedeem(false)}>
                                         Start Spin
