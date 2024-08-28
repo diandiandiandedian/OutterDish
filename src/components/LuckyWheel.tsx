@@ -135,7 +135,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     useEffect(() => {
         const tgUserId = localStorage.getItem('tgUserId');
-        setTempTgUserId(tgUserId)
+        setTempTgUserId(tgUserId || "")
     }, []);
 
 
