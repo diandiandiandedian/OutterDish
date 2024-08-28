@@ -32,13 +32,13 @@ const QuestsPage: React.FC = () => {
                 {/*    points={playgame}*/}
                 {/*    id="noton"*/}
                 {/*/>*/}
-                {/*<QuestItem*/}
-                {/*    imgSrc="/panter/Hunt.png"*/}
-                {/*    title="Come and Play Nifi's Hunt!"*/}
-                {/*    description=""*/}
-                {/*    points={playgame}*/}
-                {/*    id="Hunt"*/}
-                {/*/>*/}
+                <QuestItem
+                    imgSrc="/panter/Hunt.png"
+                    title="Come and Play Nifi's Hunt!"
+                    description=""
+                    points={playgame}
+                    id="Hunt"
+                />
                 <QuestItem
                     imgSrc="/panter/TapPop.png"
                     title="Play TapPop & earn rewards"
