@@ -307,39 +307,30 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
 
     async function goOtherApp(jumpUrl: string, jumpFlag: string) {
         // if (jumpFlag === "squirrelLegendPlayOrClaim") {
-        if (squirrelLegendPlayOrClaim === 1) {
-            localStorage.setItem(jumpFlag, "2");
-            window.location.href = jumpUrl;
-            setTimeout(() => {
-                setSquirrelLegendPlayOrClaim(2)
-            }, 2000); // 延迟1秒
-        } else if (squirrelLegendPlayOrClaim === 2) {
-            localStorage.setItem(jumpFlag, "3");
-            setSquirrelLegendPlayOrClaim(3)
-            handleClaimClick(23)
+        // }
+        if (jumpFlag === "wheelCoinPUPs") {
+            if (coinpupsPlayOrClaim === 1) {
+                setCoinpupsPlayOrClaim(2)
+                localStorage.setItem(jumpFlag, "2");
+                window.location.href = jumpUrl;
+            } else if (coinpupsPlayOrClaim === 2) {
+                localStorage.setItem(jumpFlag, "3");
+                setCoinpupsPlayOrClaim(3)
+                handleClaimClick(102)
+            }
+        }else if (jumpFlag === "squirrelLegendPlayOrClaim"){
+            if (squirrelLegendPlayOrClaim === 1) {
+                localStorage.setItem(jumpFlag, "2");
+                window.location.href = jumpUrl;
+                setTimeout(() => {
+                    setSquirrelLegendPlayOrClaim(2)
+                }, 2000); // 延迟1秒
+            } else if (squirrelLegendPlayOrClaim === 2) {
+                localStorage.setItem(jumpFlag, "3");
+                setSquirrelLegendPlayOrClaim(3)
+                handleClaimClick(23)
+            }
         }
-        // }
-        // if (jumpFlag === "wheelNOTON") {
-        //     if (notonPlayOrClaim === 1) {
-        //         setNotonPlayOrClaim(2)
-        //         localStorage.setItem(jumpFlag, "2");
-        //         window.location.href = jumpUrl;
-        //     } else if (notonPlayOrClaim === 2) {
-        //         localStorage.setItem(jumpFlag, "3");
-        //         setNotonPlayOrClaim(3)
-        //         handleClaimClick(22)
-        //     }
-        // } else if (jumpFlag === "wheelCoinPUPs") {
-        //     if (coinpupsPlayOrClaim === 1) {
-        //         setCoinpupsPlayOrClaim(2)
-        //         localStorage.setItem(jumpFlag, "2");
-        //         window.location.href = jumpUrl;
-        //     } else if (coinpupsPlayOrClaim === 2) {
-        //         localStorage.setItem(jumpFlag, "3");
-        //         setCoinpupsPlayOrClaim(3)
-        //         handleClaimClick(23)
-        //     }
-        // }
     }
 
     const handleClaimClick = async (jumpFlag: any) => {
@@ -353,6 +344,9 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
         } else if (jumpFlag === 23) {
             // setCoinpupsLoading(true)
             setSquirrelLegendLoading(true)
+        } else if (jumpFlag === 102) {
+            // setCoinpupsLoading(true)
+            setCoinpupsLoading(true)
         }
         const tgUserId = localStorage.getItem('tgUserId');
         const token = localStorage.getItem('token');
@@ -702,10 +696,10 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                                 <span className="flex-1 text-left">Play Squirrel Legend to win $700 and 1 free spin</span>
                                 <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${squirrelLegendPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/squirrel_legend_bot/sqlegend?startapp=bKuYBadfB", 'SquirrelLegend')}>{squirrelLegendLoading ? (<span className="loading loading-spinner loading-sm"></span>) : squirrelLegendPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
                             </div>
-                            {/*<div className="flex items-center justify-between mb-4">*/}
-                            {/*    <span className="flex-1 text-left">Play CoinPUPs get 1 spin</span>*/}
-                            {/*    <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${coinpupsPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/CoinPupsBot?start=30001218", "wheelCoinPUPs")}>{coinpupsLoading ? (<span className="loading loading-spinner loading-sm"></span>) : coinpupsPlayOrClaim === 1 ? 'Play' : "Claim"}</button>*/}
-                            {/*</div>*/}
+                            <div className="flex items-center justify-between mb-4">
+                                <span className="flex-1 text-left">Play CoinPUPs get 1 spin</span>
+                                <button className={`bg-[#FFE541] p-2 rounded-full text-black  text-[12px] shadow-[0px_4px_4px_0px_#FEA75CDE;] px-3 py-1 ${coinpupsPlayOrClaim === 3 && 'disabled bg-gray-300'}`} onClick={() => goOtherApp("https://t.me/CoinPupsBot?start=30001218", "wheelCoinPUPs")}>{coinpupsLoading ? (<span className="loading loading-spinner loading-sm"></span>) : coinpupsPlayOrClaim === 1 ? 'Play' : "Claim"}</button>
+                            </div>
                             <div className="flex items-center justify-between mb-4">
                                 <img src="/ottercoin.svg" alt="Coin" className="w-8 h-8 mr-2"/>
                                 <span className="flex-1 text-left">10,000 for daily 1 spin</span>
