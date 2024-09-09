@@ -318,7 +318,7 @@ const LuckyWheelComponent: React.FC<{ fromLogin2?: string }> = ({fromLogin2}) =>
                 setCoinpupsPlayOrClaim(3)
                 handleClaimClick(102)
             }
-        }else if (jumpFlag === "squirrelLegendPlayOrClaim"){
+        }else if (jumpFlag === "SquirrelLegend"){
             if (squirrelLegendPlayOrClaim === 1) {
                 localStorage.setItem(jumpFlag, "2");
                 window.location.href = jumpUrl;
